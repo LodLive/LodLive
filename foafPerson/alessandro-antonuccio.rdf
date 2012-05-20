@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:foaf="http://xmlns.com/foaf/0.1/">
+	<foaf:Person rdf:about="http://purl.org/net/foaf:Person/alessandro-antonuccio">
+		<foaf:name>Alessandro Antonuccio</foaf:name>
+		<foaf:givenName>Alessandro</foaf:givenName>
+		<foaf:familyName>Antonuccio</foaf:familyName>
+		<foaf:mbox>ale@lodlive.it</foaf:mbox>
+		<foaf:nick>hstudio.venezia</foaf:nick>
+		<foaf:nick>hstudio_venezia</foaf:nick>
+		<foaf:workplaceHomepage rdf:resource="http://hstudio.it"/>
+		<foaf:schoolHomepage rdf:resource="http://www.liceoamaldi.it/"/>
+		<foaf:knows>
+			<foaf:Person rdf:resource="http://purl.org/net/foaf:Person/diego-valerio-camarda"/>
+		</foaf:knows>
+		<foaf:currentProject rdf:resource="http://storia.camera.it"/>
+		<foaf:topic_interest rdf:resource="http://id.loc.gov/authorities/subjects/sh97005138"/>
+		<foaf:topic_interest rdf:resource="http://id.loc.gov/authorities/subjects/sh85143917"/>
+		<foaf:topic_interest rdf:resource="http://id.loc.gov/authorities/subjects/sh2007006475"/>
+		<foaf:topic_interest rdf:resource="http://id.loc.gov/authorities/subjects/sh00006889"/>
+		<foaf:topic_interest rdf:resource="http://id.loc.gov/authorities/subjects/sh85037199"/>
+	</foaf:Person>
+</rdf:RDF>

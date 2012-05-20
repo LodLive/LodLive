@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:foaf="http://xmlns.com/foaf/0.1/">
+	<foaf:Person rdf:about="http://purl.org/net/foaf:Person/diego-valerio-camarda">
+		<foaf:name>Diego Valerio Camarda</foaf:name>
+		<foaf:givenName>Diego Valerio</foaf:givenName>
+		<foaf:familyName>Camarda</foaf:familyName>
+		<foaf:mbox>diego@lodlive.it</foaf:mbox>
+		<foaf:nick>dvcama</foaf:nick>
+		<foaf:workplaceHomepage rdf:resource="http://regesta.com"/>
+		<foaf:schoolHomepage rdf:resource="http://www.liceomorgagni.it/"/>
+		<foaf:currentProject rdf:resource="http://storia.camera.it"/>
+		<foaf:currentProject rdf:resource="http://dati.camera.it"/>
+		<foaf:topic_interest rdf:resource="http://id.loc.gov/authorities/subjects/sh85102553"/>
+		<foaf:topic_interest rdf:resource="http://www.w3.org/TR/rdf-sparql-query/"/>
+		<foaf:topic_interest rdf:resource="http://id.loc.gov/authorities/subjects/sh96004880"/>
+		<foaf:topic_interest rdf:resource="http://www.w3.org/TR/owl-features/"/>
+		<foaf:topic_interest rdf:resource="http://id.loc.gov/authorities/subjects/sh2003010124"/>
+		<foaf:topic_interest rdf:resource="http://dbpedia.org/resource/Linked_Data"/>
+		<foaf:topic_interest rdf:resource="http://dbpedia.org/resource/Semantic_Web"/>
+		<foaf:topic_interest rdf:resource="http://dbpedia.org/resource/SPARQL"/>
+
+	</foaf:Person>
+</rdf:RDF>
