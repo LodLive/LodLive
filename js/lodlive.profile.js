@@ -604,14 +604,14 @@ $.jStorage.set('language', {
 		findResource : 'cerca una risorsa',
 		choose : 'scegli...',
 		resourceMissing : 'risorsa non trovata',
-		resourceMissingDoc : 'non sono state trovate propriet‡† di tipo literal per la risorsa per la lingua impostata o la risorsa non Ë momentaneamente disponibile nell\'endpoint',
+		resourceMissingDoc : 'non sono state trovate propriet√† di tipo literal per la risorsa per la lingua impostata o la risorsa non √® momentaneamente disponibile nell\'endpoint',
 		options : 'OPZIONI',
 		endpointNotConfigured : 'nessun endpoint configurato per la risorsa',
 		impostaUnaURI : 'imposta un uri, esegui una ricerca \no scegli tra gli esempi proposti',
 		example : 'esempio',
 		noIe : 'Siamo spiacenti ma attualmente Internet Explorer non &egrave; supportato.',
 		enpointNotAvailable : 'errore: endpoint non disponibile',
-		enpointNotAvailableOrSLow : 'errore: endpoint non disponibile o la richiesta Ë scaduta'
+		enpointNotAvailableOrSLow : 'errore: endpoint non disponibile o la richiesta √® scaduta'
 	},
 	en : {
 		restart : 'restart',
