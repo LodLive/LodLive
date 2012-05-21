@@ -336,7 +336,29 @@ $.jStorage.set('profile', {
 				uri : 'http://www.provincia.carboniaiglesias.it/taxonomy_term/78',
 				label : 'Segretario Generale Reggente'
 			} ]
+		},
+		'http://dblp.l3s.de' : {
+			description : {
+				it : 'The DBLP Computer Science Bibliography.',
+				en : 'The DBLP Computer Science Bibliography.'
+			},
+			sparql : {
+				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
+				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/terms/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>; <http://purl.org/dc/terms/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
+				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.FILTER (isIRI(?object) || ?property = <http://www.w3.org/2000/01/rdf-schema#label> || ?property = <http://purl.org/dc/terms/title>)}',
+				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
+				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
+				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
+			},
+
+			endpoint : 'http://dblp.l3s.de/d2r/sparql',
+			examples : [ {
+				uri : 'http://dblp.l3s.de/d2r/resource/authors/Oktie_Hassanzadeh',
+				label : 'Oktie Hassanzadeh'
+			} ]
 		}
+
 	},
 	uriSubstitutor : [ {
 		findStr : 'mpii.de/yago/resource/',
@@ -582,12 +604,14 @@ $.jStorage.set('language', {
 		findResource : 'cerca una risorsa',
 		choose : 'scegli...',
 		resourceMissing : 'risorsa non trovata',
-		resourceMissingDoc : 'non sono state trovate propriet√† di tipo literal per la risorsa per la lingua impostata o la risorsa non √® del tutto presente nell\'endpoint',
+		resourceMissingDoc : 'non sono state trovate propriet‡† di tipo literal per la risorsa per la lingua impostata o la risorsa non Ë momentaneamente disponibile nell\'endpoint',
 		options : 'OPZIONI',
 		endpointNotConfigured : 'nessun endpoint configurato per la risorsa',
 		impostaUnaURI : 'imposta un uri, esegui una ricerca \no scegli tra gli esempi proposti',
 		example : 'esempio',
-		noIe : 'Siamo spiacenti ma attualmente Internet Explorer non &egrave; supportato.'
+		noIe : 'Siamo spiacenti ma attualmente Internet Explorer non &egrave; supportato.',
+		enpointNotAvailable : 'errore: endpoint non disponibile',
+		enpointNotAvailableOrSLow : 'errore: endpoint non disponibile o la richiesta Ë scaduta'
 	},
 	en : {
 		restart : 'restart',
@@ -599,12 +623,14 @@ $.jStorage.set('language', {
 		findResource : 'find resources',
 		choose : 'choose...',
 		resourceMissing : 'resource not found',
-		resourceMissingDoc : 'literal values not found or the resource is missing in the endpoint',
+		resourceMissingDoc : 'literal values not found or the resource is missing or not available in the endpoint',
 		options : 'OPTIONS',
 		endpointNotConfigured : 'no endpoint configured for the resource',
 		impostaUnaURI : 'inert an uri, make a query or choose one of the examples provided',
 		example : 'example',
-		noIe : 'Sorry but Internet Explorer is not supported.'
+		noIe : 'Sorry but Internet Explorer is not supported.',
+		enpointNotAvailable : 'error: endpoint not available',
+		enpointNotAvailableOrSLow : 'error: endpoint not available or the request timed out'
 	}
 });
 

@@ -17,7 +17,7 @@ var debugOn = false;
 		cache : true,
 		callbackParameter : 'callback',
 		callback : 'lodlive',
-		timeout : 20000
+		timeout : 30000
 	});
 
 	var methods = {
@@ -825,7 +825,7 @@ var debugOn = false;
 						context.lodlive('formatDoc', destBox, values, uris, bnodes, URI);
 					},
 					error : function(e, b, v) {
-						destBox.children('.box').html('');
+						destBox.html('');
 						values = [ {
 							'http://system/msg' : 'risorsa non trovata: ' + destBox.attr('rel')
 						} ];
@@ -888,7 +888,7 @@ var debugOn = false;
 							context.lodlive('formatDoc', destBox, values, uris, bnodes, URI);
 						},
 						error : function(e, b, v) {
-							destBox.children('.box').html('');
+							destBox.html('');
 							values = [ {
 								'http://system/msg' : 'risorsa non trovata: ' + destBox.attr('rel')
 							} ];
@@ -2136,7 +2136,7 @@ var debugOn = false;
 			var context = this;
 			destBox.children('.box').addClass("errorBox");
 			destBox.children('.box').html('');
-			var jResult = $("<div class=\"boxTitle\"><span>errore: endpoint non disponibile</span></div>");
+			var jResult = $("<div class=\"boxTitle\"><span>"+lang('enpointNotAvailable')+"</span></div>");
 			destBox.children('.box').append(jResult);
 			jResult.css({
 				'marginTop' : jResult.height() == 13 ? 58 : jResult.height() == 26 ? 51 : 45
@@ -2147,7 +2147,7 @@ var debugOn = false;
 			});
 			destBox.append(obj);
 			destBox.children('.box').hover(function() {
-				context.lodlive('msg', "si è verificato un errore, l'endpoint non è momentaneamente disponibile", 'show', 'fullInfo', destBox.attr("data-endpoint"));
+				context.lodlive('msg', lang('enpointNotAvailableOrSLow') , 'show', 'fullInfo', destBox.attr("data-endpoint"));
 			}, function() {
 				context.lodlive('msg', null, 'hide');
 			});
