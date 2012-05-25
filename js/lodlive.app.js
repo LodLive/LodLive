@@ -1,18 +1,17 @@
-function myAlert(msg) {
-	var alert = $('<div class="alert ' + spriteHome + '"><div>' + msg + '</div></div>');
-	alert.click(function() {
-		$(this).remove();
-	});
-	if ($('.alert').length > 0) {
-		$('.alert').remove();
-	}
-	$('body').append(alert);
-	alert.css({
-		top : $(window).height() / 2 + $('body').scrollTop()
-	});
-}
 $(function() {
-
+	function myAlert(msg) {
+		var alert = $('<div class="alert ' + spriteHome + '"><div>' + msg + '</div></div>');
+		alert.click(function() {
+			$(this).remove();
+		});
+		if ($('.alert').length > 0) {
+			$('.alert').remove();
+		}
+		$('body').append(alert);
+		alert.css({
+			top : $(window).height() / 2 + $('body').scrollTop()
+		});
+	}
 	function lang(obj) {
 		return $.jStorage.get('language')[$.jStorage.get('selectedLanguage')][obj];
 	}

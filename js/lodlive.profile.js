@@ -373,7 +373,7 @@ $.jStorage.set('profile', {
 			documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.} ORDER BY ?property',
 			document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.} ORDER BY ?property',
 			bnode : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-			inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
+			inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100'
 		},
 		endpoint : 'http://labs.regesta.com/resourceProxy/'
 	// endpoint : 'http://127.0.0.1:8080/sparql-rdf-proxy/resource/'
@@ -609,7 +609,7 @@ $.jStorage.set('language', {
 		endpointNotConfigured : 'nessun endpoint configurato per la risorsa',
 		impostaUnaURI : 'imposta un uri, esegui una ricerca \no scegli tra gli esempi proposti',
 		example : 'esempio',
-		noIe : 'Siamo spiacenti ma attualmente Internet Explorer non &egrave; supportato.',
+		noIe : 'Siamo spiacenti ma attualmente Internet Explorer non &egrave; totalmente supportato.',
 		enpointNotAvailable : 'errore: endpoint non disponibile',
 		enpointNotAvailableOrSLow : 'errore: endpoint non disponibile o la richiesta è scaduta'
 	},
@@ -628,7 +628,7 @@ $.jStorage.set('language', {
 		endpointNotConfigured : 'no endpoint configured for the resource',
 		impostaUnaURI : 'inert an uri, make a query or choose one of the examples provided',
 		example : 'example',
-		noIe : 'Sorry but Internet Explorer is not supported.',
+		noIe : 'Sorry but Internet Explorer is not totally supported.',
 		enpointNotAvailable : 'error: endpoint not available',
 		enpointNotAvailableOrSLow : 'error: endpoint not available or the request timed out'
 	}
