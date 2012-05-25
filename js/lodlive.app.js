@@ -241,7 +241,7 @@ $(function() {
 			$('#startPanel').children('#boxes').children('#boxesCont').children('.page:last').append('<div class="startBox infoHome segnala"><h1><span>Segnala un endpoint</span></h1><p>&Egrave; possibile segnalare a info@lodlive.it un endpoint di modo che sia inserito nell\'applicazione disponibile su lodlive.it. In generale si ottengono risultati migliori con dataset che hanno relazioni owl:sameAs verso altre risorse disponibili su un endpoint SPARQL. </p></div>');
 		}
 
-		$('#menu').find('a').click(function() {
+		$('#menu').find('a[href^=#]').click(function() {
 			var text = $('<div class="text ' + spriteHome + '"><h3>' + $(this).text() + '</h3><div class="padding">' + $($(this).attr("href")).children('p').html() + '</div></div>');
 			text.click(function() {
 				$(this).remove();
