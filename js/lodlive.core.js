@@ -26,23 +26,21 @@ var debugOn = false;
 			context.append('<div id="lodlogo" class="sprite"></div>');
 
 			// inizializzo il contenitore delle variabili di ambiente
-			if (!document.lodliveVars) {
-				document.lodliveVars = {};
-			}
-
 			var storeIdsCleaner = $.jStorage.index();
 			for ( var int = 0; int < storeIdsCleaner.length; int++) {
 				if (storeIdsCleaner[int].indexOf("storeIds-") == 0) {
 					$.jStorage.deleteKey(storeIdsCleaner[int]);
 				}
 			}
+			$.jStorage.set('imagesMap', {});
+			$.jStorage.set('mapsMap', {});
 
 			// $.jStorage.set('storeIds',{});
 			// template della query
 
 			// creo il primo box, lo aggiungo al documento e lo posiziono
 			// orizzontalmente nel centro
-			var firstBox =  $($.jStorage.get('boxTemplate'));
+			var firstBox = $($.jStorage.get('boxTemplate'));
 			context.lodlive('centerBox', firstBox);
 			context.append(firstBox);
 			firstBox.attr("id", MD5(firstUri));
@@ -52,9 +50,9 @@ var debugOn = false;
 			});
 
 			// inizializzo la mappa delle classi
-			document.lodliveVars['classMap'] = {
+			$.jStorage.set('classMap', {
 				counter : 1
-			};
+			});
 
 			// imposto le dimensioni dell'area di lavoro
 			context.height($(document).height());
@@ -199,15 +197,17 @@ var debugOn = false;
 				panel.css({
 					left : 0,
 					top : 10,
-					opacity : 0.8,
 					position : 'fixed',
-					zIndex : 9999
+					zIndex : 999
 				});
 				panel.append('<div class="panel options sprite" ></div>');
 				panel.append('<div class="panel legend sprite" ></div>');
 				panel.append('<div class="panel help sprite" ></div>');
+				panel.append('<div class="panel" ></div>');
+				panel.append('<div class="panel2 maps sprite" ></div>');
+				panel.append('<div class="panel2 images sprite" ></div>');
 
-				panel.find('.panel').hover(function() {
+				panel.children('.panel,.panel2').hover(function() {
 					$(this).setBackgroundPosition({
 						y : -450
 					});
@@ -218,13 +218,16 @@ var debugOn = false;
 				});
 
 				context.append(panel);
+
 				panel.attr("data-top", panel.position().top);
 				panel.children('.panel').click(function() {
+					panel.children('.panel,.panel2').hide();
 					var close = $('<div class="panel close sprite" ></div>');
 					close.click(function() {
 						$(this).remove();
 						panel.children('#panelContent').remove();
 						panel.removeClass("justX");
+						panel.children('.panel,.panel2').show();
 					});
 					close.hover(function() {
 						$(this).setBackgroundPosition({
@@ -247,9 +250,9 @@ var debugOn = false;
 						var anUl = $('<ul class="optionsList"></ul>');
 						panelContent.append('<div></div>');
 						panelContent.children('div').append('<h2>' + lang('options') + '</h2>').append(anUl);
-						anUl.append('<li ' + (document.lodliveVars.doInverse ? 'class="checked"' : 'class="check"') + ' data-value="inverse" ><span class="spriteLegenda"></span>' + lang('generateInverse') + '</li>');
-						anUl.append('<li ' + (document.lodliveVars.doAutoExpand ? 'class="checked"' : 'class="check"') + ' data-value="autoExpand" ><span class="spriteLegenda"></span>' + lang('autoExpand') + '</li>');
-						anUl.append('<li ' + (document.lodliveVars.doAutoSameas ? 'class="checked"' : 'class="check"') + ' data-value="autoSameas"><span class="spriteLegenda"></span>' + lang('autoSameAs') + '</li>');
+						anUl.append('<li ' + ($.jStorage.get('doInverse') ? 'class="checked"' : 'class="check"') + ' data-value="inverse" ><span class="spriteLegenda"></span>' + lang('generateInverse') + '</li>');
+						anUl.append('<li ' + ($.jStorage.get('doAutoExpand') ? 'class="checked"' : 'class="check"') + ' data-value="autoExpand" ><span class="spriteLegenda"></span>' + lang('autoExpand') + '</li>');
+						anUl.append('<li ' + ($.jStorage.get('doAutoSameas') ? 'class="checked"' : 'class="check"') + ' data-value="autoSameas"><span class="spriteLegenda"></span>' + lang('autoSameAs') + '</li>');
 						anUl.append('<li>&#160;</li>');
 						anUl.append('<li class="reload"><span  class="spriteLegenda"></span>' + lang('restart') + '</li>');
 						anUl.children('.reload').click(function() {
@@ -258,20 +261,20 @@ var debugOn = false;
 						anUl.children('li[data-value]').click(function() {
 							if ($(this).hasClass('check')) {
 								if ($(this).attr("data-value") == 'inverse') {
-									document.lodliveVars.doInverse = true;
+									$.jStorage.set('doInverse', true);
 								} else if ($(this).attr("data-value") == 'autoExpand') {
-									document.lodliveVars.doAutoExpand = true;
+									$.jStorage.set('doAutoExpand', true);
 								} else if ($(this).attr("data-value") == 'autoSameas') {
-									document.lodliveVars.doAutoSameas = true;
+									$.jStorage.set('doAutoSameas', true);
 								}
 								$(this).attr('class', "checked");
 							} else {
 								if ($(this).attr("data-value") == 'inverse') {
-									document.lodliveVars.doInverse = false;
+									$.jStorage.set('doInverse', false);
 								} else if ($(this).attr("data-value") == 'autoExpand') {
-									document.lodliveVars.doAutoExpand = false;
+									$.jStorage.set('doAutoExpand', false);
 								} else if ($(this).attr("data-value") == 'autoSameas') {
-									document.lodliveVars.doAutoSameas = false;
+									$.jStorage.set('doAutoSameas', false);
 								}
 								$(this).attr('class', "check");
 							}
@@ -300,6 +303,64 @@ var debugOn = false;
 					}
 				});
 
+				panel.children('.panel2').click(function() {
+					panel.children('.panel,.panel2').hide();
+					var close = $('<div class="panel close2 sprite" ></div>');
+					close.click(function() {
+						$(this).remove();
+						$('#mapPanel', panel).hide();
+						$('#imagePanel', panel).hide();
+						panelContent.hide();
+						panel.removeClass("justX");
+						panel.children('.panel,.panel2').show();
+					});
+					close.hover(function() {
+						$(this).setBackgroundPosition({
+							y : -550
+						});
+					}, function() {
+						$(this).setBackgroundPosition({
+							y : -500
+						});
+					});
+					panel.append(close);
+					var panelContent = $('#panel2Content', panel);
+					if (panelContent.length == 0) {
+						panelContent = $('<div id="panel2Content"></div>');
+						panel.append(panelContent);
+					} else {
+						panelContent.show();
+					}
+					if ($(this).hasClass("maps")) {
+						var mapPanel = $('#mapPanel');
+						if (mapPanel.length == 0) {
+							mapPanel = $('<div id="mapPanel"></div>');
+							panelContent.width(800);
+							panelContent.append(mapPanel);
+							$('#mapPanel').gmap3({
+								action : 'init',
+								options : {
+									zoom : 2,
+									mapTypeId : google.maps.MapTypeId.HYBRID
+								}
+							});
+						} else {
+							mapPanel.show();
+						}
+						context.lodlive('updateMapPanel', panel);
+					} else if ($(this).hasClass("images")) {
+						var imagePanel = $('#imagePanel');
+						if (imagePanel.length == 0) {
+							imagePanel = $('<div id="imagePanel"><span id="imgesCnt"></span></div>');
+							panelContent.append(imagePanel);
+						} else {
+							imagePanel.show();
+
+						}
+						context.lodlive('updateImagePanel', panel);
+					}
+				});
+
 			} else if (action == 'show') {
 
 			} else if (action == 'hide') {
@@ -325,6 +386,213 @@ var debugOn = false;
 			}
 			if (debugOn) {
 				console.debug((new Date().getTime() - start) + '	controlPanel ');
+			}
+		},
+		updateMapPanel : function(panel) {
+			var context = this;
+			if ($("#mapPanel:visible", panel).length > 0) {
+				$('#mapPanel').gmap3({
+					action : 'clear'
+				});
+				var panelContent = $('#panel2Content', panel);
+				panelContent.width(800);
+				var close = $('.close2', panel);
+				var mapsMap = $.jStorage.get('mapsMap');
+				var mapSize = 0;
+				for ( var prop in mapsMap) {
+					if (mapsMap.hasOwnProperty(prop)) {
+						mapSize++;
+					}
+				}
+				for ( var prop in mapsMap) {
+					if (mapsMap.hasOwnProperty(prop)) {
+						$('#mapPanel').gmap3({
+							action : 'addMarker',
+							latLng : [ mapsMap[prop].lats, mapsMap[prop].longs ],
+							title : unescape(mapsMap[prop].title)
+						}, mapSize > 1 ? {
+							action : "autofit"
+						} : {});
+					}
+				}
+
+				close.css({
+					position : 'absolute',
+					left : panelContent.width() + 1,
+					top : 0
+				});
+
+			} else {
+				context.lodlive('highlight', panel.children('.maps'), 2, 200, '-565px -450px');
+			}
+		},
+		updateImagePanel : function(panel) {
+			var context = this;
+			var imagePanel = $('#imagePanel', panel).children("span");
+			if ($("#imagePanel:visible", panel).length > 0) {
+				var panelContent = $('#panel2Content', panel);
+				var close = $('.close2', panel);
+				var imageMap = $.jStorage.get('imagesMap');
+				var mapSize = 0;
+				for ( var prop in imageMap) {
+					if (imageMap.hasOwnProperty(prop)) {
+						mapSize++;
+					}
+				}
+				if (mapSize > 0) {
+					imagePanel.children('.amsg').remove();
+					var counter = 0;
+					for ( var prop in imageMap) {
+						if (imageMap.hasOwnProperty(prop)) {
+							for ( var a = 0; a < imageMap[prop].length; a++) {
+								for ( var key in imageMap[prop][a]) {
+									if (($.jStorage.get('noImagesMap', {})[prop + counter])) {
+										counter--;
+									} else if (imagePanel.children('.img-' + prop + '-' + counter).length == 0) {
+										var img = $('<a href="' + unescape(key) + '" class="sprite relatedImage img-' + prop + '-' + counter + '"><img rel="' + unescape(imageMap[prop][a][key]) + '" src="' + unescape(key) + '"/></a>"');
+										imagePanel.prepend(img);
+										img.fancybox({
+											'transitionIn' : 'elastic',
+											'transitionOut' : 'elastic',
+											'speedIn' : 400,
+											'type' : 'image',
+											'speedOut' : 200,
+											'hideOnContentClick' : true,
+											'showCloseButton' : false,
+											'overlayShow' : false
+										});
+										img.children('img').error(function() {
+											$(this).parent().remove();
+											counter--;
+											if (counter < 3) {
+												panelContent.width(148);
+											} else {
+												var tot = (counter / 3 + (counter % 3 > 0 ? 1 : 0) + '').split('.')[0];
+												if (tot > 7) {
+													tot = 7;
+												}
+												panelContent.width(20 + (tot) * 128);
+											}
+											close.css({
+												position : 'absolute',
+												left : panelContent.width() + 1,
+												top : 0
+											});
+											var noImage = $.jStorage.get('noImagesMap', {});
+											noImage[prop + counter] = true;
+											$.jStorage.set('noImagesMap', noImage);
+											close.css({
+												position : 'absolute',
+												left : panelContent.width() + 1,
+												top : 0
+											});
+										});
+										img.children('img').load(function() {
+											var titolo = $(this).attr('rel');
+											if ($(this).width() < $(this).height()) {
+												$(this).height($(this).height() * 113 / $(this).width());
+												$(this).width(113);
+											} else {
+												$(this).css({
+													width : $(this).width() * 113 / $(this).height(),
+													height : 113,
+													marginLeft : -(($(this).width() * 113 / $(this).height() - 113) / 2)
+												});
+											}
+											var controls = $('<span class="imgControls"><span class="imgControlCenter" title="' + lang('showResource') + '"></span><span class="imgControlZoom" title="' + lang('zoomIn') + '"></span><span class="imgTitle">' + titolo + '</span></span>');
+											$(this).parent().append(controls);
+											$(this).parent().hover(function() {
+												$(this).children('img').hide();
+											}, function() {
+												$(this).children('img').show();
+											});
+											controls.children('.imgControlZoom').hover(function() {
+												$(this).parent().parent().setBackgroundPosition({
+													x : -1955
+												});
+											}, function() {
+												$(this).parent().parent().setBackgroundPosition({
+													x : -1825
+												});
+											});
+											controls.children('.imgControlCenter').hover(function() {
+												$(this).parent().parent().setBackgroundPosition({
+													x : -2085
+												});
+											}, function() {
+												$(this).parent().parent().setBackgroundPosition({
+													x : -1825
+												});
+											});
+											controls.children('.imgControlCenter').click(function() {
+												$('.close2').click();
+												context.lodlive('highlight', $('#' + prop).children('.box'), 4, 200, '0 0');
+												return false;
+											});
+											if (counter < 3) {
+												panelContent.width(148);
+											} else {
+												var tot = (counter / 3 + (counter % 3 > 0 ? 1 : 0) + '').split('.')[0];
+												if (tot > 7) {
+													tot = 7;
+												}
+												panelContent.width(20 + (tot) * 128);
+												close.css({
+													position : 'absolute',
+													left : panelContent.width() + 1,
+													top : 0
+												});
+											}
+										});
+
+									}
+									counter++;
+									var tot = (counter / 3 + (counter % 3 > 0 ? 1 : 0) + '').split('.')[0];
+									if (tot > 7) {
+										tot = 7;
+									}
+									close.css({
+										position : 'absolute',
+										left : panelContent.width() + 1,
+										top : 0
+									});
+								}
+							}
+						}
+					}
+				} else {
+					panelContent.width(148);
+					if (imagePanel.children('.amsg').length == 0) {
+						imagePanel.append('<span class="amsg">' + lang('imagesNotFound') + '</span>');
+					}
+				}
+				close.css({
+					position : 'absolute',
+					left : panelContent.width() + 1,
+					top : 0
+				});
+
+			} else {
+				context.lodlive('highlight', panel.children('.images'), 2, 200, '-610px -450px');
+			}
+
+		},
+		highlight : function(object, times, speed, backmove) {
+			var context = this;
+			if (times > 0) {
+				times--;
+				var css = object.css('background-position');
+				object.doTimeout(speed, function() {
+					object.css({
+						'background-position' : backmove
+					});
+					object.doTimeout(speed, function() {
+						object.css({
+							'background-position' : css
+						});
+						context.lodlive('highlight', object, times, speed, backmove);
+					});
+				});
 			}
 		},
 		renewDrag : function(aDivList) {
@@ -511,7 +779,7 @@ var debugOn = false;
 					if (debugOn) {
 						console.debug((new Date().getTime() - start) + '	addNewDoc 08 ');
 					}
-					if (document.lodliveVars.doInverse) {
+					if ($.jStorage.get('doInverse')) {
 						context.lodlive('openDoc', $(ele).attr("rel"), newObj, fromInverse);
 					} else {
 						context.lodlive('openDoc', $(ele).attr("rel"), newObj);
@@ -566,6 +834,22 @@ var debugOn = false;
 				}
 			}
 			this.lodlive('docInfo', '', 'close');
+
+			var imagesMap = $.jStorage.get("imagesMap", {});
+			if (imagesMap[id]) {
+				delete imagesMap[id];
+				$.jStorage.set('imagesMap', imagesMap);
+				context.lodlive('updateImagePanel', $('#controlPanel'));
+				$('#controlPanel').find('a[class*=img-' + id + ']').remove();
+			}
+			var mapsMap = $.jStorage.get("mapsMap", {});
+			if (mapsMap[id]) {
+				delete mapsMap[id];
+				$.jStorage.set('mapsMap', mapsMap);
+				context.lodlive('updateMapPanel', $('#controlPanel'));
+				// $('#controlPanel').find('a[class*=img-' + id + ']').remove();
+			}
+
 			obj.fadeOut('normal', null, function() {
 				obj.remove();
 				$("." + id).show();
@@ -797,7 +1081,7 @@ var debugOn = false;
 					url : url,
 					beforeSend : function() {
 						$('body').append(destBox);
-						destBox.html('<img style=\"margin-left:' + (destBox.width() / 2) + 'px;margin-top:147px\" src="img/ajax-loader.gif"/>');
+						destBox.html('<img style=\"margin-left:' + (destBox.width() / 2) + 'px;margin-top:147px\" src="img/ajax-loader-gray.gif"/>');
 						destBox.css({
 							position : 'fixed',
 							left : $(window).width() - $('#docInfo').width() - 20,
@@ -865,7 +1149,7 @@ var debugOn = false;
 						url : SPARQLquery,
 						beforeSend : function() {
 							$('body').append(destBox);
-							destBox.html('<img style=\"margin-left:' + (destBox.width() / 2) + 'px;margin-top:147px\" src="img/ajax-loader.gif"/>');
+							destBox.html('<img style=\"margin-left:' + (destBox.width() / 2) + 'px;margin-top:147px\" src="img/ajax-loader-gray.gif"/>');
 							destBox.css({
 								position : 'fixed',
 								left : $(window).width() - $('#docInfo').width() - 20,
@@ -1352,7 +1636,7 @@ var debugOn = false;
 			$.jsonp({
 				url : SPARQLquery,
 				beforeSend : function() {
-					destBox.find('span[class=bnode]').html('<img src="img/ajax-loader.gif"/>');
+					destBox.find('span[class=bnode]').html('<img src="img/ajax-loader-black.gif"/>');
 
 				},
 				success : function(json) {
@@ -1413,16 +1697,20 @@ var debugOn = false;
 			var aClass = this.lodlive("getProperty", "document", "className", docType);
 			// destBox.addClass(aClass);
 			if (aClass == null || aClass == 'standard' || aClass == '') {
-				if (document.lodliveVars['classMap'][docType]) {
-					aClass = document.lodliveVars['classMap'][docType];
+				if ($.jStorage.get('classMap')[docType]) {
+					aClass = $.jStorage.get('classMap')[docType];
 				} else {
-					aClass = "box" + document.lodliveVars['classMap'].counter;
-					if (document.lodliveVars['classMap'].counter == 13) {
-						document.lodliveVars['classMap'].counter = 1;
+					var classMap = $.jStorage.get('classMap');
+					aClass = "box" + $.jStorage.get('classMap').counter;
+					if ($.jStorage.get('classMap').counter == 13) {
+						classMap.counter = 1;
+						$.jStorage.set('classMap', classMap);
 					} else {
-						document.lodliveVars['classMap'].counter = document.lodliveVars['classMap'].counter + 1;
+						classMap.counter = classMap.counter + 1;
+						$.jStorage.set('classMap', classMap);
 					}
-					document.lodliveVars['classMap'][docType] = aClass;
+					classMap[docType] = aClass;
+					$.jStorage.set('classMap', classMap);
 				}
 			}
 			containerBox.addClass(aClass);
@@ -1432,15 +1720,12 @@ var debugOn = false;
 			var images = this.lodlive("getProperty", "images", "properties", docType);
 			// ed ai path dei link esterni
 			var weblinks = this.lodlive("getProperty", "weblinks", "properties", docType);
-			// e le basi delle uri accettate per la navigazione e quindi
-			// configurate come endpoint
-			var allowedUris = [];
-			$.each(lodLiveProfile.connection, function(key, value) {
-				var keySplit = key.split(",");
-				for ( var a = 0; a < keySplit.length; a++) {
-					allowedUris.push(keySplit[a]);
-				}
-			});
+			// e le latitudini
+			var lats = this.lodlive("getProperty", "maps", "lats", docType);
+			// e le longitudini
+			var longs = this.lodlive("getProperty", "maps", "longs", docType);
+			// e punti
+			var points = this.lodlive("getProperty", "maps", "points", docType);
 
 			// se la proprieta' e' stata scritta come stringa la trasformo in un
 			// array
@@ -1453,8 +1738,14 @@ var debugOn = false;
 			if (typeof weblinks == typeof '') {
 				weblinks = [ weblinks ];
 			}
-			if (typeof allowedUris == typeof '') {
-				allowedUris = [ allowedUris ];
+			if (typeof lats == typeof '') {
+				lats = [ lats ];
+			}
+			if (typeof longs == typeof '') {
+				longs = [ longs ];
+			}
+			if (typeof points == typeof '') {
+				points = [ points ];
 			}
 
 			// gestisco l'inserimento di messaggi di sistema come errori o altro
@@ -1482,6 +1773,7 @@ var debugOn = false;
 			}
 			result += "</span></div>";
 			var jResult = $(result);
+
 			if (jResult.text() == '') {
 				jResult.text(lang('noName'));
 			}
@@ -1489,6 +1781,7 @@ var debugOn = false;
 			jResult.ThreeDots({
 				max_rows : 3
 			});
+			var resourceTitle = jResult.text();
 			// posiziono il titolo al centro del box
 			jResult.css({
 				'marginTop' : jResult.height() == 13 ? 58 : jResult.height() == 26 ? 51 : 45,
@@ -1507,6 +1800,10 @@ var debugOn = false;
 			var propertyGroup = {};
 			var propertyGroupInverted = {};
 
+			var connectedImages = [];
+			var connectedLongs = [];
+			var connectedLats = [];
+
 			var sameDocControl = [];
 			$.each(uris, function(key, value) {
 				for ( var akey in value) {
@@ -1517,7 +1814,9 @@ var debugOn = false;
 							value[akey] = value[akey].replace(svalue.findStr, svalue.replaceStr);
 						});
 					}
-					if (akey != 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' && $.inArray(akey, images) == -1 && $.inArray(akey, weblinks) == -1) {
+					if ($.inArray(akey, images) > -1) {
+						eval('connectedImages.push({\'' + value[akey] + '\':\'' + escape(resourceTitle) + '\'})');
+					} else if (akey != 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' && $.inArray(akey, weblinks) == -1) {
 						// controllo se trovo la stessa relazione in una
 						// proprieta' diversa
 						if ($.inArray(value[akey], sameDocControl) > -1) {
@@ -1571,6 +1870,47 @@ var debugOn = false;
 
 					}
 				});
+			}
+			for ( var a = 0; a < points.length; a++) {
+				var resultArray = context.lodlive('getJsonValue', values, points[a], points[a]);
+				for ( var af = 0; af < resultArray.length; af++) {
+					if (resultArray[af].indexOf(" ") != -1) {
+						eval('connectedLongs.push(\'' + unescape(resultArray[af].split(" ")[1]) + '\')');
+						eval('connectedLats.push(\'' + unescape(resultArray[af].split(" ")[0]) + '\')');
+					} else if (resultArray[af].indexOf("-") != -1) {
+						eval('connectedLongs.push(\'' + unescape(resultArray[af].split("-")[1]) + '\')');
+						eval('connectedLats.push(\'' + unescape(resultArray[af].split("-")[0]) + '\')');
+					}
+				}
+			}
+			for ( var a = 0; a < longs.length; a++) {
+				var resultArray = context.lodlive('getJsonValue', values, longs[a], longs[a]);
+				for ( var af = 0; af < resultArray.length; af++) {
+					eval('connectedLongs.push(\'' + unescape(resultArray[af]) + '\')');
+				}
+			}
+			for ( var a = 0; a < lats.length; a++) {
+				var resultArray = context.lodlive('getJsonValue', values, lats[a], lats[a]);
+				for ( var af = 0; af < resultArray.length; af++) {
+					eval('connectedLats.push(\'' + unescape(resultArray[af]) + '\')');
+				}
+			}
+
+			if (connectedImages.length > 0) {
+				var imagesMap = $.jStorage.get("imagesMap", {});
+				imagesMap[containerBox.attr("id")] = connectedImages;
+				$.jStorage.set('imagesMap', imagesMap);
+				context.lodlive('updateImagePanel', $('#controlPanel'));
+			}
+			if (connectedLongs.length > 0 && connectedLats.length > 0) {
+				var mapsMap = $.jStorage.get("mapsMap", {});
+				mapsMap[containerBox.attr("id")] = {
+					longs : connectedLongs[0],
+					lats : connectedLats[0],
+					title : containerBox.attr('rel') + "\n" + escape(resourceTitle)
+				};
+				$.jStorage.set('mapsMap', mapsMap);
+				context.lodlive('updateMapPanel', $('#controlPanel'));
 			}
 
 			var totRelated = connectedDocs.length + invertedDocs.length;
@@ -1945,7 +2285,7 @@ var debugOn = false;
 							} catch (e) {
 							}
 						} : null);
-						if (document.lodliveVars.doAutoExpand) {
+						if ($.jStorage.get('doAutoExpand')) {
 							context.lodlive('autoExpand', destBox);
 						}
 					},
@@ -1963,7 +2303,7 @@ var debugOn = false;
 							} catch (e) {
 							}
 						} : null);
-						if (document.lodliveVars.doAutoExpand) {
+						if ($.jStorage.get('doAutoExpand')) {
 							context.lodlive('autoExpand', destBox);
 						}
 					}
@@ -1982,7 +2322,7 @@ var debugOn = false;
 					} catch (e) {
 					}
 				} : null);
-				if (document.lodliveVars.doAutoExpand) {
+				if ($.jStorage.get('doAutoExpand')) {
 					context.lodlive('autoExpand', destBox);
 				}
 			}
@@ -1993,7 +2333,7 @@ var debugOn = false;
 			}
 			var context = this;
 			SPARQLquery = context.lodlive('composeQuery', anUri, 'documentUri');
-			if (document.lodliveVars.doStats) {
+			if ($.jStorage.get('doStats')) {
 				this.lodlive('doStats', anUri);
 			}
 			var uris = [];
@@ -2015,12 +2355,12 @@ var debugOn = false;
 					},
 					success : function(json) {
 						json = json['results']['bindings'];
-						var tot = json.length;
+						// var tot = json.length;
 						var conta = 0;
 						// var aSpan = $('<span style="color:#000"><br />gg0/' +
 						// tot + '</span>');
 						// destBox.children('.box').append(aSpan);
-						var control = {};
+						// var control = {};
 						$.each(json, function(key, value) {
 							conta++;
 							if (value.object.type == 'uri') {
@@ -2047,7 +2387,7 @@ var debugOn = false;
 							console.debug((new Date().getTime() - start) + '	openDoc eval uris & values');
 						}
 						destBox.children('.box').html('');
-						if (document.lodliveVars.doInverse) {
+						if ($.jStorage.get('doInverse')) {
 							SPARQLquery = context.lodlive('composeQuery', anUri, 'inverse');
 							var inverses = [];
 							$.jsonp({
@@ -2058,7 +2398,7 @@ var debugOn = false;
 								success : function(json) {
 									json = json['results']['bindings'];
 									var conta = 0;
-									var tot = json.length;
+									// var tot = json.length;
 									// var aSpan = $('<span
 									// style="color:#000"><br />0/' + tot +
 									// '</span>');
@@ -2080,11 +2420,11 @@ var debugOn = false;
 											} catch (e) {
 											}
 										} : null);
-										if (document.lodliveVars.doAutoExpand) {
+										if ($.jStorage.get('doAutoExpand')) {
 											context.lodlive('autoExpand', destBox);
 										}
 									};
-									if (document.lodliveVars.doAutoSameas) {
+									if ($.jStorage.get('doAutoSameas')) {
 										var counter = 0;
 										var tot = 0;
 										$.each(lodLiveProfile.connection, function(key, value) {
@@ -2105,7 +2445,7 @@ var debugOn = false;
 										} catch (e) {
 										}
 									} : null);
-									if (document.lodliveVars.doAutoExpand) {
+									if ($.jStorage.get('doAutoExpand')) {
 										context.lodlive('autoExpand', destBox);
 									}
 								}
@@ -2118,7 +2458,7 @@ var debugOn = false;
 								} catch (e) {
 								}
 							} : null);
-							if (document.lodliveVars.doAutoExpand) {
+							if ($.jStorage.get('doAutoExpand')) {
 								context.lodlive('autoExpand', destBox);
 							}
 						}
@@ -2136,7 +2476,7 @@ var debugOn = false;
 			var context = this;
 			destBox.children('.box').addClass("errorBox");
 			destBox.children('.box').html('');
-			var jResult = $("<div class=\"boxTitle\"><span>"+lang('enpointNotAvailable')+"</span></div>");
+			var jResult = $("<div class=\"boxTitle\"><span>" + lang('enpointNotAvailable') + "</span></div>");
 			destBox.children('.box').append(jResult);
 			jResult.css({
 				'marginTop' : jResult.height() == 13 ? 58 : jResult.height() == 26 ? 51 : 45
@@ -2147,7 +2487,7 @@ var debugOn = false;
 			});
 			destBox.append(obj);
 			destBox.children('.box').hover(function() {
-				context.lodlive('msg', lang('enpointNotAvailableOrSLow') , 'show', 'fullInfo', destBox.attr("data-endpoint"));
+				context.lodlive('msg', lang('enpointNotAvailableOrSLow'), 'show', 'fullInfo', destBox.attr("data-endpoint"));
 			}, function() {
 				context.lodlive('msg', null, 'hide');
 			});
