@@ -537,19 +537,37 @@ var debugOn = false;
 													tot = 7;
 												}
 												panelContent.width(20 + (tot) * 128);
-												close.css({
-													position : 'absolute',
-													left : panelContent.width() + 1,
-													top : 0
-												});
 											}
+											close.css({
+												position : 'absolute',
+												left : panelContent.width() + 1,
+												top : 0
+											});
 										});
-
+										if (counter < 3) {
+											panelContent.width(148);
+										} else {
+											var tot = (counter / 3 + (counter % 3 > 0 ? 1 : 0) + '').split('.')[0];
+											if (tot > 7) {
+												tot = 7;
+											}
+											panelContent.width(20 + (tot) * 128);
+											close.css({
+												position : 'absolute',
+												left : panelContent.width() + 1,
+												top : 0
+											});
+										}
 									}
 									counter++;
-									var tot = (counter / 3 + (counter % 3 > 0 ? 1 : 0) + '').split('.')[0];
-									if (tot > 7) {
-										tot = 7;
+									if (counter < 3) {
+										panelContent.width(148);
+									} else {
+										var tot = (counter / 3 + (counter % 3 > 0 ? 1 : 0) + '').split('.')[0];
+										if (tot > 7) {
+											tot = 7;
+										}
+										panelContent.width(20 + (tot) * 128);
 									}
 									close.css({
 										position : 'absolute',
