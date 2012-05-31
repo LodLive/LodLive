@@ -355,7 +355,6 @@ var debugOn = false;
 							panelContent.append(imagePanel);
 						} else {
 							imagePanel.show();
-
 						}
 						context.lodlive('updateImagePanel', panel);
 					}
@@ -526,7 +525,7 @@ var debugOn = false;
 											});
 											controls.children('.imgControlCenter').click(function() {
 												$('.close2').click();
-												context.lodlive('highlight', $('#' + prop).children('.box'), 4, 200, '0 0');
+												context.lodlive('highlight', $('#' + prop).children('.box'), 12, 100, '0 0'); //-390px
 												return false;
 											});
 											if (counter < 3) {
@@ -537,43 +536,16 @@ var debugOn = false;
 													tot = 7;
 												}
 												panelContent.width(20 + (tot) * 128);
+												close.css({
+													position : 'absolute',
+													left : panelContent.width() + 1,
+													top : 0
+												});
 											}
-											close.css({
-												position : 'absolute',
-												left : panelContent.width() + 1,
-												top : 0
-											});
 										});
-										if (counter < 3) {
-											panelContent.width(148);
-										} else {
-											var tot = (counter / 3 + (counter % 3 > 0 ? 1 : 0) + '').split('.')[0];
-											if (tot > 7) {
-												tot = 7;
-											}
-											panelContent.width(20 + (tot) * 128);
-											close.css({
-												position : 'absolute',
-												left : panelContent.width() + 1,
-												top : 0
-											});
-										}
+
 									}
 									counter++;
-									if (counter < 3) {
-										panelContent.width(148);
-									} else {
-										var tot = (counter / 3 + (counter % 3 > 0 ? 1 : 0) + '').split('.')[0];
-										if (tot > 7) {
-											tot = 7;
-										}
-										panelContent.width(20 + (tot) * 128);
-									}
-									close.css({
-										position : 'absolute',
-										left : panelContent.width() + 1,
-										top : 0
-									});
 								}
 							}
 						}
@@ -584,6 +556,7 @@ var debugOn = false;
 						imagePanel.append('<span class="amsg">' + lang('imagesNotFound') + '</span>');
 					}
 				}
+
 				close.css({
 					position : 'absolute',
 					left : panelContent.width() + 1,
@@ -2175,16 +2148,29 @@ var debugOn = false;
 				});
 			});
 
-			{ // aggiungo al box i tools
-				// chordsList = this.lodlive('circleChords',
-				// destBox.width() / 2 + 5, 24, destBox.position().left +
-				// destBox.width() / 2, destBox.position().top +
-				// destBox.height() / 2, 23);
+			{
 				var obj = $("<div class=\"actionBox contents\" rel=\"contents\"  >&#160;</div>");
 				containerBox.append(obj);
-
+				obj.hover(function() {
+					$(this).parent().children('.box').setBackgroundPosition({
+						y : -260
+					});
+				}, function() {
+					$(this).parent().children('.box').setBackgroundPosition({
+						y : 0
+					});
+				});
 				obj = $("<div class=\"actionBox tools\" rel=\"tools\" >&#160;</div>");
 				containerBox.append(obj);
+				obj.hover(function() {
+					$(this).parent().children('.box').setBackgroundPosition({
+						y : -130
+					});
+				}, function() {
+					$(this).parent().children('.box').setBackgroundPosition({
+						y : 0
+					});
+				});
 			}
 			if (debugOn) {
 				console.debug((new Date().getTime() - start) + '	format ');
@@ -2665,10 +2651,10 @@ var debugOn = false;
 		var backPos = $.trim(this.css('background-position'));
 		try {
 			var backPosArray = backPos.split(" ");
-			if (pos.x) {
+			if (pos.x || pos.x == 0) {
 				backPosArray[0] = pos.x + 'px';
 			}
-			if (pos.y) {
+			if (pos.y || pos.y == 0) {
 				backPosArray[1] = pos.y + 'px';
 			}
 			backPos = backPosArray[0] + " " + backPosArray[1];
