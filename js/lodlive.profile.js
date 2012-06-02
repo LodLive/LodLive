@@ -395,7 +395,7 @@ $.jStorage.set('profile', {
 			points : [ 'http://www.georss.org/georss/point' ]
 		},
 		weblinks : {
-			properties : [ 'http://it.dbpedia.org/property/url', 'http://data.nytimes.com/elements/search_api_query', 'http://www.w3.org/2000/01/rdf-schema#isDefinedBy', 'http://xmlns.com/foaf/0.1/page', 'http://xmlns.com/foaf/0.1/homepage', 'http://purl.org/dc/terms/isReferencedBy', 'http://purl.org/dc/elements/1.1/relation', 'http://dbpedia.org/ontology/wikiPageExternalLink', 'http://data.nytimes.com/elements/topicPage' ]
+			properties : [ 'http://rdfs.org/sioc/ns#links_to', 'http://it.dbpedia.org/property/url', 'http://data.nytimes.com/elements/search_api_query', 'http://www.w3.org/2000/01/rdf-schema#isDefinedBy', 'http://xmlns.com/foaf/0.1/page', 'http://xmlns.com/foaf/0.1/homepage', 'http://purl.org/dc/terms/isReferencedBy', 'http://purl.org/dc/elements/1.1/relation', 'http://dbpedia.org/ontology/wikiPageExternalLink', 'http://data.nytimes.com/elements/topicPage' ]
 		}
 	},
 	'http://www.w3.org/2002/07/owl#Class' : {
@@ -584,10 +584,12 @@ if (!document.lodliveVars) {
 
 $.jStorage.set('boxTemplate', '<div class="boxWrapper" id="first"><div class="box sprite"></div></div>');
 $.jStorage.set('relationsLimit', 25);
-$.jStorage.set('doStats', false);
-$.jStorage.set('doInverse', true);
-$.jStorage.set('doAutoExpand', true);
-$.jStorage.set('doAutoSameas', true);
+$.jStorage.set('doStats', $.jStorage.get('doStats', true));
+$.jStorage.set('doInverse', $.jStorage.get('doAutoExpand', true));
+$.jStorage.set('doAutoExpand', $.jStorage.get('doAutoExpand', true));
+$.jStorage.set('doAutoSameas', $.jStorage.get('doAutoSameas', true));
+$.jStorage.set('doCollectImages', $.jStorage.get('doCollectImages', true));
+$.jStorage.set('doDrawMap', $.jStorage.get('doDrawMap', true));
 
 $.jStorage.set('endpoints', {
 	all : 'output=json&format=application/json&timeout=0',
@@ -600,6 +602,8 @@ $.jStorage.set('language', {
 		generateInverse : 'calcola relazioni inverse',
 		autoExpand : 'espandi automaticamente le relazioni',
 		autoSameAs : 'calcola relazioni inverse di tipo sameAs',
+		autoCollectImages : 'raccogli le immagini durante la navigazione',
+		autoDrawMap : 'geolocalizza le risorse',
 		noName : 'denominazione non trovata',
 		addUri : 'inserisci una uri',
 		findResource : 'cerca una risorsa',
@@ -623,6 +627,8 @@ $.jStorage.set('language', {
 		generateInverse : 'generate inverse relations',
 		autoExpand : 'auto-expand mode',
 		autoSameAs : 'generate inverse sameAs relations',
+		autoCollectImages : 'collect images during browsing',
+		autoDrawMap : 'geolocalize resources',
 		noName : 'no title provided',
 		addUri : 'insert an URI',
 		findResource : 'find resources',
