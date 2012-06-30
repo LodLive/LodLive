@@ -384,7 +384,7 @@ $.jStorage.set('profile', {
 	'default' : {
 		document : {
 			className : 'standard',
-			titleProperties : [ 'http://www.geonames.org/ontology#name', 'http://purl.org/dc/elements/1.1/title', 'http://purl.org/dc/terms/title', 'http://www.w3.org/2000/01/rdf-schema#label', 'http://www.w3.org/2004/02/skos/core#prefLabel', 'http://logd.tw.rpi.edu/source/visualizing-org/dataset/2010-global-agenda-council-interlinkage-survey/vocab/enhancement/1/how_councils_interlink', 'http://rdf.freebase.com/ns/type.object.name', 'http://spcdata.digitpa.gov.it/nome_cognome' ]
+			titleProperties : [ 'http://www.w3.org/1999/02/22-rdf-syntax-ns#value', 'http://www.geonames.org/ontology#name', 'http://purl.org/dc/elements/1.1/title', 'http://purl.org/dc/terms/title', 'http://www.w3.org/2000/01/rdf-schema#label', 'http://www.w3.org/2004/02/skos/core#prefLabel', 'http://logd.tw.rpi.edu/source/visualizing-org/dataset/2010-global-agenda-council-interlinkage-survey/vocab/enhancement/1/how_councils_interlink', 'http://rdf.freebase.com/ns/type.object.name', 'http://spcdata.digitpa.gov.it/nome_cognome' ]
 		},// http://www.w3.org/2000/01/rdf-schema#label
 		images : {
 			properties : [ 'http://xmlns.com/foaf/0.1/depiction', 'http://dbpedia.org/ontology/thumbnail', 'http://dbpedia.org/property/logo', 'http://linkedgeodata.org/ontology/schemaIcon' ]
@@ -590,63 +590,10 @@ $.jStorage.set('doAutoExpand', $.jStorage.get('doAutoExpand', true));
 $.jStorage.set('doAutoSameas', $.jStorage.get('doAutoSameas', true));
 $.jStorage.set('doCollectImages', $.jStorage.get('doCollectImages', true));
 $.jStorage.set('doDrawMap', $.jStorage.get('doDrawMap', true));
+$.jStorage.set('showConsole', $.jStorage.get('showConsole', false));
 
 $.jStorage.set('endpoints', {
 	all : 'output=json&format=application/json&timeout=0',
 	arcSparql : 'output=json&jsonp=lodlive',
 	sesame : 'Accept=application/sparql-results%2Bjson'
 });
-$.jStorage.set('language', {
-	it : {
-		restart : 'riavvia',
-		generateInverse : 'calcola relazioni inverse',
-		autoExpand : 'espandi automaticamente le relazioni',
-		autoSameAs : 'calcola relazioni inverse di tipo sameAs',
-		autoCollectImages : 'raccogli le immagini durante la navigazione',
-		autoDrawMap : 'geolocalizza le risorse',
-		noName : 'denominazione non trovata',
-		addUri : 'inserisci una uri',
-		findResource : 'cerca una risorsa',
-		choose : 'scegli...',
-		resourceMissing : 'risorsa non trovata',
-		resourceMissingDoc : 'non sono state trovate proprietà di tipo literal per la risorsa per la lingua impostata o la risorsa non è momentaneamente disponibile nell\'endpoint',
-		options : 'OPZIONI',
-		endpointNotConfigured : 'nessun endpoint configurato per la risorsa',
-		impostaUnaURI : 'imposta un uri, esegui una ricerca \no scegli tra gli esempi proposti',
-		example : 'esempio',
-		noIe : 'Siamo spiacenti ma attualmente Internet Explorer non &egrave; totalmente supportato.',
-		enpointNotAvailable : 'errore: endpoint non disponibile',
-		enpointNotAvailableOrSLow : 'errore: endpoint non disponibile o la richiesta è scaduta',
-		imagesNotFound : 'nessuna immagine per le risorse aperte',
-		mapNotFound : 'nessuna mappa per le riorse aperte',
-		showResource : 'evidenza la risorsa',
-		zoomIn : 'ingrandisci'
-	},
-	en : {
-		restart : 'restart',
-		generateInverse : 'generate inverse relations',
-		autoExpand : 'auto-expand mode',
-		autoSameAs : 'generate inverse sameAs relations',
-		autoCollectImages : 'collect images during browsing',
-		autoDrawMap : 'geolocalize resources',
-		noName : 'no title provided',
-		addUri : 'insert an URI',
-		findResource : 'find resources',
-		choose : 'choose...',
-		resourceMissing : 'resource not found',
-		resourceMissingDoc : 'literal values not found or the resource is missing or not available in the endpoint',
-		options : 'OPTIONS',
-		endpointNotConfigured : 'no endpoint configured for the resource',
-		impostaUnaURI : 'inert an uri, make a query or choose one of the examples provided',
-		example : 'example',
-		noIe : 'Sorry but Internet Explorer is not totally supported.',
-		enpointNotAvailable : 'error: endpoint not available',
-		enpointNotAvailableOrSLow : 'error: endpoint not available or the request timed out',
-		imagesNotFound : 'no images for the opened resources',
-		mapNotFound : 'no maps for the opened resources',
-		showResource : 'highlight the resource',
-		zoomIn : 'zoom in'
-	}
-});
-
-$.jStorage.set('selectedLanguage', 'en');
