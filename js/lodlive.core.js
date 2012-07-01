@@ -19,7 +19,7 @@ var debugOn = false;
 		callback : 'lodlive',
 		timeout : 30000
 	});
-
+	$.pnotify.defaults.pnotify_delay = 5000;
 	var methods = {
 		init : function(firstUri) {
 			var context = this;
@@ -90,6 +90,7 @@ var debugOn = false;
 			}
 			var url = "";
 			var res = "";
+			var endpoint = "";
 
 			$.each(lodLiveProfile.connection, function(key, value) {
 				var keySplit = key.split(",");
@@ -101,10 +102,18 @@ var debugOn = false;
 						} else {
 							url = value.endpoint + "?" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + encodeURIComponent(res);
 						}
+						endpoint = value.endpoint;
 						return false;
 					}
 				}
 			});
+			if (endpoint && $.jStorage.get('showConsole')) {
+				$.pnotify({
+					pnotify_title : endpoint,
+					pnotify_text : res.replace(/</gi, "&lt;").replace(/>/gi, "&gt;"),
+					pnotify_opacity : .8
+				});
+			}
 			if (debugOn) {
 				console.debug((new Date().getTime() - start) + '	composeQuery ');
 			}
@@ -257,6 +266,7 @@ var debugOn = false;
 
 						anUl.append('<li ' + ($.jStorage.get('doCollectImages') ? 'class="checked"' : 'class="check"') + ' data-value="autoCollectImages"><span class="spriteLegenda"></span>' + lang('autoCollectImages') + '</li>');
 						anUl.append('<li ' + ($.jStorage.get('doDrawMap') ? 'class="checked"' : 'class="check"') + ' data-value="autoDrawMap"><span class="spriteLegenda"></span>' + lang('autoDrawMap') + '</li>');
+						anUl.append('<li ' + ($.jStorage.get('showConsole') ? 'class="checked"' : 'class="check"') + ' data-value="showConsole"><span class="spriteLegenda"></span>' + lang('showConsole') + '</li>');
 
 						anUl.append('<li>&#160;</li>');
 						anUl.append('<li class="reload"><span  class="spriteLegenda"></span>' + lang('restart') + '</li>');
@@ -277,6 +287,8 @@ var debugOn = false;
 								} else if ($(this).attr("data-value") == 'autoDrawMap') {
 									$.jStorage.set('doDrawMap', true);
 									panel.children('div.panel2.maps').removeClass('inactive');
+								} else if ($(this).attr("data-value") == 'showConsole') {
+									$.jStorage.set('showConsole', true);
 								}
 								$(this).attr('class', "checked");
 							} else {
@@ -292,6 +304,8 @@ var debugOn = false;
 								} else if ($(this).attr("data-value") == 'autoDrawMap') {
 									panel.children('div.panel2.maps').addClass('inactive');
 									$.jStorage.set('doDrawMap', false);
+								} else if ($(this).attr("data-value") == 'showConsole') {
+									$.jStorage.set('showConsole', false);
 								}
 								$(this).attr('class', "check");
 							}
@@ -1102,6 +1116,13 @@ var debugOn = false;
 				// attivo lo sparql interno basato su sesame
 				var res = lodLiveProfile['resourceResolver'].sparql['documentUri'].replace(/\{URI\}/ig, URI);
 				var url = lodLiveProfile['resourceResolver'].endpoint + "?uri=" + encodeURIComponent(URI) + "&query=" + encodeURIComponent(res);
+				if ($.jStorage.get('showConsole')) {
+					$.pnotify({
+						pnotify_title : lang('endpointNotConfiguredSoInternal'),
+						pnotify_text : res.replace(/</gi, "&lt;").replace(/>/gi, "&gt;"),
+						pnotify_opacity : .8
+					});
+				}
 				$.jsonp({
 					url : url,
 					beforeSend : function() {
@@ -1781,10 +1802,14 @@ var debugOn = false;
 			for ( var a = 0; a < titles.length; a++) {
 				var resultArray = this.lodlive('getJsonValue', values, titles[a], titles[a].indexOf('http') == 0 ? '' : titles[a]);
 				if (titles[a].indexOf('http') != 0) {
-					result += unescape(titles[a]) + " ";
+					if (result.indexOf(unescape(titles[a]) + " \n") == -1) {
+						result += unescape(titles[a]) + " \n";
+					}
 				} else {
 					for ( var af = 0; af < resultArray.length; af++) {
-						result += unescape(resultArray[af]) + " ";
+						if (result.indexOf(unescape(resultArray[af]) + " \n") == -1) {
+							result += unescape(resultArray[af]) + " \n";
+						}
 					}
 				}
 			}
@@ -2296,6 +2321,13 @@ var debugOn = false;
 				// attivo lo sparql interno basato su sesame
 				var res = lodLiveProfile['resourceResolver'].sparql['documentUri'].replace(/\{URI\}/ig, resource);
 				var url = lodLiveProfile['resourceResolver'].endpoint + "?uri=" + encodeURIComponent(resource) + "&query=" + encodeURIComponent(res);
+				if ($.jStorage.get('showConsole')) {
+					$.pnotify({
+						pnotify_title : lang('endpointNotConfiguredSoInternal'),
+						pnotify_text : res.replace(/</gi, "&lt;").replace(/>/gi, "&gt;"),
+						pnotify_opacity : .8
+					});
+				}
 				$.jsonp({
 					url : url,
 					beforeSend : function() {
@@ -2435,6 +2467,7 @@ var debugOn = false;
 								url : SPARQLquery,
 								beforeSend : function() {
 									destBox.children('.box').html('<img style=\"margin-top:' + (destBox.children('.box').height() / 2 - 5) + 'px\" src="img/ajax-loader.gif"/>');
+
 								},
 								success : function(json) {
 									json = json['results']['bindings'];
@@ -2600,6 +2633,15 @@ var debugOn = false;
 					$.jsonp({
 						url : SPARQLquery,
 						timeout : 3000,
+						beforeSend : function() {
+							if ($.jStorage.get('showConsole')) {
+								$.pnotify({
+									pnotify_title : value.endpoint,
+									pnotify_text : value.sparql['inverseSameAs'].replace(/\{URI\}/g, anUri).replace(/</gi, "&lt;").replace(/>/gi, "&gt;"),
+									pnotify_opacity : .8
+								});
+							}
+						},
 						success : function(json) {
 							json = json['results']['bindings'];
 							$.each(json, function(key, value) {

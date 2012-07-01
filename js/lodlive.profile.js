@@ -87,10 +87,10 @@ $.jStorage.set('profile', {
 				label : 'Mario Monti'
 			} ]
 		},
-		'http://data.nytimes.com' : {
+		'http://worldbank.270a.info' : {
 			description : {
-				it : 'For the last 150 years, The New York Times has maintained one of the most authoritative news vocabularies ever developed. In 2009, we began to publish this vocabulary as linked open data.<br />As of 13 January 2010, The New York Times has published 10,000 subject headings as linked open data under a CC BY license.',
-				en : 'For the last 150 years, The New York Times has maintained one of the most authoritative news vocabularies ever developed. In 2009, we began to publish this vocabulary as linked open data.<br />As of 13 January 2010, The New York Times has published 10,000 subject headings as linked open data under a CC BY license.'
+				it : 'The World Bank is an international development organization that provides access to a comprehensive set of data about countries around the globe. The data that is collected from The World Bank is published using the Linked Data principles and is composed of a wide array of observations on World Development Indicators, World Bank Finances, World Bank Projects and Operations, and World Bank Climate Change data.',
+				en : 'The World Bank is an international development organization that provides access to a comprehensive set of data about countries around the globe. The data that is collected from The World Bank is published using the Linked Data principles and is composed of a wide array of observations on World Development Indicators, World Bank Finances, World Bank Projects and Operations, and World Bank Climate Change data.'
 			},
 			sparql : {
 				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
@@ -99,13 +99,45 @@ $.jStorage.set('profile', {
 				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
 				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
 				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
+				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
 			},
 			useForInverseSameAs : true,
-			endpoint : 'http://api.talis.com/stores/nytimes/services/sparql',
+			endpoint : 'http://worldbank.270a.info/sparql',
+			proxy : 'http://labs.regesta.com/sparqlProxy/',
 			examples : [ {
-				uri : 'http://data.nytimes.com/55630655163615370853',
-				label : 'Romano Prodi'
+				label : 'Canada (country)',
+				uri : 'http://worldbank.270a.info/classification/country/CA'
+			}, {
+				label : 'Agricultural machinery, tractors (skos)',
+				uri : 'http://worldbank.270a.info/classification/indicator/AG.AGR.TRAC.NO'
+			}, {
+				label : 'World Bank Finances dataset',
+				uri : 'http://worldbank.270a.info/dataset/world-bank-finances'
+			}, {
+				label : 'Canadian Dollar (currency)',
+				uri : 'http://worldbank.270a.info/classification/currency/CAD'
+			}
+
+			]
+		},
+		'http://ReLoad,http://lod.xdams.org' : {
+			description : {
+				it : 'ReLoad (Repository for Linked open archival data) &egrave; un progetto realizzato dall\'Archivio Centrale dello Stato, dall\'Istituto per i Beni culturali dell\'Emilia Romagna e da Regesta.exe con l\'obiettivo di sperimentare le metodologie del semantic web e le tecnologie standard per i linked open data sulle risorse archivistiche',
+				en : 'ReLoad (Repository for Linked open archival data) &egrave; un progetto realizzato dall\'Archivio Centrale dello Stato, dall\'Istituto per i Beni culturali dell\'Emilia Romagna e da Regesta.exe con l\'obiettivo di sperimentare le metodologie del semantic web e le tecnologie standard per i linked open data sulle risorse archivistiche'
+			},
+			sparql : {
+				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
+				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/terms/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>; <http://purl.org/dc/terms/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
+				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.FILTER (isIRI(?object) || ?property = <http://www.w3.org/2000/01/rdf-schema#label> || ?property = <http://purl.org/dc/terms/title> ||  ?property =  <http://purl.org/dc/elements/1.1/title>)}',
+				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
+				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
+				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
+			},
+			endpoint : 'http://lod.xdams.org/sparql',
+			examples : [ {
+				uri : 'http://lod.xdams.org/reload/oad/uod/IT-ACS-AS0002-0019726',
+				label : 'uod'
 			} ]
 		},
 		'http://linkedgeodata.org' : {
@@ -152,6 +184,27 @@ $.jStorage.set('profile', {
 			examples : [ {
 				uri : 'http://data.linkedmdb.org/resource/film/2014',
 				label : 'Shining'
+			} ]
+		},
+		'http://data.nytimes.com' : {
+			description : {
+				it : 'For the last 150 years, The New York Times has maintained one of the most authoritative news vocabularies ever developed. In 2009, we began to publish this vocabulary as linked open data.<br />As of 13 January 2010, The New York Times has published 10,000 subject headings as linked open data under a CC BY license.',
+				en : 'For the last 150 years, The New York Times has maintained one of the most authoritative news vocabularies ever developed. In 2009, we began to publish this vocabulary as linked open data.<br />As of 13 January 2010, The New York Times has published 10,000 subject headings as linked open data under a CC BY license.'
+			},
+			sparql : {
+				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
+				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
+				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
+				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
+				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
+			},
+			useForInverseSameAs : true,
+			endpoint : 'http://api.talis.com/stores/nytimes/services/sparql',
+			examples : [ {
+				uri : 'http://data.nytimes.com/55630655163615370853',
+				label : 'Romano Prodi'
 			} ]
 		},
 		'http://data.ordnancesurvey.co.uk' : {
@@ -384,7 +437,7 @@ $.jStorage.set('profile', {
 	'default' : {
 		document : {
 			className : 'standard',
-			titleProperties : [ 'http://www.w3.org/1999/02/22-rdf-syntax-ns#value', 'http://www.geonames.org/ontology#name', 'http://purl.org/dc/elements/1.1/title', 'http://purl.org/dc/terms/title', 'http://www.w3.org/2000/01/rdf-schema#label', 'http://www.w3.org/2004/02/skos/core#prefLabel', 'http://logd.tw.rpi.edu/source/visualizing-org/dataset/2010-global-agenda-council-interlinkage-survey/vocab/enhancement/1/how_councils_interlink', 'http://rdf.freebase.com/ns/type.object.name', 'http://spcdata.digitpa.gov.it/nome_cognome' ]
+			titleProperties : [ 'http://www.w3.org/2004/02/skos/core#notation', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#value', 'http://www.geonames.org/ontology#name', 'http://purl.org/dc/elements/1.1/title', 'http://purl.org/dc/terms/title', 'http://www.w3.org/2000/01/rdf-schema#label', 'http://www.w3.org/2004/02/skos/core#prefLabel', 'http://logd.tw.rpi.edu/source/visualizing-org/dataset/2010-global-agenda-council-interlinkage-survey/vocab/enhancement/1/how_councils_interlink', 'http://rdf.freebase.com/ns/type.object.name', 'http://spcdata.digitpa.gov.it/nome_cognome' ]
 		},// http://www.w3.org/2000/01/rdf-schema#label
 		images : {
 			properties : [ 'http://xmlns.com/foaf/0.1/depiction', 'http://dbpedia.org/ontology/thumbnail', 'http://dbpedia.org/property/logo', 'http://linkedgeodata.org/ontology/schemaIcon' ]

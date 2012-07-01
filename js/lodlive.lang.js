@@ -24,7 +24,7 @@ $.jStorage.set('language', {
 		mapNotFound : 'nessuna mappa per le riorse aperte',
 		showResource : 'evidenza la risorsa',
 		zoomIn : 'ingrandisci',
-		showConsole : 'mostra la console'
+		showConsole : 'mostra la console delle ricerche (sperimentale)'
 	},
 	en : {
 		restart : 'restart',
@@ -51,7 +51,7 @@ $.jStorage.set('language', {
 		mapNotFound : 'no maps for the opened resources',
 		showResource : 'highlight the resource',
 		zoomIn : 'zoom in',
-		showConsole : 'show the console'
+		showConsole : 'show console (experimental)'
 	}
 });
 
