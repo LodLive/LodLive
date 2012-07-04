@@ -223,11 +223,11 @@ div#boxesCont .page {
 	color: #000; margin: 20px 30px 20px 20px; font-size: 11px; line-height: 20px;
 }
 
-.alert {
+.myalert {
 	z-index: 999; position: absolute; width: 286px; height: 98px; left: 50%; top: 50%; margin-left: -150px; margin-top: -53px; background-position: -630px -80px; cursor: pointer; position: absolute;
 }
 
-.alert div {
+.myalert div {
 	color: #fff; margin-left: 84px; margin-top: 30px; margin-right: 20px;
 }
 

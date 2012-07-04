@@ -1,11 +1,11 @@
 $(function() {
 	function myAlert(msg) {
-		var alert = $('<div class="alert ' + spriteHome + '"><div>' + msg + '</div></div>');
+		var alert = $('<div class="myalert ' + spriteHome + '"><div>' + msg + '</div></div>');
 		alert.click(function() {
 			$(this).remove();
 		});
-		if ($('.alert').length > 0) {
-			$('.alert').remove();
+		if ($('.myalert').length > 0) {
+			$('.myalert').remove();
 		}
 		$('body').append(alert);
 		alert.css({

@@ -19,7 +19,6 @@ var debugOn = false;
 		callback : 'lodlive',
 		timeout : 30000
 	});
-	$.pnotify.defaults.pnotify_delay = 5000;
 	var methods = {
 		init : function(firstUri) {
 			var context = this;
@@ -34,6 +33,10 @@ var debugOn = false;
 			}
 			$.jStorage.set('imagesMap', {});
 			$.jStorage.set('mapsMap', {});
+
+			if ($.jStorage.get('showConsole', false)) {
+				context.lodlive('queryConsole', 'init');
+			}
 
 			// $.jStorage.set('storeIds',{});
 			// template della query
@@ -85,6 +88,7 @@ var debugOn = false;
 			document.location = document.location.href.substring(0, document.location.href.indexOf("?"));
 		},
 		composeQuery : function(resource, module, testURI) {
+			var context = this;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
@@ -108,10 +112,9 @@ var debugOn = false;
 				}
 			});
 			if (endpoint && $.jStorage.get('showConsole')) {
-				$.pnotify({
-					pnotify_title : endpoint,
-					pnotify_text : res.replace(/</gi, "&lt;").replace(/>/gi, "&gt;"),
-					pnotify_opacity : .8
+				context.lodlive('queryConsole', 'log', {
+					title : endpoint,
+					text : res.replace(/</gi, "&lt;").replace(/>/gi, "&gt;")
 				});
 			}
 			if (debugOn) {
@@ -149,9 +152,7 @@ var debugOn = false;
 				msgPanel.hide();
 			} else {
 				msgPanel.empty();
-				msg = msg.replace(/\//g, '/<span style="font-size:1px"> </span>');
-				msg = msg.replace(/&/g, '&<span style="font-size:1px"> </span>');
-				msg = msg.replace(/%/g, '%<span style="font-size:1px"> </span>');
+				msg = breakLines(msg);
 				msg = msg.replace(/\|/g, '<br />');
 				var msgs = msg.split(" \n ");
 				if (type == 'fullInfo') {
@@ -192,6 +193,32 @@ var debugOn = false;
 					zIndex : 99999999
 				});
 				msgPanel.show();
+			}
+		},
+		queryConsole : function(action, toLog) {
+			var context = this;
+			var panel = $('#queryConsole');
+			if (action == 'init') {
+				panel = $('<div id="queryConsole"></div>');
+				panel.css({
+					height : $(window).height() / 3,
+					width : $(window).width() - 350
+				});
+				context.append(panel);
+			} else if (action == 'log') {
+				if (toLog.resource) {
+					panel.append('<h3>' + toLog.resource + '</h3>');
+				}
+				if (toLog.title) {
+					panel.append('<h4>' + toLog.title + '</h4>');
+				}
+				if (toLog.text) {
+					panel.append('<div>' + toLog.text + '</div>');
+				}
+				panel.append('<hr/>');
+				panel.scrollTop(999999);
+			} else if (action == 'remove') {
+				panel.remove();
 			}
 		},
 		controlPanel : function(action) {
@@ -289,6 +316,7 @@ var debugOn = false;
 									panel.children('div.panel2.maps').removeClass('inactive');
 								} else if ($(this).attr("data-value") == 'showConsole') {
 									$.jStorage.set('showConsole', true);
+									context.lodlive('queryConsole', 'init');
 								}
 								$(this).attr('class', "checked");
 							} else {
@@ -306,6 +334,7 @@ var debugOn = false;
 									$.jStorage.set('doDrawMap', false);
 								} else if ($(this).attr("data-value") == 'showConsole') {
 									$.jStorage.set('showConsole', false);
+									context.lodlive('queryConsole', 'remove');
 								}
 								$(this).attr('class', "check");
 							}
@@ -1117,10 +1146,9 @@ var debugOn = false;
 				var res = lodLiveProfile['resourceResolver'].sparql['documentUri'].replace(/\{URI\}/ig, URI);
 				var url = lodLiveProfile['resourceResolver'].endpoint + "?uri=" + encodeURIComponent(URI) + "&query=" + encodeURIComponent(res);
 				if ($.jStorage.get('showConsole')) {
-					$.pnotify({
-						pnotify_title : lang('endpointNotConfiguredSoInternal'),
-						pnotify_text : res.replace(/</gi, "&lt;").replace(/>/gi, "&gt;"),
-						pnotify_opacity : .8
+					context.lodlive('queryConsole', 'log', {
+						title : lang('endpointNotConfiguredSoInternal'),
+						text : res.replace(/</gi, "&lt;").replace(/>/gi, "&gt;")
 					});
 				}
 				$.jsonp({
@@ -2322,10 +2350,9 @@ var debugOn = false;
 				var res = lodLiveProfile['resourceResolver'].sparql['documentUri'].replace(/\{URI\}/ig, resource);
 				var url = lodLiveProfile['resourceResolver'].endpoint + "?uri=" + encodeURIComponent(resource) + "&query=" + encodeURIComponent(res);
 				if ($.jStorage.get('showConsole')) {
-					$.pnotify({
-						pnotify_title : lang('endpointNotConfiguredSoInternal'),
-						pnotify_text : res.replace(/</gi, "&lt;").replace(/>/gi, "&gt;"),
-						pnotify_opacity : .8
+					context.lodlive('queryConsole', 'log', {
+						title : lang('endpointNotConfiguredSoInternal'),
+						text : res.replace(/</gi, "&lt;").replace(/>/gi, "&gt;")
 					});
 				}
 				$.jsonp({
@@ -2405,6 +2432,11 @@ var debugOn = false;
 				start = new Date().getTime();
 			}
 			var context = this;
+			if ($.jStorage.get('showConsole')) {
+				context.lodlive('queryConsole', 'log', {
+					resource : anUri
+				});
+			}
 			SPARQLquery = context.lodlive('composeQuery', anUri, 'documentUri');
 			if ($.jStorage.get('doStats')) {
 				this.lodlive('doStats', anUri);
@@ -2635,10 +2667,9 @@ var debugOn = false;
 						timeout : 3000,
 						beforeSend : function() {
 							if ($.jStorage.get('showConsole')) {
-								$.pnotify({
-									pnotify_title : value.endpoint,
-									pnotify_text : value.sparql['inverseSameAs'].replace(/\{URI\}/g, anUri).replace(/</gi, "&lt;").replace(/>/gi, "&gt;"),
-									pnotify_opacity : .8
+								context.lodlive('queryConsole', 'log', {
+									title : value.endpoint,
+									text : value.sparql['inverseSameAs'].replace(/\{URI\}/g, anUri).replace(/</gi, "&lt;").replace(/>/gi, "&gt;")
 								});
 							}
 						},
@@ -2969,6 +3000,12 @@ var debugOn = false;
 
 	function lang(obj) {
 		return $.jStorage.get('language')[$.jStorage.get('selectedLanguage')][obj];
+	}
+	function breakLines(msg) {
+		msg = msg.replace(/\//g, '/<span style="font-size:1px"> </span>');
+		msg = msg.replace(/&/g, '&<span style="font-size:1px"> </span>');
+		msg = msg.replace(/%/g, '%<span style="font-size:1px"> </span>');
+		return msg;
 	}
 
 })(jQuery, $.jStorage.get('profile'));

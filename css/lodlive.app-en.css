@@ -2,10 +2,10 @@
 	background: url(../img/sprite-home-eng.png) no-repeat
 }
 
-.alert {
+.myalert {
 	z-index: 999; position: absolute; width: 286px; height: 98px; left: 50%; top: 50%; margin-left: -150px; margin-top: -53px; background-position: -630px -80px; cursor: pointer; position: absolute;
 }
 
-.alert div {
+.myalert div {
 	color: #fff; margin-left: 84px; margin-top: 30px; margin-right: 20px;
 }

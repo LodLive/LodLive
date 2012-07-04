@@ -350,3 +350,15 @@ div#msg .separ.inverse {
 #selectionBox a {
 	font-size: 20px; text-decoration: none;
 }
+
+#queryConsole {
+	right: 0; bottom: 0; position: fixed; z-index: 999; overflow: auto;
+}
+
+#queryConsole h4,#queryConsole div,#queryConsole hr {
+	margin-right: 20px; margin-left: 20px
+}
+
+#queryConsole h3 {
+	margin-right: 20px;
+}
