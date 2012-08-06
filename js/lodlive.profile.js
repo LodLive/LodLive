@@ -141,6 +141,33 @@ $.jStorage.set('profile', {
 			} ]
 		},
 
+		'http://data.oceandrilling.org,http://dx.doi.org,http://chronos.org' : {
+			description : {
+				it : 'data.oceandrilling.org facilitates the discovery and access to data and information related to scientific ocean drilling efforts of the Integrated Ocean Drilling Program (IODP) U.S. implementing organization (USIO). Additional data originates from the: Deep Sea Drilling Project (DSDP), Ocean Drilling Program (ODP and ODP Legacy) in addition to IODP.',
+				en : 'data.oceandrilling.org facilitates the discovery and access to data and information related to scientific ocean drilling efforts of the Integrated Ocean Drilling Program (IODP) U.S. implementing organization (USIO). Additional data originates from the: Deep Sea Drilling Project (DSDP), Ocean Drilling Program (ODP and ODP Legacy) in addition to IODP.',
+			},
+			sparql : {
+				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
+				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
+				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
+				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
+				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameas> <{URI}>}'
+			},
+			useForInverseSameAs : true,
+			endpoint : 'http://data.oceandrilling.org/sparql',
+			examples : [ {
+				uri : 'http://data.oceandrilling.org/core/1/ODP',
+				label : 'Ocean Drilling Program'
+			}, {
+				uri : 'http://data.oceandrilling.org/core/1/',
+				label : 'USIO-IODP vocabulary'
+			}, {
+				uri : 'http://data.oceandrilling.org/codices/lsh/104/642/D',
+				label : 'Expedition 104 site 642 hole D'
+			} ]
+		},
 		'http://linkedgeodata.org' : {
 			description : {
 				it : 'LinkedGeoData is an effort to add a spatial dimension to the Web of Data / Semantic Web. LinkedGeoData uses the information collected by the OpenStreetMap project and makes it available as an RDF knowledge base according to the Linked Data principles. It interlinks this data with other knowledge bases in the Linking Open Data initiative.',
@@ -452,8 +479,7 @@ $.jStorage.set('profile', {
 			properties : [ 'http://rdfs.org/sioc/ns#links_to', 'http://it.dbpedia.org/property/url', 'http://data.nytimes.com/elements/search_api_query', 'http://www.w3.org/2000/01/rdf-schema#isDefinedBy', 'http://xmlns.com/foaf/0.1/page', 'http://xmlns.com/foaf/0.1/homepage', 'http://purl.org/dc/terms/isReferencedBy', 'http://purl.org/dc/elements/1.1/relation', 'http://dbpedia.org/ontology/wikiPageExternalLink', 'http://data.nytimes.com/elements/topicPage' ]
 		}
 	},
-	
-	
+
 	'http://www.w3.org/2002/07/owl#Class' : {
 		document : {
 			className : 'Class',
@@ -490,6 +516,11 @@ $.jStorage.set('profile', {
 				visualizationType : '',
 				properties : []
 			}
+		}
+	},
+	'http://data.oceandrilling.org/core/1/ODP' : {
+		document : {
+			titleProperties : [ 'expedition', 'http://data.oceandrilling.org/core/1/expedition', 'site', 'http://data.oceandrilling.org/core/1/site', 'hole', 'http://data.oceandrilling.org/core/1/hole' ]
 		}
 	},
 	'http://xmlns.com/foaf/0.1/Person' : {
