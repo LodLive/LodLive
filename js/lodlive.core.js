@@ -111,17 +111,19 @@ var debugOn = false;
 					}
 				}
 			});
-			if (endpoint && $.jStorage.get('showConsole')) {
-				context.lodlive('queryConsole', 'log', {
-					title : endpoint,
-					text : res.replace(/</gi, "&lt;").replace(/>/gi, "&gt;")
-				});
-			}
 			if (debugOn) {
 				console.debug((new Date().getTime() - start) + '	composeQuery ');
 			}
 			if (url == '') {
 				url = 'http://system/dummy?' + resource;
+			}
+
+			if (endpoint && $.jStorage.get('showConsole')) {
+				context.lodlive('queryConsole', 'log', {
+					title : endpoint,
+					text : res,
+					id : url
+				});
 			}
 			return url;
 		},
@@ -209,13 +211,21 @@ var debugOn = false;
 				if (toLog.resource) {
 					panel.append('<h3>' + toLog.resource + '</h3>');
 				}
+				var id = MD5(toLog.id);
 				if (toLog.title) {
-					panel.append('<h4>' + toLog.title + '</h4>');
+					panel.append('<h4 id="' + id + '">' + toLog.title + '</h4>');
 				}
 				if (toLog.text) {
-					panel.append('<div>' + toLog.text + '</div>');
+					panel.append('<div>' + (toLog.text).replace(/</gi, "&lt;").replace(/>/gi, "&gt;") + '</div>');
+					panel.append('<hr/>');
 				}
-				panel.append('<hr/>');
+				if (toLog.error) {
+					panel.find('#' + id).append('<strong style="float:right">Error! </strong>')
+				}
+				if (typeof toLog.founded == typeof 0) {
+					panel.find('#' + id).append('<span style="float:right">trovate <strong>' + toLog.founded + '</strong> propriet&agrave; </span>')
+				}
+
 				panel.scrollTop(999999);
 			} else if (action == 'remove') {
 				panel.remove();
@@ -293,7 +303,7 @@ var debugOn = false;
 
 						anUl.append('<li ' + ($.jStorage.get('doCollectImages') ? 'class="checked"' : 'class="check"') + ' data-value="autoCollectImages"><span class="spriteLegenda"></span>' + lang('autoCollectImages') + '</li>');
 						anUl.append('<li ' + ($.jStorage.get('doDrawMap') ? 'class="checked"' : 'class="check"') + ' data-value="autoDrawMap"><span class="spriteLegenda"></span>' + lang('autoDrawMap') + '</li>');
-						anUl.append('<li ' + ($.jStorage.get('showConsole') ? 'class="checked"' : 'class="check"') + ' data-value="showConsole"><span class="spriteLegenda"></span>' + lang('showConsole') + '</li>');
+					//	anUl.append('<li ' + ($.jStorage.get('showConsole') ? 'class="checked"' : 'class="check"') + ' data-value="showConsole"><span class="spriteLegenda"></span>' + lang('showConsole') + '</li>');
 
 						anUl.append('<li>&#160;</li>');
 						anUl.append('<li class="reload"><span  class="spriteLegenda"></span>' + lang('restart') + '</li>');
@@ -1148,7 +1158,8 @@ var debugOn = false;
 				if ($.jStorage.get('showConsole')) {
 					context.lodlive('queryConsole', 'log', {
 						title : lang('endpointNotConfiguredSoInternal'),
-						text : res.replace(/</gi, "&lt;").replace(/>/gi, "&gt;")
+						text : res,
+						id : url
 					});
 				}
 				$.jsonp({
@@ -1306,7 +1317,7 @@ var debugOn = false;
 						}
 					}
 				}
-				var isSameAs = label.indexOf('sameAs') > -1 ? true : false;
+				var isSameAs = label.toLowerCase().indexOf('sameas') > -1 ? true : false;
 
 				// eseguo i calcoli e scrivo la riga di connessione tra i cerchi
 				var lineangle = (Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI) + 180;
@@ -1894,7 +1905,8 @@ var debugOn = false;
 					}
 					if ($.inArray(akey, images) > -1) {
 						eval('connectedImages.push({\'' + value[akey] + '\':\'' + escape(resourceTitle) + '\'})');
-					} else if (akey != 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' && $.inArray(akey, weblinks) == -1) {
+						// to expand types } else if (akey != 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' && $.inArray(akey, weblinks) == -1) {
+					} else if ($.inArray(akey, weblinks) == -1) {
 						// controllo se trovo la stessa relazione in una
 						// proprieta' diversa
 						if ($.inArray(value[akey], sameDocControl) > -1) {
@@ -2072,7 +2084,7 @@ var debugOn = false;
 							// "</div>");
 							var objBox = $("<div class=\"groupedRelatedBox sprite\" rel=\"" + MD5(akey) + "\"    data-title=\"" + akey + " \n " + (propertyGroup[akey].length) + " risorse collegate\" ></div>");
 							// containerBox.append(objBox);
-							if (akey.indexOf('owl#sameAs') != -1) {
+							if (akey.toLowerCase().indexOf('owl#sameas') != -1) {
 								objBox.addClass('isSameAs');
 							}
 							objBox.attr('style', 'top:' + (chordsList[a][1] - 8) + 'px;left:' + (chordsList[a][0] - 8) + 'px');
@@ -2115,7 +2127,7 @@ var debugOn = false;
 						obj.attr("data-circleId", containerBox.attr('id'));
 						obj.attr("data-property", akey);
 						// se si tratta di un sameas applico una classe diversa
-						if (akey.indexOf('owl#sameAs') != -1) {
+						if (akey.toLowerCase().indexOf('owl#sameas') != -1) {
 							obj.addClass('isSameAs');
 						}
 						if (obj.hasClass("aGrouped")) {
@@ -2150,7 +2162,7 @@ var debugOn = false;
 							// "</div>");
 							var objBox = $("<div class=\"groupedRelatedBox sprite inverse\" rel=\"" + MD5(akey) + "-i\"   data-title=\"" + akey + " \n " + (propertyGroupInverted[akey].length) + " risorse collegate\" ></div>");
 							// containerBox.append(objBox);
-							if (akey.indexOf('owl#sameAs') != -1) {
+							if (akey.toLowerCase().indexOf('owl#sameas') != -1) {
 								objBox.addClass('isSameAs');
 							}
 							objBox.attr('style', 'top:' + (chordsList[a][1] - 8) + 'px;left:' + (chordsList[a][0] - 8) + 'px');
@@ -2193,7 +2205,7 @@ var debugOn = false;
 						obj.attr("data-circleId", containerBox.attr('id'));
 						obj.attr("data-property", akey);
 						// se si tratta di un sameas applico una classe diversa
-						if (akey.indexOf('owl#sameAs') != -1) {
+						if (akey.toLowerCase().indexOf('owl#sameas') != -1) {
 							obj.addClass('isSameAs');
 						}
 						if (obj.hasClass("aGrouped")) {
@@ -2352,7 +2364,8 @@ var debugOn = false;
 				if ($.jStorage.get('showConsole')) {
 					context.lodlive('queryConsole', 'log', {
 						title : lang('endpointNotConfiguredSoInternal'),
-						text : res.replace(/</gi, "&lt;").replace(/>/gi, "&gt;")
+						text : res,
+						id : url
 					});
 				}
 				$.jsonp({
@@ -2470,24 +2483,19 @@ var debugOn = false;
 							conta++;
 							if (value.object.type == 'uri') {
 								if (value.object.value != anUri) {
-									/*
-									 * if (control[value['property']['value']]) {
-									 * if (control[value['property']['value']] >
-									 * 24) { return true; }
-									 * control[value['property']['value']] =
-									 * control[value['property']['value']] + 1; }
-									 * else {
-									 * control[value['property']['value']] = 1; }
-									 */
 									eval('uris.push({\'' + value['property']['value'] + '\':\'' + escape(value.object.value) + '\'})');
 								}
 							} else {
 								eval('values.push({\'' + value['property']['value'] + '\':\'' + escape(value.object.value) + '\'})');
 							}
 
-							// aSpan.text(conta + 'gggggg/' + tot);
-
 						});
+						if ($.jStorage.get('showConsole')) {
+							context.lodlive('queryConsole', 'log', {
+								founded : conta,
+								id : SPARQLquery
+							});
+						}
 						if (debugOn) {
 							console.debug((new Date().getTime() - start) + '	openDoc eval uris & values');
 						}
@@ -2514,6 +2522,12 @@ var debugOn = false;
 										eval('inverses.push({\'' + value['property']['value'] + '\':\'' + escape(value.object.value) + '\'})');
 										// aSpan.text(conta + '/' + tot);
 									});
+									if ($.jStorage.get('showConsole')) {
+										context.lodlive('queryConsole', 'log', {
+											founded : conta,
+											id : SPARQLquery
+										});
+									}
 									if (debugOn) {
 										console.debug((new Date().getTime() - start) + '	openDoc inverse eval uris ');
 									}
@@ -2545,6 +2559,12 @@ var debugOn = false;
 								error : function(e, b, v) {
 									destBox.children('.box').html('');
 									context.lodlive('format', destBox.children('.box'), values, uris);
+									if ($.jStorage.get('showConsole')) {
+										context.lodlive('queryConsole', 'log', {
+											error : 'error',
+											id : SPARQLquery
+										});
+									}
 									context.lodlive('addClick', destBox, fromInverse ? function() {
 										try {
 											$(fromInverse).click();
@@ -2669,15 +2689,24 @@ var debugOn = false;
 							if ($.jStorage.get('showConsole')) {
 								context.lodlive('queryConsole', 'log', {
 									title : value.endpoint,
-									text : value.sparql['inverseSameAs'].replace(/\{URI\}/g, anUri).replace(/</gi, "&lt;").replace(/>/gi, "&gt;")
+									text : value.sparql['inverseSameAs'].replace(/\{URI\}/g, anUri),
+									id : SPARQLquery
 								});
 							}
 						},
 						success : function(json) {
 							json = json['results']['bindings'];
+							var conta = 0;
 							$.each(json, function(key, value) {
+								conta++;
 								eval('inverse.splice(1,0,{\'' + 'http://www.w3.org/2002/07/owl#sameAs' + '\':\'' + escape(value.object.value) + '\'})');
 							});
+							if ($.jStorage.get('showConsole')) {
+								context.lodlive('queryConsole', 'log', {
+									founded : conta,
+									id : SPARQLquery
+								});
+							}
 							counter++;
 							if (counter < tot) {
 								context.lodlive('findInverseSameAs', anUri, counter, inverse, callback, tot);
@@ -2686,6 +2715,12 @@ var debugOn = false;
 							}
 						},
 						error : function(e, b, v) {
+							if ($.jStorage.get('showConsole')) {
+								context.lodlive('queryConsole', 'log', {
+									error : 'error',
+									id : SPARQLquery
+								});
+							}
 							counter++;
 							if (counter < tot) {
 								context.lodlive('findInverseSameAs', anUri, counter, inverse, callback, tot);
@@ -2778,7 +2813,9 @@ var debugOn = false;
 	};
 
 	var MD5 = function(string) {
-
+		if (!string) {
+			return "";
+		}
 		function RotateLeft(lValue, iShiftBits) {
 			return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
 		}

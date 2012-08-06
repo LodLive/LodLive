@@ -307,6 +307,26 @@ div.boxWrapper.ObjectProperty .groupedRelatedBox.inverse {
 	background-position: -1352px -472px;
 }
 
+div.boxWrapper.Property .box {
+	background-position: -2080px 0;
+}
+
+div.boxWrapper.Property div.relatedBox {
+	background-position: -1372px -412px;
+}
+
+div.boxWrapper.Property .groupedRelatedBox {
+	background-position: -1372px -432px;
+}
+
+div.boxWrapper.Property .relatedBox.inverse {
+	background-position: -1372px -452px;
+}
+
+div.boxWrapper.Property .groupedRelatedBox.inverse {
+	background-position: -1372px -472px;
+}
+
 div.boxWrapper.DatatypeProperty .box {
 	background-position: -2080px 0;
 }

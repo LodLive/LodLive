@@ -140,6 +140,7 @@ $.jStorage.set('profile', {
 				label : 'uod'
 			} ]
 		},
+
 		'http://linkedgeodata.org' : {
 			description : {
 				it : 'LinkedGeoData is an effort to add a spatial dimension to the Web of Data / Semantic Web. LinkedGeoData uses the information collected by the OpenStreetMap project and makes it available as an RDF knowledge base according to the Linked Data principles. It interlinks this data with other knowledge bases in the Linking Open Data initiative.',
@@ -451,6 +452,8 @@ $.jStorage.set('profile', {
 			properties : [ 'http://rdfs.org/sioc/ns#links_to', 'http://it.dbpedia.org/property/url', 'http://data.nytimes.com/elements/search_api_query', 'http://www.w3.org/2000/01/rdf-schema#isDefinedBy', 'http://xmlns.com/foaf/0.1/page', 'http://xmlns.com/foaf/0.1/homepage', 'http://purl.org/dc/terms/isReferencedBy', 'http://purl.org/dc/elements/1.1/relation', 'http://dbpedia.org/ontology/wikiPageExternalLink', 'http://data.nytimes.com/elements/topicPage' ]
 		}
 	},
+	
+	
 	'http://www.w3.org/2002/07/owl#Class' : {
 		document : {
 			className : 'Class',
@@ -472,6 +475,16 @@ $.jStorage.set('profile', {
 	'http://www.w3.org/2002/07/owl#DatatypeProperty' : {
 		document : {
 			className : 'DatatypeProperty',
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ],
+			weblinks : {
+				visualizationType : '',
+				properties : []
+			}
+		}
+	},
+	'http://www.w3.org/2002/07/owl#Property' : {
+		document : {
+			className : 'Property',
 			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ],
 			weblinks : {
 				visualizationType : '',
