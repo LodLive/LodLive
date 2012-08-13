@@ -144,7 +144,7 @@ $.jStorage.set('profile', {
 		'http://data.oceandrilling.org,http://dx.doi.org,http://chronos.org' : {
 			description : {
 				it : 'data.oceandrilling.org facilitates the discovery and access to data and information related to scientific ocean drilling efforts of the Integrated Ocean Drilling Program (IODP) U.S. implementing organization (USIO). Additional data originates from the: Deep Sea Drilling Project (DSDP), Ocean Drilling Program (ODP and ODP Legacy) in addition to IODP.',
-				en : 'data.oceandrilling.org facilitates the discovery and access to data and information related to scientific ocean drilling efforts of the Integrated Ocean Drilling Program (IODP) U.S. implementing organization (USIO). Additional data originates from the: Deep Sea Drilling Project (DSDP), Ocean Drilling Program (ODP and ODP Legacy) in addition to IODP.',
+				en : 'data.oceandrilling.org facilitates the discovery and access to data and information related to scientific ocean drilling efforts of the Integrated Ocean Drilling Program (IODP) U.S. implementing organization (USIO). Additional data originates from the: Deep Sea Drilling Project (DSDP), Ocean Drilling Program (ODP and ODP Legacy) in addition to IODP.'
 			},
 			sparql : {
 				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
@@ -155,7 +155,7 @@ $.jStorage.set('profile', {
 				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
 				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameas> <{URI}>}'
 			},
-			useForInverseSameAs : true,
+			useForInverseSameAs : false,
 			endpoint : 'http://data.oceandrilling.org/sparql',
 			examples : [ {
 				uri : 'http://data.oceandrilling.org/core/1/ODP',
@@ -479,7 +479,36 @@ $.jStorage.set('profile', {
 			properties : [ 'http://rdfs.org/sioc/ns#links_to', 'http://it.dbpedia.org/property/url', 'http://data.nytimes.com/elements/search_api_query', 'http://www.w3.org/2000/01/rdf-schema#isDefinedBy', 'http://xmlns.com/foaf/0.1/page', 'http://xmlns.com/foaf/0.1/homepage', 'http://purl.org/dc/terms/isReferencedBy', 'http://purl.org/dc/elements/1.1/relation', 'http://dbpedia.org/ontology/wikiPageExternalLink', 'http://data.nytimes.com/elements/topicPage' ]
 		}
 	},
-
+	'http://www.w3.org/2000/01/rdf-schema#Class' : {
+		document : {
+			className : 'Class',
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+		}
+	},
+	'http://www.w3.org/2000/01/rdf-schema#ObjectProperty' : {
+		document : {
+			className : 'ObjectProperty',
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+		}
+	},
+	'http://www.w3.org/2000/01/rdf-schema#Restriction' : {
+		document : {
+			className : 'DatatypeProperty',
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+		}
+	},
+	'http://www.w3.org/2000/01/rdf-schema#DatatypeProperty' : {
+		document : {
+			className : 'DatatypeProperty',
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+		}
+	},
+	'http://www.w3.org/2000/01/rdf-schema#Property' : {
+		document : {
+			className : 'Property',
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+		}
+	},
 	'http://www.w3.org/2002/07/owl#Class' : {
 		document : {
 			className : 'Class',
@@ -501,21 +530,13 @@ $.jStorage.set('profile', {
 	'http://www.w3.org/2002/07/owl#DatatypeProperty' : {
 		document : {
 			className : 'DatatypeProperty',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ],
-			weblinks : {
-				visualizationType : '',
-				properties : []
-			}
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
 		}
 	},
 	'http://www.w3.org/2002/07/owl#Property' : {
 		document : {
 			className : 'Property',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ],
-			weblinks : {
-				visualizationType : '',
-				properties : []
-			}
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
 		}
 	},
 	'http://data.oceandrilling.org/core/1/ODP' : {
@@ -531,141 +552,6 @@ $.jStorage.set('profile', {
 	'http://yago-knowledge.org/resource/wordnet_person_100007846' : {
 		document : {
 			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
-		}
-	},
-	'http://dati.camera.it/ocd/deputato' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/mandatoCamera' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/legislatura' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/organo' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/organoGoverno' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/incarico' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/incaricoGoverno' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/gruppoParlamentare' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/componenteGruppoMisto' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/senatore' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/assemblea' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/atto' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/DOC' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/aic' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/legge' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/governo' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/mandatoSenato' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/presidenteCamera' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/presidenteRepubblica' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/presidenteConsiglioMinistri' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/sistemaElettorale' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/dibattito' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/discussione' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/ufficioParlamentare' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/seduta' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/bollettino' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
-		}
-	},
-	'http://dati.camera.it/ocd/elezione' : {
-		document : {
-			titleProperties : 'http://www.w3.org/2000/01/rdf-schema#label'
 		}
 	},
 	'http://www.cnr.it/ontology/cnr/personale.owl#UnitaDiPersonaleInterno' : {
@@ -687,7 +573,7 @@ $.jStorage.set('doAutoExpand', $.jStorage.get('doAutoExpand', true));
 $.jStorage.set('doAutoSameas', $.jStorage.get('doAutoSameas', true));
 $.jStorage.set('doCollectImages', $.jStorage.get('doCollectImages', true));
 $.jStorage.set('doDrawMap', $.jStorage.get('doDrawMap', true));
-$.jStorage.set('showConsole', $.jStorage.get('showConsole', false));
+$.jStorage.set('showConsole', $.jStorage.get('showConsole', true));
 
 $.jStorage.set('endpoints', {
 	all : 'output=json&format=application/json&timeout=0',
