@@ -34,10 +34,6 @@ var debugOn = false;
 			$.jStorage.set('imagesMap', {});
 			$.jStorage.set('mapsMap', {});
 
-			if ($.jStorage.get('showConsole', false)) {
-				context.lodlive('queryConsole', 'init');
-			}
-
 			// $.jStorage.set('storeIds',{});
 			// template della query
 
@@ -122,7 +118,8 @@ var debugOn = false;
 				context.lodlive('queryConsole', 'log', {
 					title : endpoint,
 					text : res,
-					id : url
+					id : url,
+					uriId : resource
 				});
 			}
 			return url;
@@ -199,36 +196,78 @@ var debugOn = false;
 		},
 		queryConsole : function(action, toLog) {
 			var context = this;
-			var panel = $('#queryConsole');
+			var id = MD5(toLog.uriId);
+			var localId = MD5(toLog.id);
+			var panel = context.children('div#q' + id + '.queryConsole');
 			if (action == 'init') {
-				panel = $('<div id="queryConsole"></div>');
-				panel.css({
-					height : $(window).height() / 3,
-					width : $(window).width() - 350
-				});
+				panel = $('<div id="q' + id + '" class="queryConsole" style="display:none"></div>');
 				context.append(panel);
 			} else if (action == 'log') {
 				if (toLog.resource) {
-					panel.append('<h3>' + toLog.resource + '</h3>');
+					panel.append('<h3 class="sprite"><span>' + toLog.resource + '</span><a class="sprite">&#160;</a></h3>');
+					panel.children("h3").children("a").click(function() {
+						context.lodlive('queryConsole', 'close', {
+							uriId : toLog.uriId
+						});
+					}).hover(function() {
+						$(this).setBackgroundPosition({
+							x : -641
+						});
+					}, function() {
+						$(this).setBackgroundPosition({
+							x : -611
+						});
+					});
+
 				}
-				var id = MD5(toLog.id);
 				if (toLog.title) {
-					panel.append('<h4 id="' + id + '">' + toLog.title + '</h4>');
+					var h4 = $('<h4 class="t' + localId + ' sprite"><span>' + toLog.title + '</span></h4>');
+					panel.append(h4);
+					h4.hover(function() {
+						$(this).setBackgroundPosition({
+							y : -700
+						});
+					}, function() {
+						$(this).setBackgroundPosition({
+							y : -650
+						});
+					});
+					h4.toggle(function() {
+						$(this).setBackgroundPosition({
+							x : -1290
+						});
+						$(this).next('div').slideDown();
+					}, function() {
+						$(this).setBackgroundPosition({
+							x : -680
+						});
+						$(this).next('div').slideUp();
+					});
 				}
 				if (toLog.text) {
-					panel.append('<div>' + (toLog.text).replace(/</gi, "&lt;").replace(/>/gi, "&gt;") + '</div>');
-					panel.append('<hr/>');
+					var aDiv = $('<div><span>' + (toLog.text).replace(/</gi, "&lt;").replace(/>/gi, "&gt;") + '</span></div>');
+					aDiv.css({
+						opacity : 0.95
+					});
+					panel.append(aDiv);
 				}
 				if (toLog.error) {
-					panel.find('#' + id).append('<strong style="float:right">Error! </strong>')
+					panel.find('h4.t' + localId + ' >span').append('<strong style="float:right">Error! </strong>');
 				}
 				if (typeof toLog.founded == typeof 0) {
-					panel.find('#' + id).append('<span style="float:right">trovate <strong>' + toLog.founded + '</strong> propriet&agrave; </span>')
-				}
+					if (toLog.founded == 0) {
+						panel.find('h4.t' + localId + ' >span').append('<strong style="float:right">nessuna propriet&agrave;</strong>');
+					} else {
+						panel.find('h4.t' + localId + ' >span').append('<strong style="float:right">trovate ' + toLog.founded + ' propriet&agrave; </strong>');
+					}
 
-				panel.scrollTop(999999);
+				}
 			} else if (action == 'remove') {
 				panel.remove();
+			} else if (action == 'show') {
+				panel.show();
+			} else if (action == 'close') {
+				panel.hide();
 			}
 		},
 		controlPanel : function(action) {
@@ -303,7 +342,6 @@ var debugOn = false;
 
 						anUl.append('<li ' + ($.jStorage.get('doCollectImages') ? 'class="checked"' : 'class="check"') + ' data-value="autoCollectImages"><span class="spriteLegenda"></span>' + lang('autoCollectImages') + '</li>');
 						anUl.append('<li ' + ($.jStorage.get('doDrawMap') ? 'class="checked"' : 'class="check"') + ' data-value="autoDrawMap"><span class="spriteLegenda"></span>' + lang('autoDrawMap') + '</li>');
-					//	anUl.append('<li ' + ($.jStorage.get('showConsole') ? 'class="checked"' : 'class="check"') + ' data-value="showConsole"><span class="spriteLegenda"></span>' + lang('showConsole') + '</li>');
 
 						anUl.append('<li>&#160;</li>');
 						anUl.append('<li class="reload"><span  class="spriteLegenda"></span>' + lang('restart') + '</li>');
@@ -324,9 +362,6 @@ var debugOn = false;
 								} else if ($(this).attr("data-value") == 'autoDrawMap') {
 									$.jStorage.set('doDrawMap', true);
 									panel.children('div.panel2.maps').removeClass('inactive');
-								} else if ($(this).attr("data-value") == 'showConsole') {
-									$.jStorage.set('showConsole', true);
-									context.lodlive('queryConsole', 'init');
 								}
 								$(this).attr('class', "checked");
 							} else {
@@ -342,9 +377,6 @@ var debugOn = false;
 								} else if ($(this).attr("data-value") == 'autoDrawMap') {
 									panel.children('div.panel2.maps').addClass('inactive');
 									$.jStorage.set('doDrawMap', false);
-								} else if ($(this).attr("data-value") == 'showConsole') {
-									$.jStorage.set('showConsole', false);
-									context.lodlive('queryConsole', 'remove');
 								}
 								$(this).attr('class', "check");
 							}
@@ -898,6 +930,9 @@ var debugOn = false;
 			// $(".tipsy").remove();
 
 			var id = obj.attr("id");
+			context.lodlive('queryConsole', 'remove', {
+				uriId : obj.attr('rel')
+			});
 			$("#line-" + id).clearCanvas();
 			var generatedRev = $.jStorage.get('storeIds-generatedByRev-' + id);
 			if (generatedRev) {
@@ -1033,11 +1068,11 @@ var debugOn = false;
 			obj.find(".actionBox[rel=tools]").click(function() {
 				if ($(".toolBox:visible").length == 0) {
 					var pos = obj.position();
-					var tools = $("<div class=\"toolBox sprite\" style=\"display:none\" ><div class=\"innerActionBox remove\" rel=\"remove\" title=\"rimuovi questo box\" >&#160;</div><div class=\"innerActionBox center\" rel=\"center\" title=\"centra e chiudi le altre risorse\" >&#160;</div><div class=\"innerActionBox newpage\" rel=\"newpage\" title=\"visualizza la risorsa online\" >&#160;</div><div class=\"innerActionBox expand\" rel=\"expand\" title=\"espandi tutte le relazioni\" >&#160;</div></div>");
+					var tools = $("<div class=\"toolBox sprite\" style=\"display:none\" ><div class=\"innerActionBox infoQ\" rel=\"infoQ\" title=\"informazioni su questo box\" >&#160;</div><div class=\"innerActionBox center\" rel=\"center\" title=\"centra e chiudi le altre risorse\" >&#160;</div><div class=\"innerActionBox newpage\" rel=\"newpage\" title=\"visualizza la risorsa online\" >&#160;</div><div class=\"innerActionBox expand\" rel=\"expand\" title=\"espandi tutte le relazioni\" >&#160;</div><div class=\"innerActionBox remove\" rel=\"remove\" title=\"rimuovi questo box\" >&#160;</div></div>");
 					context.append(tools);
 					tools.css({
 						top : pos.top - 23,
-						left : pos.left + 26
+						left : pos.left + 10
 					});
 					tools.fadeIn('fast');
 					tools.find(".innerActionBox[rel=expand]").each(function() {
@@ -1065,6 +1100,23 @@ var debugOn = false;
 							});
 						});
 					});
+					tools.find(".innerActionBox[rel=infoQ]").each(function() {
+						$(this).click(function() {
+							tools.remove();
+							context.lodlive('queryConsole', 'show', {
+								uriId : obj.attr('rel')
+							});
+						});
+						$(this).hover(function() {
+							tools.setBackgroundPosition({
+								y : -425
+							});
+						}, function() {
+							tools.setBackgroundPosition({
+								y : -395
+							});
+						});
+					});
 					tools.find(".innerActionBox[rel=remove]").each(function() {
 						$(this).click(function() {
 							// $('.tipsy').remove();
@@ -1074,7 +1126,7 @@ var debugOn = false;
 						});
 						$(this).hover(function() {
 							tools.setBackgroundPosition({
-								y : -425
+								y : -545
 							});
 						}, function() {
 							tools.setBackgroundPosition({
@@ -1102,19 +1154,6 @@ var debugOn = false;
 					});
 					tools.find(".innerActionBox[rel=center]").each(function() {
 						$(this).click(function() {
-							/*
-							 * } tools.remove(); // $('.tipsy').remove();
-							 * context.lodlive('docInfo', '', 'close');
-							 * context.lodlive('msg', '', 'hide');
-							 * context.lodlive('centerBox', obj);
-							 * document.lodliveVars.storeIds = {};
-							 * $('.aGrouped').hide(); $('canvas').remove();
-							 * context.children('.boxWrapper[id!=' +
-							 * obj.attr('id') + ']').each(function() {
-							 * context.lodlive('removeDoc', $(this)); }); //
-							 * $('.exploded').removeClass('exploded'); //
-							 * $('.lastClick').click();
-							 */
 							var loca = $(location).attr('href');
 							if (loca.indexOf('?http') != -1) {
 								document.location = loca.substring(0, loca.indexOf('?')) + '?' + obj.attr('rel');
@@ -1159,7 +1198,7 @@ var debugOn = false;
 					context.lodlive('queryConsole', 'log', {
 						title : lang('endpointNotConfiguredSoInternal'),
 						text : res,
-						id : url
+						uriId : URI
 					});
 				}
 				$.jsonp({
@@ -1905,7 +1944,9 @@ var debugOn = false;
 					}
 					if ($.inArray(akey, images) > -1) {
 						eval('connectedImages.push({\'' + value[akey] + '\':\'' + escape(resourceTitle) + '\'})');
-						// to expand types } else if (akey != 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' && $.inArray(akey, weblinks) == -1) {
+						// to expand types } else if (akey !=
+						// 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' &&
+						// $.inArray(akey, weblinks) == -1) {
 					} else if ($.inArray(akey, weblinks) == -1) {
 						// controllo se trovo la stessa relazione in una
 						// proprieta' diversa
@@ -2365,7 +2406,7 @@ var debugOn = false;
 					context.lodlive('queryConsole', 'log', {
 						title : lang('endpointNotConfiguredSoInternal'),
 						text : res,
-						id : url
+						uriId : resource
 					});
 				}
 				$.jsonp({
@@ -2441,12 +2482,17 @@ var debugOn = false;
 			}
 		},
 		openDoc : function(anUri, destBox, fromInverse) {
+
 			if (debugOn) {
 				start = new Date().getTime();
 			}
 			var context = this;
 			if ($.jStorage.get('showConsole')) {
+				context.lodlive('queryConsole', 'init', {
+					uriId : anUri
+				});
 				context.lodlive('queryConsole', 'log', {
+					uriId : anUri,
 					resource : anUri
 				});
 			}
@@ -2493,7 +2539,8 @@ var debugOn = false;
 						if ($.jStorage.get('showConsole')) {
 							context.lodlive('queryConsole', 'log', {
 								founded : conta,
-								id : SPARQLquery
+								id : SPARQLquery,
+								uriId : anUri
 							});
 						}
 						if (debugOn) {
@@ -2525,7 +2572,8 @@ var debugOn = false;
 									if ($.jStorage.get('showConsole')) {
 										context.lodlive('queryConsole', 'log', {
 											founded : conta,
-											id : SPARQLquery
+											id : SPARQLquery,
+											uriId : anUri
 										});
 									}
 									if (debugOn) {
@@ -2562,7 +2610,8 @@ var debugOn = false;
 									if ($.jStorage.get('showConsole')) {
 										context.lodlive('queryConsole', 'log', {
 											error : 'error',
-											id : SPARQLquery
+											id : SPARQLquery,
+											uriId : anUri
 										});
 									}
 									context.lodlive('addClick', destBox, fromInverse ? function() {
@@ -2690,7 +2739,8 @@ var debugOn = false;
 								context.lodlive('queryConsole', 'log', {
 									title : value.endpoint,
 									text : value.sparql['inverseSameAs'].replace(/\{URI\}/g, anUri),
-									id : SPARQLquery
+									id : SPARQLquery,
+									uriId : anUri
 								});
 							}
 						},
@@ -2704,7 +2754,8 @@ var debugOn = false;
 							if ($.jStorage.get('showConsole')) {
 								context.lodlive('queryConsole', 'log', {
 									founded : conta,
-									id : SPARQLquery
+									id : SPARQLquery,
+									uriId : anUri
 								});
 							}
 							counter++;
@@ -2718,7 +2769,8 @@ var debugOn = false;
 							if ($.jStorage.get('showConsole')) {
 								context.lodlive('queryConsole', 'log', {
 									error : 'error',
-									id : SPARQLquery
+									id : SPARQLquery,
+									uriId : anUri
 								});
 							}
 							counter++;

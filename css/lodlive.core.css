@@ -323,7 +323,7 @@ div#msg .separ.inverse {
 }
 
 .toolBox {
-	background-position: -135px -395px; height: 23px; width: 64px; position: absolute; z-index: 98; background-repeat-y: no-repeat;
+	background-position: -135px -395px; height: 23px; width: 80px; position: absolute; z-index: 98; background-repeat-y: no-repeat;
 }
 
 .box a {
@@ -351,14 +351,42 @@ div#msg .separ.inverse {
 	font-size: 20px; text-decoration: none;
 }
 
-#queryConsole {
-	right: 0; bottom: 0; position: fixed; z-index: 999; overflow: auto;
+.queryConsole {
+	position: fixed; z-index: 999; width: 630px; left: 50%; top: 50; margin-left: -315px
 }
 
-#queryConsole h4,#queryConsole div,#queryConsole hr {
-	margin-right: 20px; margin-left: 20px
+.queryConsole h3 {
+	width: 630px; background-position: -10px -650px; height: 42px; margin: 0; padding: 0; font-size: 13px;
 }
 
-#queryConsole h3 {
-	margin-right: 20px;
+.queryConsole h3 span {
+	float: left;padding: 12px 20px 0 20px
 }
+
+.queryConsole h3 a {
+	display: block; width: 29px; height: 40px; cursor: pointer; float: right; background-position: -611px -650px;
+}
+
+.queryConsole div {
+	background-color: #fff; display: none; width: 598px; margin-left: 1px; position: relative; top: -1px;
+}
+
+.queryConsole span {
+	display: block; padding: 10px 20px 0 20px
+}
+
+.queryConsole div span {
+	padding: 10px 80px 30px 30px
+}
+
+.queryConsole strong {
+	font-weight: normal;
+}
+
+.queryConsole h4 {
+	width: 600px; background-position: -680px -650px; height: 40px; margin: 0; padding: 0; cursor: pointer;
+}
+
+.queryConsole h4 span { 
+	padding: 12px 20px 0 20px
+} 
