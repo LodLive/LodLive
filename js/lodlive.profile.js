@@ -39,13 +39,13 @@ $.jStorage.set('profile', {
 				en : 'DBpedia is a community effort to extract structured information from Wikipedia and to make this information available on the Web. DBpedia allows you to ask sophisticated queries against Wikipedia, and to link other data sets on the Web to Wikipedia data.'
 			},
 			sparql : {
-				allClasses : 'SELECT DISTINCT ?object  WHERE {[] a ?object} ORDER BY ?object  LIMIT 50  ',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} } LIMIT 1',
-				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.FILTER (( isIRI(?object) || ?property = <http://www.w3.org/2000/01/rdf-schema#label>  || ?property = <http://www.georss.org/georss/point> || ?property = <http://xmlns.com/foaf/0.1/surname> || ?property = <http://xmlns.com/foaf/0.1/name> || ?property = <http://purl.org/dc/elements/1.1/title>))}  ORDER BY ?property',
-				document : 'SELECT DISTINCT *  WHERE  {{<{URI}> ?property ?object. FILTER(!isLiteral(?object))} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="it")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="en")}}  ORDER BY ?property',
-				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
+				allClasses : 'SELECT DISTINCT ?object FROM <http://dbpedia.org> WHERE {[] a ?object} ORDER BY ?object  LIMIT 50  ',
+				findSubject : 'SELECT DISTINCT ?subject FROM <http://dbpedia.org> WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} } LIMIT 1',
+				documentUri : 'SELECT DISTINCT * FROM <http://dbpedia.org> WHERE {<{URI}> ?property ?object.FILTER (( isIRI(?object) || ?property = <http://www.w3.org/2000/01/rdf-schema#label>  || ?property = <http://www.georss.org/georss/point> || ?property = <http://xmlns.com/foaf/0.1/surname> || ?property = <http://xmlns.com/foaf/0.1/name> || ?property = <http://purl.org/dc/elements/1.1/title>))}  ORDER BY ?property',
+				document : 'SELECT DISTINCT * FROM <http://dbpedia.org>  WHERE  {{<{URI}> ?property ?object. FILTER(!isLiteral(?object))} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="it")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="en")}}  ORDER BY ?property',
+				bnode : 'SELECT DISTINCT * FROM <http://dbpedia.org>  WHERE {<{URI}> ?property ?object}',
+				inverse : 'SELECT DISTINCT * FROM <http://dbpedia.org> WHERE {?object ?property <{URI}>} LIMIT 100',
+				inverseSameAs : 'SELECT DISTINCT * FROM <http://dbpedia.org> WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
 			},
 			useForInverseSameAs : true,
 			endpoint : 'http://dbpedia.org/sparql',
@@ -482,61 +482,61 @@ $.jStorage.set('profile', {
 	'http://www.w3.org/2000/01/rdf-schema#Class' : {
 		document : {
 			className : 'Class',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label',' - ','http://www.w3.org/2000/01/rdf-schema#comment' ]
 		}
 	},
 	'http://www.w3.org/2000/01/rdf-schema#ObjectProperty' : {
 		document : {
 			className : 'ObjectProperty',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label',' - ','http://www.w3.org/2000/01/rdf-schema#comment'  ]
 		}
 	},
 	'http://www.w3.org/2000/01/rdf-schema#Restriction' : {
 		document : {
 			className : 'DatatypeProperty',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label',' - ','http://www.w3.org/2000/01/rdf-schema#comment'  ]
 		}
 	},
 	'http://www.w3.org/2000/01/rdf-schema#DatatypeProperty' : {
 		document : {
 			className : 'DatatypeProperty',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label',' - ','http://www.w3.org/2000/01/rdf-schema#comment'  ]
 		}
 	},
 	'http://www.w3.org/2000/01/rdf-schema#Property' : {
 		document : {
 			className : 'Property',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label',' - ','http://www.w3.org/2000/01/rdf-schema#comment'  ]
 		}
 	},
 	'http://www.w3.org/2002/07/owl#Class' : {
 		document : {
 			className : 'Class',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label',' - ','http://www.w3.org/2000/01/rdf-schema#comment'  ]
 		}
 	},
 	'http://www.w3.org/2002/07/owl#ObjectProperty' : {
 		document : {
 			className : 'ObjectProperty',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label',' - ','http://www.w3.org/2000/01/rdf-schema#comment'  ]
 		}
 	},
 	'http://www.w3.org/2002/07/owl#Restriction' : {
 		document : {
 			className : 'DatatypeProperty',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label',' - ','http://www.w3.org/2000/01/rdf-schema#comment'  ]
 		}
 	},
 	'http://www.w3.org/2002/07/owl#DatatypeProperty' : {
 		document : {
 			className : 'DatatypeProperty',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label',' - ','http://www.w3.org/2000/01/rdf-schema#comment'  ]
 		}
 	},
 	'http://www.w3.org/2002/07/owl#Property' : {
 		document : {
 			className : 'Property',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label',' - ','http://www.w3.org/2000/01/rdf-schema#comment'  ]
 		}
 	},
 	'http://data.oceandrilling.org/core/1/ODP' : {
