@@ -95,7 +95,7 @@ var debugOn = false;
 			$.each(lodLiveProfile.connection, function(key, value) {
 				var keySplit = key.split(",");
 				for ( var a = 0; a < keySplit.length; a++) {
-					if ((testURI ? testURI : resource).indexOf(keySplit[a]) != -1) {
+					if ((testURI ? testURI : resource).indexOf(keySplit[a]) == 0) {
 						res = value.sparql[module].replace(/\{URI\}/ig, resource);
 						if (value.proxy) {
 							url = value.proxy + '?endpoint=' + value.endpoint + "&" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + encodeURIComponent(res);
@@ -236,12 +236,16 @@ var debugOn = false;
 						$(this).setBackgroundPosition({
 							x : -1290
 						});
-						$(this).next('div').slideDown();
+						panel.find('.slideOpen').click();
+						$(this).addClass('slideOpen');
+						$(this).next('div').slideToggle();
 					}, function() {
 						$(this).setBackgroundPosition({
 							x : -680
 						});
-						$(this).next('div').slideUp();
+						$(this).removeClass('slideOpen');
+						$(this).next('div').slideToggle();
+
 					});
 				}
 				if (toLog.text) {
@@ -252,13 +256,13 @@ var debugOn = false;
 					panel.append(aDiv);
 				}
 				if (toLog.error) {
-					panel.find('h4.t' + localId + ' >span').append('<strong style="float:right">Error! </strong>');
+					panel.find('h4.t' + localId + ' >span').append('<strong style="float:right">' + lang('enpointNotAvailable') + '</strong>');
 				}
 				if (typeof toLog.founded == typeof 0) {
 					if (toLog.founded == 0) {
-						panel.find('h4.t' + localId + ' >span').append('<strong style="float:right">nessuna propriet&agrave;</strong>');
+						panel.find('h4.t' + localId + ' >span').append('<strong style="float:right">' + lang('propsNotFound') + '</strong>');
 					} else {
-						panel.find('h4.t' + localId + ' >span').append('<strong style="float:right">trovate ' + toLog.founded + ' propriet&agrave; </strong>');
+						panel.find('h4.t' + localId + ' >span').append('<strong style="float:right">' + toLog.founded + ' ' + lang('propsFound') + ' </strong>');
 					}
 
 				}
@@ -1880,8 +1884,8 @@ var debugOn = false;
 			for ( var a = 0; a < titles.length; a++) {
 				var resultArray = this.lodlive('getJsonValue', values, titles[a], titles[a].indexOf('http') == 0 ? '' : titles[a]);
 				if (titles[a].indexOf('http') != 0) {
-					if (result.indexOf(unescape(titles[a]) + " \n") == -1) {
-						result += unescape(titles[a]) + " \n";
+					if (result.indexOf($.trim(unescape(titles[a])) + " \n") == -1) {
+						result += $.trim(unescape(titles[a])) + " \n";
 					}
 				} else {
 					for ( var af = 0; af < resultArray.length; af++) {
@@ -2718,7 +2722,7 @@ var debugOn = false;
 						for ( var a = 0; a < keySplit.length; a++) {
 							// salto i sameas interni allo stesso endpoint
 							if (anUri.indexOf(keySplit[a]) != -1) {
-								// skip = true;
+								skip = true;
 							}
 						}
 					}

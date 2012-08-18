@@ -22,6 +22,8 @@ $.jStorage.set('language', {
 		enpointNotAvailableOrSLow : 'errore: endpoint non disponibile o la richiesta è scaduta',
 		imagesNotFound : 'nessuna immagine per le risorse aperte',
 		mapNotFound : 'nessuna mappa per le riorse aperte',
+		propsNotFound : 'nessuna propriet&agrave; trovata',
+		propsFound : 'propriet&agrave; trovate',
 		showResource : 'evidenza la risorsa',
 		zoomIn : 'ingrandisci',
 		showConsole : 'mostra la console delle ricerche (sperimentale)'
@@ -49,6 +51,8 @@ $.jStorage.set('language', {
 		enpointNotAvailableOrSLow : 'error: endpoint not available or the request timed out',
 		imagesNotFound : 'no images for the opened resources',
 		mapNotFound : 'no maps for the opened resources',
+		propsNotFound : 'nothing found',
+		propsFound : 'properties found',
 		showResource : 'highlight the resource',
 		zoomIn : 'zoom in',
 		showConsole : 'show console (experimental)'
