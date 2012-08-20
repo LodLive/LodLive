@@ -26,7 +26,9 @@ $.jStorage.set('language', {
 		propsFound : 'propriet&agrave; trovate',
 		showResource : 'evidenza la risorsa',
 		zoomIn : 'ingrandisci',
-		showConsole : 'mostra la console delle ricerche (sperimentale)'
+		showConsole : 'mostra la console delle ricerche (sperimentale)',
+		executeThisQuery:'esegui la query SPARQL in una nuova finestra',
+		moreInfoOnThis:'maggiori informazioni su questa risorsa'
 	},
 	en : {
 		restart : 'restart',
@@ -55,7 +57,9 @@ $.jStorage.set('language', {
 		propsFound : 'properties found',
 		showResource : 'highlight the resource',
 		zoomIn : 'zoom in',
-		showConsole : 'show console (experimental)'
+		showConsole : 'show console (experimental)',
+		executeThisQuery:'execute the SPARQL query in a new window',
+		moreInfoOnThis:'more info on this resource'
 	}
 });
 

@@ -360,7 +360,7 @@ div#msg .separ.inverse {
 }
 
 .queryConsole h3 span {
-	float: left;padding: 12px 20px 0 20px
+	float: left; padding: 12px 20px 0 20px
 }
 
 .queryConsole h3 a {
@@ -376,9 +376,17 @@ div#msg .separ.inverse {
 }
 
 .queryConsole div span {
-	padding: 10px 80px 30px 30px
+	padding: 10px 19px 30px 30px;
 }
 
+.queryConsole div span span.contentArea {
+	padding: 0; width: 500px;
+}
+
+.queryConsole div span span.linkArea {
+	padding: 0; float: right; width: 10px; height: 10px;background-position: -610px -600px; cursor: pointer; 
+}
+ 
 .queryConsole strong {
 	font-weight: normal;
 }
@@ -387,6 +395,6 @@ div#msg .separ.inverse {
 	width: 600px; background-position: -680px -650px; height: 40px; margin: 0; padding: 0; cursor: pointer;
 }
 
-.queryConsole h4 span { 
+.queryConsole h4 span {
 	padding: 12px 20px 0 20px
-} 
+}

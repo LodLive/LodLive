@@ -249,20 +249,25 @@ var debugOn = false;
 					});
 				}
 				if (toLog.text) {
-					var aDiv = $('<div><span>' + (toLog.text).replace(/</gi, "&lt;").replace(/>/gi, "&gt;") + '</span></div>');
+					var aDiv = $('<div><span><span class="contentArea">' + (toLog.text).replace(/</gi, "&lt;").replace(/>/gi, "&gt;") + '</span></span></div>');
+					var aLink = $('<span class="linkArea sprite" title="'+lang('executeThisQuery')+'"></span>');
+					aLink.click(function() {
+						window.open(panel.find('h4.t' + localId).clone().find('strong').remove().end().text() + '?query=' + encodeURIComponent(toLog.text));
+					});
+					aDiv.children('span').prepend(aLink);
 					aDiv.css({
 						opacity : 0.95
 					});
 					panel.append(aDiv);
 				}
 				if (toLog.error) {
-					panel.find('h4.t' + localId + ' >span').append('<strong style="float:right">' + lang('enpointNotAvailable') + '</strong>');
+					panel.find('h4.t' + localId + ' > span').append('<strong style="float:right">' + lang('enpointNotAvailable') + '</strong>');
 				}
 				if (typeof toLog.founded == typeof 0) {
 					if (toLog.founded == 0) {
-						panel.find('h4.t' + localId + ' >span').append('<strong style="float:right">' + lang('propsNotFound') + '</strong>');
+						panel.find('h4.t' + localId + ' > span').append('<strong style="float:right">' + lang('propsNotFound') + '</strong>');
 					} else {
-						panel.find('h4.t' + localId + ' >span').append('<strong style="float:right">' + toLog.founded + ' ' + lang('propsFound') + ' </strong>');
+						panel.find('h4.t' + localId + ' > span').append('<strong style="float:right">' + toLog.founded + ' ' + lang('propsFound') + ' </strong>');
 					}
 
 				}
@@ -1072,7 +1077,7 @@ var debugOn = false;
 			obj.find(".actionBox[rel=tools]").click(function() {
 				if ($(".toolBox:visible").length == 0) {
 					var pos = obj.position();
-					var tools = $("<div class=\"toolBox sprite\" style=\"display:none\" ><div class=\"innerActionBox infoQ\" rel=\"infoQ\" title=\"informazioni su questo box\" >&#160;</div><div class=\"innerActionBox center\" rel=\"center\" title=\"centra e chiudi le altre risorse\" >&#160;</div><div class=\"innerActionBox newpage\" rel=\"newpage\" title=\"visualizza la risorsa online\" >&#160;</div><div class=\"innerActionBox expand\" rel=\"expand\" title=\"espandi tutte le relazioni\" >&#160;</div><div class=\"innerActionBox remove\" rel=\"remove\" title=\"rimuovi questo box\" >&#160;</div></div>");
+					var tools = $("<div class=\"toolBox sprite\" style=\"display:none\" ><div class=\"innerActionBox infoQ\" rel=\"infoQ\" title=\""+lang('moreInfoOnThis')+"\" >&#160;</div><div class=\"innerActionBox center\" rel=\"center\" title=\"centra e chiudi le altre risorse\" >&#160;</div><div class=\"innerActionBox newpage\" rel=\"newpage\" title=\"visualizza la risorsa online\" >&#160;</div><div class=\"innerActionBox expand\" rel=\"expand\" title=\"espandi tutte le relazioni\" >&#160;</div><div class=\"innerActionBox remove\" rel=\"remove\" title=\"rimuovi questo box\" >&#160;</div></div>");
 					context.append(tools);
 					tools.css({
 						top : pos.top - 23,
