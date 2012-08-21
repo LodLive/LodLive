@@ -250,9 +250,18 @@ var debugOn = false;
 				}
 				if (toLog.text) {
 					var aDiv = $('<div><span><span class="contentArea">' + (toLog.text).replace(/</gi, "&lt;").replace(/>/gi, "&gt;") + '</span></span></div>');
-					var aLink = $('<span class="linkArea sprite" title="'+lang('executeThisQuery')+'"></span>');
+					var aLink = $('<span class="linkArea sprite" title="' + lang('executeThisQuery') + '"></span>');
 					aLink.click(function() {
 						window.open(panel.find('h4.t' + localId).clone().find('strong').remove().end().text() + '?query=' + encodeURIComponent(toLog.text));
+					});
+					aLink.hover(function() {
+						$(this).setBackgroundPosition({
+							x : -630
+						});
+					}, function() {
+						$(this).setBackgroundPosition({
+							x : -610
+						});
 					});
 					aDiv.children('span').prepend(aLink);
 					aDiv.css({
@@ -570,6 +579,7 @@ var debugOn = false;
 											counter--;
 										} else if (imagePanel.children('.img-' + prop + '-' + counter).length == 0) {
 											var img = $('<a href="' + unescape(key) + '" class="sprite relatedImage img-' + prop + '-' + counter + '"><img rel="' + unescape(imageMap[prop][a][key]) + '" src="' + unescape(key) + '"/></a>"');
+											img.attr("data-prop", prop);
 											imagePanel.prepend(img);
 											img.fancybox({
 												'transitionIn' : 'elastic',
@@ -644,10 +654,9 @@ var debugOn = false;
 														x : -1825
 													});
 												});
-												controls.children('.imgControlCenter').attr("data-prop", prop);
 												controls.children('.imgControlCenter').click(function() {
 													$('.close2', panel).click();
-													context.lodlive('highlight', $('#' + $(this).attr("data-prop")).children('.box'), 8, 100, '0 0'); // -390px
+													context.lodlive('highlight', $('#' + $(this).parent().parent().attr("data-prop")).children('.box'), 8, 100, '0 0'); // -390px
 													return false;
 												});
 												if (counter < 3) {
@@ -1077,7 +1086,7 @@ var debugOn = false;
 			obj.find(".actionBox[rel=tools]").click(function() {
 				if ($(".toolBox:visible").length == 0) {
 					var pos = obj.position();
-					var tools = $("<div class=\"toolBox sprite\" style=\"display:none\" ><div class=\"innerActionBox infoQ\" rel=\"infoQ\" title=\""+lang('moreInfoOnThis')+"\" >&#160;</div><div class=\"innerActionBox center\" rel=\"center\" title=\"centra e chiudi le altre risorse\" >&#160;</div><div class=\"innerActionBox newpage\" rel=\"newpage\" title=\"visualizza la risorsa online\" >&#160;</div><div class=\"innerActionBox expand\" rel=\"expand\" title=\"espandi tutte le relazioni\" >&#160;</div><div class=\"innerActionBox remove\" rel=\"remove\" title=\"rimuovi questo box\" >&#160;</div></div>");
+					var tools = $("<div class=\"toolBox sprite\" style=\"display:none\" ><div class=\"innerActionBox infoQ\" rel=\"infoQ\" title=\"" + lang('moreInfoOnThis') + "\" >&#160;</div><div class=\"innerActionBox center\" rel=\"center\" title=\"centra e chiudi le altre risorse\" >&#160;</div><div class=\"innerActionBox newpage\" rel=\"newpage\" title=\"visualizza la risorsa online\" >&#160;</div><div class=\"innerActionBox expand\" rel=\"expand\" title=\"espandi tutte le relazioni\" >&#160;</div><div class=\"innerActionBox remove\" rel=\"remove\" title=\"rimuovi questo box\" >&#160;</div></div>");
 					context.append(tools);
 					tools.css({
 						top : pos.top - 23,
