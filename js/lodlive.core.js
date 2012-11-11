@@ -114,7 +114,7 @@ var debugOn = false;
 				url = 'http://system/dummy?' + resource;
 			}
 
-			if (endpoint && $.jStorage.get('showConsole')) {
+			if (endpoint && $.jStorage.get('showInfoConsole')) {
 				context.lodlive('queryConsole', 'log', {
 					title : endpoint,
 					text : res,
@@ -250,20 +250,23 @@ var debugOn = false;
 				}
 				if (toLog.text) {
 					var aDiv = $('<div><span><span class="contentArea">' + (toLog.text).replace(/</gi, "&lt;").replace(/>/gi, "&gt;") + '</span></span></div>');
-					var aLink = $('<span class="linkArea sprite" title="' + lang('executeThisQuery') + '"></span>');
-					aLink.click(function() {
-						window.open(panel.find('h4.t' + localId).clone().find('strong').remove().end().text() + '?query=' + encodeURIComponent(toLog.text));
-					});
-					aLink.hover(function() {
-						$(this).setBackgroundPosition({
-							x : -630
+					var aEndpoint = $.trim(panel.find('h4.t' + localId).clone().find('strong').remove().end().text());
+					if (aEndpoint.indexOf("http:") == 0) {
+						var aLink = $('<span class="linkArea sprite" title="' + lang('executeThisQuery') + '"></span>');
+						aLink.click(function() {
+							window.open(aEndpoint + '?query=' + encodeURIComponent(toLog.text));
 						});
-					}, function() {
-						$(this).setBackgroundPosition({
-							x : -610
+						aLink.hover(function() {
+							$(this).setBackgroundPosition({
+								x : -630
+							});
+						}, function() {
+							$(this).setBackgroundPosition({
+								x : -610
+							});
 						});
-					});
-					aDiv.children('span').prepend(aLink);
+						aDiv.children('span').prepend(aLink);
+					}
 					aDiv.css({
 						opacity : 0.95
 					});
@@ -1210,9 +1213,9 @@ var debugOn = false;
 			var values = [];
 			if (lodLiveProfile['resourceResolver']) {
 				// attivo lo sparql interno basato su sesame
-				var res = lodLiveProfile['resourceResolver'].sparql['documentUri'].replace(/\{URI\}/ig, URI);
+				var res = lodLiveProfile['resourceResolver'].sparql['document'].replace(/\{URI\}/ig, URI);
 				var url = lodLiveProfile['resourceResolver'].endpoint + "?uri=" + encodeURIComponent(URI) + "&query=" + encodeURIComponent(res);
-				if ($.jStorage.get('showConsole')) {
+				if ($.jStorage.get('showInfoConsole')) {
 					context.lodlive('queryConsole', 'log', {
 						title : lang('endpointNotConfiguredSoInternal'),
 						text : res,
@@ -2420,7 +2423,7 @@ var debugOn = false;
 				// attivo lo sparql interno basato su sesame
 				var res = lodLiveProfile['resourceResolver'].sparql['documentUri'].replace(/\{URI\}/ig, resource);
 				var url = lodLiveProfile['resourceResolver'].endpoint + "?uri=" + encodeURIComponent(resource) + "&query=" + encodeURIComponent(res);
-				if ($.jStorage.get('showConsole')) {
+				if ($.jStorage.get('showInfoConsole')) {
 					context.lodlive('queryConsole', 'log', {
 						title : lang('endpointNotConfiguredSoInternal'),
 						text : res,
@@ -2505,7 +2508,7 @@ var debugOn = false;
 				start = new Date().getTime();
 			}
 			var context = this;
-			if ($.jStorage.get('showConsole')) {
+			if ($.jStorage.get('showInfoConsole')) {
 				context.lodlive('queryConsole', 'init', {
 					uriId : anUri
 				});
@@ -2554,7 +2557,7 @@ var debugOn = false;
 							}
 
 						});
-						if ($.jStorage.get('showConsole')) {
+						if ($.jStorage.get('showInfoConsole')) {
 							context.lodlive('queryConsole', 'log', {
 								founded : conta,
 								id : SPARQLquery,
@@ -2587,7 +2590,7 @@ var debugOn = false;
 										eval('inverses.push({\'' + value['property']['value'] + '\':\'' + escape(value.object.value) + '\'})');
 										// aSpan.text(conta + '/' + tot);
 									});
-									if ($.jStorage.get('showConsole')) {
+									if ($.jStorage.get('showInfoConsole')) {
 										context.lodlive('queryConsole', 'log', {
 											founded : conta,
 											id : SPARQLquery,
@@ -2625,7 +2628,7 @@ var debugOn = false;
 								error : function(e, b, v) {
 									destBox.children('.box').html('');
 									context.lodlive('format', destBox.children('.box'), values, uris);
-									if ($.jStorage.get('showConsole')) {
+									if ($.jStorage.get('showInfoConsole')) {
 										context.lodlive('queryConsole', 'log', {
 											error : 'error',
 											id : SPARQLquery,
@@ -2753,7 +2756,7 @@ var debugOn = false;
 						url : SPARQLquery,
 						timeout : 3000,
 						beforeSend : function() {
-							if ($.jStorage.get('showConsole')) {
+							if ($.jStorage.get('showInfoConsole')) {
 								context.lodlive('queryConsole', 'log', {
 									title : value.endpoint,
 									text : value.sparql['inverseSameAs'].replace(/\{URI\}/g, anUri),
@@ -2769,7 +2772,7 @@ var debugOn = false;
 								conta++;
 								eval('inverse.splice(1,0,{\'' + 'http://www.w3.org/2002/07/owl#sameAs' + '\':\'' + escape(value.object.value) + '\'})');
 							});
-							if ($.jStorage.get('showConsole')) {
+							if ($.jStorage.get('showInfoConsole')) {
 								context.lodlive('queryConsole', 'log', {
 									founded : conta,
 									id : SPARQLquery,
@@ -2784,7 +2787,7 @@ var debugOn = false;
 							}
 						},
 						error : function(e, b, v) {
-							if ($.jStorage.get('showConsole')) {
+							if ($.jStorage.get('showInfoConsole')) {
 								context.lodlive('queryConsole', 'log', {
 									error : 'error',
 									id : SPARQLquery,

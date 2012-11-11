@@ -19,7 +19,7 @@ $.jStorage.set('language', {
 		example : 'esempio',
 		noIe : 'Siamo spiacenti ma attualmente Internet Explorer non &egrave; totalmente supportato.',
 		enpointNotAvailable : 'errore: endpoint non disponibile',
-		enpointNotAvailableOrSLow : 'errore: endpoint non disponibile o la richiesta è scaduta',
+		enpointNotAvailableOrSLow : 'errore: endpoint non disponibile o richiesta scaduta',
 		imagesNotFound : 'nessuna immagine per le risorse aperte',
 		mapNotFound : 'nessuna mappa per le riorse aperte',
 		propsNotFound : 'nessuna propriet&agrave; trovata',
@@ -27,8 +27,11 @@ $.jStorage.set('language', {
 		showResource : 'evidenza la risorsa',
 		zoomIn : 'ingrandisci',
 		showConsole : 'mostra la console delle ricerche (sperimentale)',
-		executeThisQuery:'esegui la query SPARQL in una nuova finestra',
-		moreInfoOnThis:'maggiori informazioni su questa risorsa'
+		executeThisQuery : 'esegui la query SPARQL in una nuova finestra',
+		moreInfoOnThis : 'maggiori informazioni su questa risorsa',
+		simpleSearch : 'ricerca semplice',
+		simpleSearchDescription : 'la ricerca semplice permette di... la ricerca semplice permette di... la ricerca semplice permette di...',
+		insertUri : 'inserisci un URI'
 	},
 	en : {
 		restart : 'restart',
@@ -58,8 +61,11 @@ $.jStorage.set('language', {
 		showResource : 'highlight the resource',
 		zoomIn : 'zoom in',
 		showConsole : 'show console (experimental)',
-		executeThisQuery:'execute the SPARQL query in a new window',
-		moreInfoOnThis:'more info on this resource'
+		executeThisQuery : 'execute the SPARQL query in a new window',
+		moreInfoOnThis : 'more info on this resource',
+		simpleSearch : 'simple search',
+		simpleSearchDescription : 'bla bla bla bla... bla bla bla bla... bla bla bla bla... bla bla bla bla...',
+		insertUri : 'insert URI'
 	}
 });
 
