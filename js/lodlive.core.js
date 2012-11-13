@@ -19,6 +19,7 @@ var debugOn = false;
 		callback : 'lodlive',
 		timeout : 30000
 	});
+	var globalInfoPanelMap = {};
 	var methods = {
 		init : function(firstUri) {
 			var context = this;
@@ -33,7 +34,8 @@ var debugOn = false;
 			}
 			$.jStorage.set('imagesMap', {});
 			$.jStorage.set('mapsMap', {});
-
+			$.jStorage.set('infoPanelMap', {});
+			
 			// $.jStorage.set('storeIds',{});
 			// template della query
 
@@ -52,10 +54,10 @@ var debugOn = false;
 			$.jStorage.set('classMap', {
 				counter : 1
 			});
-
+			
 			// imposto le dimensioni dell'area di lavoro
-			context.height($(document).height());
-			context.width($(document).width());
+			// context.height($(document).height());
+			// context.width($(document).width());
 
 			// attivo le funzioni per il drag
 			context.lodlive('renewDrag', context.children('.boxWrapper'));
@@ -198,10 +200,12 @@ var debugOn = false;
 			var context = this;
 			var id = MD5(toLog.uriId);
 			var localId = MD5(toLog.id);
-			var panel = context.children('div#q' + id + '.queryConsole');
+			var infoMap = globalInfoPanelMap;
+			var panel = infoMap[id];
 			if (action == 'init') {
-				panel = $('<div id="q' + id + '" class="queryConsole" style="display:none"></div>');
-				context.append(panel);
+				panel = $('<div id="q' + id + '" class="queryConsole"></div>');
+				infoMap[id] = panel;
+				globalInfoPanelMap = infoMap;
 			} else if (action == 'log') {
 				if (toLog.resource) {
 					panel.append('<h3 class="sprite"><span>' + toLog.resource + '</span><a class="sprite">&#160;</a></h3>');
@@ -283,12 +287,16 @@ var debugOn = false;
 					}
 
 				}
+				infoMap[id] = panel;
+				globalInfoPanelMap = infoMap;
 			} else if (action == 'remove') {
-				panel.remove();
+				delete infoMap[id];
+				globalInfoPanelMap = infoMap;
 			} else if (action == 'show') {
-				panel.show();
+				//panel.show();
+				context.append(panel);
 			} else if (action == 'close') {
-				panel.hide();
+				panel.detach();
 			}
 		},
 		controlPanel : function(action) {
