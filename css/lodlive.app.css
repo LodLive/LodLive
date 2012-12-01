@@ -1,4 +1,8 @@
 /* app home page */
+input:focus,select:focus,textarea:focus,button:focus {
+	outline: none;
+}
+
 div#logo {
 	background-position: -785px -400px; height: 30px; width: 200px; clear: right; margin: 20px 20px 20px 0;
 }
@@ -24,23 +28,23 @@ div#startPanel {
 }
 
 div.startBox {
-	width: 300px; float: left; border: 0; background-position: -10px -10px; color: #fff; height: 300px; margin-bottom: 10px; overflow: auto; margin-right: 10px;
+	width: 300px; float: left; border: 0; background-position: -10px -10px; color: #575757; height: 300px; margin-bottom: 10px; overflow: auto; margin-right: 10px;
 }
 
 div#boxes {
-	width: 930px; overflow: hidden; float: left; height: 610px
+	width: 920px; overflow: hidden; float: left; height: 610px
+}
+
+div#firstLineBoxes {
+	float: left; height: 310px; width: 930px;
 }
 
 div#boxesCont {
-	float: left;
-}
-
-div#boxesCont .page {
-	float: left; width: 310px;
+	float: left; height: 305px;
 }
 
 #nextPage {
-	position: absolute; left: 50%; margin-left: 460px; cursor: pointer; z-index: 900; width: 20px; height: 40px; background-position: -660px -10px; top: 355px;
+	position: absolute; left: 50%; margin-left: 460px; cursor: pointer; z-index: 900; width: 20px; height: 40px; background-position: -660px -10px; top: 490px;
 }
 
 #nextPage:hover {
@@ -48,7 +52,7 @@ div#boxesCont .page {
 }
 
 #prevPage {
-	position: absolute; left: 50%; margin-left: -500px; cursor: pointer; z-index: 900; width: 20px; height: 40px; background-position: -630px -10px; top: 355px;
+	display: none; position: absolute; left: 50%; margin-left: -500px; cursor: pointer; z-index: 900; width: 20px; height: 40px; background-position: -630px -10px; left: 50%; margin-left: -500px; cursor: pointer; z-index: 900; width: 20px; height: 40px; background-position: -630px -10px; top: 490px;
 }
 
 #prevPage:hover {
@@ -96,11 +100,15 @@ div#boxesCont .page {
 }
 
 .startBox .select {
-	width: 260px; display: block; border: 0; height: 20px; margin-top: 40px; background: #fff; cursor: pointer;
+	width: 260px; display: block; border: 0; height: 20px; margin-top: 40px; background: #fff; cursor: pointer; overflow: hidden;
 }
 
 .selectionList {
-	background: #fff; width: 260px; color: #000; border-top: 2px solid #000
+	background: #fff; width: 260px; color: #575757; border-top: 2px solid #e3e3e3; overflow: hidden; -moz-box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5); box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5);
+}
+
+.slimScrollDiv {
+	background: #fff; width: 260px; color: #575757; border-top: 2px solid #e3e3e3; overflow: hidden; -moz-box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5); box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5);
 }
 
 .selectionList span {
@@ -108,7 +116,7 @@ div#boxesCont .page {
 }
 
 .selectionList span:hover {
-	background: #e1e1e1;
+	background: #d0d0d0;
 }
 
 .inviaForm {
@@ -127,24 +135,64 @@ div#boxesCont .page {
 	font-size: 11px; font-weight: normal; color: black; padding-top: 2px; display: block; padding-left: 6px; float: left; width: 233px; overflow: hidden;
 }
 
+.cerca .slimScrollDiv  .selectEle span {
+	width: 248px; word-break: break-all; line-height: 15px; padding-bottom: 5px;
+}
+
+.endpList .slimScrollDiv  .selectEle span {
+	width: 188; word-break: break-all; line-height: 15px; padding-bottom: 5px;
+}
+
+.cerca .slimScrollDiv .selectionList,.endpList .slimScrollDiv .selectionList {
+	border-top: 0;
+}
+
+.cerca .slimScrollDiv {
+	border-top: 2px solid #e3e3e3; z-index: 9999;
+}
+
+.endpList .slimScrollDiv {
+	border-top: 2px solid #8b8b8b; z-index: 9999;
+}
+
 .startBox .select span.arrow,.startBox .cerca span.arrow {
 	font-size: 11px; font-weight: normal; color: #000; float: right; background-position: -626px -57px; width: 10px; height: 10px; margin-top: 5px; margin-right: 2px;
 }
 
 .startBox .input {
-	width: 260px; display: block; border: 0; height: 20px; line-height: 20px; margin-top: 10px; color: #cccccc; background-color: #666666;
+	width: 260px; display: block; border: 0; height: 20px; line-height: 20px; margin-top: 10px; color: #575757; background-color: #bdbdbd; overflow: hidden;
+}
+
+.startBox .input.textarea {
+	width: 260px; display: block; border: 0; height: 50px; line-height: 20px; margin-top: 10px; color: #575757; background-color: #fff; overflow: hidden;
+}
+
+.startBox .input textarea {
+	padding-top: 0; padding-left: 5px; width: 258px; display: block; border: 0; height: 48px; color: #575757; background-color: #fff; font-size: 11px; font-weight: normal;
 }
 
 .startBox .input input {
-	padding-top: 7px; padding-left: 5px; width: 251px; display: block; border: 0; height: 16px; color: #cccccc; background-color: #666666; font-size: 11px; font-weight: normal;
+	padding-top: 0; padding-left: 5px; width: 251px; display: block; border: 0; height: 18px; color: #575757; background-color: #bdbdbd; font-size: 11px; font-weight: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.startBox .input input {
+		padding-top: 4px;
+	}
 }
 
 .startBox .inputClass {
-	width: 200px; display: block; border: 0; height: 20px; line-height: 20px; margin-top: 40px; color: #cccccc; background-color: #666666;
+	width: 200px; display: block; border: 0; height: 20px; line-height: 20px; margin-top: 40px; color: #575757; background-color: #bdbdbd;
 }
 
 .startBox .inputClass input {
-	padding-top: 7px; padding-left: 5px; width: 191px; display: block; border: 0; height: 16px; color: #cccccc; background-color: #666666; font-size: 11px; font-weight: normal;
+	padding-top: 0; padding-left: 5px; width: 191px; display: block; border: 0; height: 18px; color: #575757; background-color: #bdbdbd; font-size: 11px; font-weight: normal; padding-left: 5px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.startBox .inputClass input {
+		padding-top: 4px;
+	}
 }
 
 #footer {
@@ -240,17 +288,77 @@ h1 span {
 }
 
 div.startBox.infoHome {
-	z-index: 900; display: none; background: #fff; color: #000; cursor: pointer;
+	z-index: 900; display: none; background: #fff; color: #575757; cursor: pointer;
 }
 
-div.startBox.infoHome.segnala {
-	background: #616693; color: #fff; display: block; cursor: auto;
-}
-
-div.startBox.infoHome.segnala * {
-	cursor: auto;
+div.startBox.endpList {
+	background-position: -940px -990px; color: #fff; display: block; cursor: auto;
 }
 
 #startpanel div.startBox.infoHome p {
 	margin: 0 20px 0 20px; font-size: 11px; line-height: 20px; padding-top: 14px;
+}
+
+#boxO {
+	background-position: -10px -990px; color: #fff; display: block; cursor: auto;
+}
+
+#boxO .selectionlist span {
+	color: #975E1C;
+}
+
+#boxO .selectionlist span:hover {
+	background-color: #dcaf7a;
+}
+
+#boxO div.input,#boxO div.input input,#boxO.startbox .inputclass input,#boxO.startbox .inputclass {
+	background-color: #dcaf7a;
+}
+
+#boxO .inputClass input {
+	width: 260px;
+}
+
+#boxO .inputClass {
+	width: 260px; margin-top: 60px;
+}
+
+#boxO .info,#boxV .info,#boxB .info {
+	background-position: -640px -230px;
+}
+
+#boxO .selectionList {
+	border-top: 2px solid #c47922;
+}
+
+#boxO.startbox .select span,#boxO.startbox .cerca span {
+	color: #975E1C;
+}
+
+#boxV {
+	background-position: -10px -1300px; color: #fff; display: block; cursor: auto;
+}
+
+#boxB {
+	background-position: -10px -1610px; color: #fff; display: block; cursor: auto;
+}
+
+#boxB.startbox .input textarea {
+	background-color: #fff; color: #50547c;
+}
+
+#boxB.startbox .input {
+	margin-top: 40px; background-color: #fff;
+}
+
+.endpList .select {
+	margin-top: 260px; width: 200px;
+}
+
+.endpList .selectionList {
+	width: 200px;
+}
+
+.endpList .select span {
+	width: 173px;
 }

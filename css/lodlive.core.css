@@ -1,3 +1,7 @@
+* {
+	font-family: 'Open Sans', verdana;
+}
+
 body {
 	padding: 0; margin: 0; font-family: 'Open Sans', verdana; font-size: 10px; background: #c7c7c7
 }
@@ -92,6 +96,10 @@ body {
 
 #controlPanel .panel.help {
 	background-position: -745px -400px; cursor: pointer;
+}
+
+#panelContent .videoHelp {
+	display: block; margin-left: 67px; background-position : -781px -549px; cursor: pointer; width: 56px; height: 28px; background-position: -781px -549px;
 }
 
 #controlPanel .panel.close2 {
@@ -323,7 +331,7 @@ div#msg .separ.inverse {
 }
 
 .toolBox {
-	background-position: -135px -395px; height: 23px; width: 80px; position: absolute; z-index: 98; background-repeat-y: no-repeat;
+	background-position: -135px -395px; height: 23px; width: 80px; position: absolute; z-index: 100; background-repeat-y: no-repeat;
 }
 
 .box a {
@@ -352,7 +360,7 @@ div#msg .separ.inverse {
 }
 
 .queryConsole {
-	position: fixed; z-index: 999; width: 630px; left: 50%; top: 50; margin-left: -315px
+	position: fixed; z-index: 999; width: 630px; left: 50%; top: 70px; margin-left: -315px
 }
 
 .queryConsole h3 {
@@ -384,9 +392,9 @@ div#msg .separ.inverse {
 }
 
 .queryConsole div span span.linkArea {
-	padding: 0; float: right; width: 10px; height: 10px;background-position: -610px -600px; cursor: pointer; 
+	padding: 0; float: right; width: 10px; height: 10px; background-position: -610px -600px; cursor: pointer;
 }
- 
+
 .queryConsole strong {
 	font-weight: normal;
 }
@@ -397,4 +405,4 @@ div#msg .separ.inverse {
 
 .queryConsole h4 span {
 	padding: 12px 20px 0 20px
-}
+} 

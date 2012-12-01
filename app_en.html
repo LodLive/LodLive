@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml" version="XHTML+RDFa 1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/MarkUp/SCHEMA/xhtml-rdfa-2.xsd" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/">
+<html xmlns="http://www.w3.org/1999/xhtml" version="XHTML+RDFa 1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/MarkUp/SCHEMA/xhtml-rdfa-2.xsd" lang="it" xmlns="http://www.w3.org/1999/xhtml" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/">
 <head profile="http://www.w3.org/1999/xhtml/vocab">
 <meta property="dcterms:created" content="2012-04-25T13:00:00" />
 <link property="dc:creator" href="http://purl.org/net/foaf:Person/diego-valerio-camarda" />
@@ -12,7 +12,10 @@
 <meta property="og:title" content="LodLive - browsing the Web of Data" />
 <meta property="og:description" content="LodLive &egrave; un progetto sperimentale nato per divulgare la filosofia dei linked open data e per creare uno strumento in grado di associare le potenzialità di un browser RDF all'efficacia della rappresentazione a grafo proponendosi come primo navigatore di risorse RDF basato unicamente su endpoint SPARQL." />
 <meta property="og:image" content="http://lodlive.it/img/logoLodLive.jpg" />
-<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script>
+	window.jQuery || document.write('<script src="js/jquery-1.7.1.min.js"><\/script>')
+</script>
 <link rel="image_src" href="http://lodlive.it/img/logoLodLive.jpg" />
 <title property="dc:title">LodLive - browsing the Web of Data</title>
 <script type="text/javascript">
@@ -32,27 +35,31 @@
 </script>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
 <script type="text/javascript">
-  WebFontConfig = {
-    google: { families: [ 'Open+Sans:400italic,700italic,800italic,300italic,600italic,400,300,600,800,700:latin' ] }
-  };
-  (function() {
-    var wf = document.createElement('script');
-    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-    wf.type = 'text/javascript';
-    wf.async = 'true';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(wf, s);
-  })(); </script><script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
+	WebFontConfig = {
+		google : {
+			families : [ 'Open+Sans:400italic,700italic,800italic,300italic,600italic,400,300,600,800,700:latin' ]
+		}
+	};
+	(function() {
+		var wf = document.createElement('script');
+		wf.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+		wf.type = 'text/javascript';
+		wf.async = 'true';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(wf, s);
+	})();
+</script>
+<script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
 <script type="text/javascript" src="js/jquery.fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 <link rel="stylesheet" href="js/jquery.fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="all" />
 <link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.8.18.custom.css" type="text/css" media="all" />
 <!-- CSS principale dell'applicazione -->
-<link rel="stylesheet" href="css/lodlive.core.css?4" type="text/css" media="all" />
+<link rel="stylesheet" href="css/lodlive.core.css?0" type="text/css" media="all" />
 <!-- CSS per gli stili dei box delle classi -->
-<link rel="stylesheet" href="css/lodlive.profile.css?4" type="text/css" media="all" />
+<link rel="stylesheet" href="css/lodlive.profile.css?0" type="text/css" media="all" />
 <!-- CSS per gli stili dell'home -->
-<link rel="stylesheet" href="css/lodlive.app.css?4" type="text/css" media="all" />
+<link rel="stylesheet" href="css/lodlive.app.css?0" type="text/css" media="all" />
+<script type="text/javascript" src="js/jquery.slimScroll.min.js"></script>
 <script type="text/javascript" src="js/jquery.json-2.3.min.js"></script>
 <script type="text/javascript" src="js/jquery.jsonp-2.3.0.min.js"></script>
 <script type="text/javascript" src="js/jquery.jstorage.js"></script>
@@ -61,12 +68,12 @@
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript" src="js/jquery.gmap3.js"></script>
 <script type="text/javascript" src="js/jquery.ThreeDots.min.js"></script>
-<script type="text/javascript" src="js/lodlive.core.js?4"></script>
-<script type="text/javascript" src="js/lodlive.profile.js?4"></script>
-<script type="text/javascript" src="js/lodlive.lang.js?4"></script>
+<script type="text/javascript" src="js/lodlive.profile.js?0"></script>
+<script type="text/javascript" src="js/lodlive.core.js?0"></script>
+<script type="text/javascript" src="js/lodlive.lang.js?0"></script>
 <link rel="shortcut icon" href="favicon.png" />
 <link rel="icon" type="image/png" href="favicon.png" />
-<script type="text/javascript" src="js/lodlive.app.js?4"></script>
+<script type="text/javascript" src="js/lodlive.app.js?0"></script>
 <script type="text/javascript">
 	$.jStorage.set('selectedLanguage', 'en')
 </script>
@@ -76,11 +83,12 @@
 		<div id="lang">
 			<a href="http://lodlive.it" title="versione italiana">IT</a> / <a href="http://en.lodlive.it" title="english version">EN</a>
 		</div>
-		<div id="nextPage" class="spriteHomeEn paginator"></div>
-		<div id="prevPage" class="spriteHomeEn paginator"></div>
+		<div id="nextPage" class="spriteHome paginator"></div>
+		<div id="prevPage" class="spriteHome paginator"></div>
 		<div id="startPanel">
 			<div id="logo" class="sprite"></div>
 			<div id="boxes">
+				<div id="firstLineBoxes"></div>
 				<div id="boxesCont"></div>
 			</div>
 			<div class="startBoxMainText">
@@ -109,20 +117,13 @@
 				<div class="footerBox" id="menu">
 					<h2>menu</h2>
 					<ul>
-						<li><a href="#what">What is LodLive?</a>
-						</li>
-						<li><a href="http://blog.lodlive.it">Blog/documentation</a>
-						</li>
-						<li><a href="#faq">FAQ</a>
-						</li>
-						<li><a href="#send">Signal an endpoint</a>
-						</li>
-						<li><a href="#links">Useful Links</a>
-						</li>
-						<li><a href="#get">Download</a>
-						</li>
-						<li><a href="#credits">Credits and contacts</a>
-						</li>
+						<li><a href="#what">What is LodLive?</a></li>
+						<li><a href="http://blog.lodlive.it">Blog/documentation</a></li>
+						<li><a href="#faq">FAQ</a></li>
+						<li><a href="#send">Signal an endpoint</a></li>
+						<li><a href="#links">Useful Links</a></li>
+						<li><a href="#get">Download</a></li>
+						<li><a href="#credits">Credits and contacts</a></li>
 					</ul>
 				</div>
 				<div class="footerBox">
@@ -150,7 +151,7 @@
 		</div>
 		<div id="get" class="hd">
 			<p>
- 	LodLive is available on GitHub <a href="https://github.com/dvcama/LodLive" target="_blank">https://github.com/dvcama/LodLive</a> 
+				LodLive is available on GitHub <a href="https://github.com/dvcama/LodLive" target="_blank">https://github.com/dvcama/LodLive</a>
 			</p>
 		</div>
 		<div id="credits" class="hd">
@@ -171,6 +172,7 @@
 		<div class="help hd">
 			<div>
 				<h2>HELP</h2>
+				<p><a href="http://www.youtube.com/embed/BQ9Ckh2ov-c?rel=0" class="sprite videoHelp"></a></p>
 				<p>Here you can follow the direct and inverse connections provided by the resource by moving freely from one "circle" to the others.</p>
 				<p>Every new pop-open resource will guide the user to those relating to it, automatically connecting the new "circle" to the ones they have already opened.</p>
 				<p>Every time an owl:sameAs property is reached throughout the course of navigation, LodLive will connect to the related endpoint, enabling the user to move to the new available resources within the same navigation environment.</p>

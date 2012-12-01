@@ -30,8 +30,11 @@ $.jStorage.set('language', {
 		executeThisQuery : 'esegui la query SPARQL in una nuova finestra',
 		moreInfoOnThis : 'maggiori informazioni su questa risorsa',
 		simpleSearch : 'ricerca semplice',
-		simpleSearchDescription : 'la ricerca semplice permette di... la ricerca semplice permette di... la ricerca semplice permette di...',
-		insertUri : 'inserisci un URI'
+		simpleSearchDescription : 'DBpedia.org e Freebase consentono di interrogare le proprie risorse per parola chiave.<br /><br />Scegliendo un dataset e digitando almeno tre lettere di una parola chiave è possibile trovare gli URI delle risorse che si vuole esplorare.',
+		insertUri : 'inserisci un URI',
+		insertUriDescription : 'LodLive è in grado di analizzare e rappresentare risorse RDF anche se non supportate da un EndPoint per l\'accesso SPARQL.<br /><br />Inserendo un qualsiasi URI ad una risorsa RDF è possibile esplorarne contenuti e relazioni.',
+		insertData : 'esplora i tuoi dati',
+		liveLodLive : 'Scegliendo un endpoint tra quelli configurati è possibile navigare la risorsa e ricavare, attraverso delle query SPARQL preimpostate, non solo le proprietà dirette, ma anche tutte le proprietà inverse indipendentemente dal dataset di appartenenza.'
 	},
 	en : {
 		restart : 'restart',
@@ -64,8 +67,10 @@ $.jStorage.set('language', {
 		executeThisQuery : 'execute the SPARQL query in a new window',
 		moreInfoOnThis : 'more info on this resource',
 		simpleSearch : 'simple search',
-		simpleSearchDescription : 'bla bla bla bla... bla bla bla bla... bla bla bla bla... bla bla bla bla...',
-		insertUri : 'insert URI'
+		simpleSearchDescription : 'DBpedia.org and Freebase allow  their resources to be queried through keywords.<br/><br/>You will be able to find the URIs of the resources  you want to explore by choosing a dataset and typing at least three letters of a keyword for it.',
+		insertUri : 'insert URI',
+		insertUriDescription : 'LodLive is able to analyse and "show"  RDF resources even when they are  not supported by a SPARQL access EndPoint.<br/><br/>By entering any URI to an RDF resource,  you will be able to explore contents and relationships.',
+		insertData : 'browse your data'
 	}
 });
 

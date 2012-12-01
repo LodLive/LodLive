@@ -20,6 +20,7 @@ var debugOn = false;
 		timeout : 30000
 	});
 	var globalInfoPanelMap = {};
+	var globalInnerPageMap = {};
 	var methods = {
 		init : function(firstUri) {
 			var context = this;
@@ -35,7 +36,7 @@ var debugOn = false;
 			$.jStorage.set('imagesMap', {});
 			$.jStorage.set('mapsMap', {});
 			$.jStorage.set('infoPanelMap', {});
-			
+
 			// $.jStorage.set('storeIds',{});
 			// template della query
 
@@ -54,7 +55,7 @@ var debugOn = false;
 			$.jStorage.set('classMap', {
 				counter : 1
 			});
-			
+
 			// imposto le dimensioni dell'area di lavoro
 			// context.height($(document).height());
 			// context.width($(document).width());
@@ -224,76 +225,79 @@ var debugOn = false;
 					});
 
 				}
-				if (toLog.title) {
-					var h4 = $('<h4 class="t' + localId + ' sprite"><span>' + toLog.title + '</span></h4>');
-					panel.append(h4);
-					h4.hover(function() {
-						$(this).setBackgroundPosition({
-							y : -700
-						});
-					}, function() {
-						$(this).setBackgroundPosition({
-							y : -650
-						});
-					});
-					h4.toggle(function() {
-						$(this).setBackgroundPosition({
-							x : -1290
-						});
-						panel.find('.slideOpen').click();
-						$(this).addClass('slideOpen');
-						$(this).next('div').slideToggle();
-					}, function() {
-						$(this).setBackgroundPosition({
-							x : -680
-						});
-						$(this).removeClass('slideOpen');
-						$(this).next('div').slideToggle();
-
-					});
-				}
-				if (toLog.text) {
-					var aDiv = $('<div><span><span class="contentArea">' + (toLog.text).replace(/</gi, "&lt;").replace(/>/gi, "&gt;") + '</span></span></div>');
-					var aEndpoint = $.trim(panel.find('h4.t' + localId).clone().find('strong').remove().end().text());
-					if (aEndpoint.indexOf("http:") == 0) {
-						var aLink = $('<span class="linkArea sprite" title="' + lang('executeThisQuery') + '"></span>');
-						aLink.click(function() {
-							window.open(aEndpoint + '?query=' + encodeURIComponent(toLog.text));
-						});
-						aLink.hover(function() {
+				if (panel) {
+					if (toLog.title) {
+						var h4 = $('<h4 class="t' + localId + ' sprite"><span>' + toLog.title + '</span></h4>');
+						panel.append(h4);
+						h4.hover(function() {
 							$(this).setBackgroundPosition({
-								x : -630
+								y : -700
 							});
 						}, function() {
 							$(this).setBackgroundPosition({
-								x : -610
+								y : -650
 							});
 						});
-						aDiv.children('span').prepend(aLink);
-					}
-					aDiv.css({
-						opacity : 0.95
-					});
-					panel.append(aDiv);
-				}
-				if (toLog.error) {
-					panel.find('h4.t' + localId + ' > span').append('<strong style="float:right">' + lang('enpointNotAvailable') + '</strong>');
-				}
-				if (typeof toLog.founded == typeof 0) {
-					if (toLog.founded == 0) {
-						panel.find('h4.t' + localId + ' > span').append('<strong style="float:right">' + lang('propsNotFound') + '</strong>');
-					} else {
-						panel.find('h4.t' + localId + ' > span').append('<strong style="float:right">' + toLog.founded + ' ' + lang('propsFound') + ' </strong>');
+						h4.toggle(function() {
+							$(this).setBackgroundPosition({
+								x : -1290
+							});
+							panel.find('.slideOpen').click();
+							$(this).addClass('slideOpen');
+							$(this).next('div').slideToggle();
+						}, function() {
+							$(this).setBackgroundPosition({
+								x : -680
+							});
+							$(this).removeClass('slideOpen');
+							$(this).next('div').slideToggle();
+
+						});
 					}
 
+					if (toLog.text) {
+						var aDiv = $('<div><span><span class="contentArea">' + (toLog.text).replace(/</gi, "&lt;").replace(/>/gi, "&gt;") + '</span></span></div>');
+						var aEndpoint = $.trim(panel.find('h4.t' + localId).clone().find('strong').remove().end().text());
+						if (aEndpoint.indexOf("http:") == 0) {
+							var aLink = $('<span class="linkArea sprite" title="' + lang('executeThisQuery') + '"></span>');
+							aLink.click(function() {
+								window.open(aEndpoint + '?query=' + encodeURIComponent(toLog.text));
+							});
+							aLink.hover(function() {
+								$(this).setBackgroundPosition({
+									x : -630
+								});
+							}, function() {
+								$(this).setBackgroundPosition({
+									x : -610
+								});
+							});
+							aDiv.children('span').prepend(aLink);
+						}
+						aDiv.css({
+							opacity : 0.95
+						});
+						panel.append(aDiv);
+					}
+					if (toLog.error) {
+						panel.find('h4.t' + localId + ' > span').append('<strong style="float:right">' + lang('enpointNotAvailable') + '</strong>');
+					}
+					if (typeof toLog.founded == typeof 0) {
+						if (toLog.founded == 0) {
+							panel.find('h4.t' + localId + ' > span').append('<strong style="float:right">' + lang('propsNotFound') + '</strong>');
+						} else {
+							panel.find('h4.t' + localId + ' > span').append('<strong style="float:right">' + toLog.founded + ' ' + lang('propsFound') + ' </strong>');
+						}
+
+					}
+					infoMap[id] = panel;
+					globalInfoPanelMap = infoMap;
 				}
-				infoMap[id] = panel;
-				globalInfoPanelMap = infoMap;
 			} else if (action == 'remove') {
 				delete infoMap[id];
 				globalInfoPanelMap = infoMap;
 			} else if (action == 'show') {
-				//panel.show();
+				// panel.show();
 				context.append(panel);
 			} else if (action == 'close') {
 				panel.detach();
@@ -413,6 +417,18 @@ var debugOn = false;
 
 					} else if ($(this).hasClass("help")) {
 						var help = $('.help').children('div').clone();
+						$('.videoHelp', help).fancybox({
+							'transitionIn' : 'elastic',
+							'transitionOut' : 'elastic',
+							'speedIn' : 400,
+							'type' : 'iframe',
+							'width' : 853,
+							'height' : 480,
+							'speedOut' : 200,
+							'hideOnContentClick' : false,
+							'showCloseButton' : true,
+							'overlayShow' : false
+						});
 						panelContent.append(help);
 						if (help.height() > $(window).height() + 10) {
 							panel.addClass("justX");
@@ -797,6 +813,22 @@ var debugOn = false;
 				start = new Date().getTime();
 			}
 			var context = this;
+
+			$.each(globalInnerPageMap, function(key, element) {
+				if (element.children(".relatedBox:not([class*=exploded])").length > 0) {
+					if (element.parent().length == 0) {
+						context.append(element);
+					}
+					element.children(".relatedBox:not([class*=exploded])").each(function() {
+						var aId = $(this).attr("relmd5");
+						var newObj = context.children('#' + aId);
+						if (newObj.length > 0) {
+							$(this).click();
+						}
+					});
+					context.children('.innerPage').detach();
+				}
+			});
 			context.find(".relatedBox:not([class*=exploded])").each(function() {
 				var aId = $(this).attr("relmd5");
 				var newObj = context.children('#' + aId);
@@ -994,9 +1026,24 @@ var debugOn = false;
 
 			obj.fadeOut('normal', null, function() {
 				obj.remove();
-				$("." + id).show();
-				$("." + id).removeClass("exploded");
-
+				$.each(globalInnerPageMap, function(key, element) {
+					if (element.children("." + id).length > 0) {
+						$('#' + key).append(element);
+					}
+				});
+				$("." + id).each(function() {
+					$(this).show();
+					$(this).removeClass("exploded");
+				});
+				$.each(globalInnerPageMap, function(key, element) {
+					if (element.children("." + id).length > 0) {
+						var lastClick = $('#' + key).find('.lastClick').attr("rel");
+						if ($('#' + key).children('.innerPage').children('.' + lastClick).length == 0) {
+							$('#' + key).children('.innerPage').detach();
+						}
+					}
+				});
+				// $('#'+id).children('.innerPage').detach();
 				var generated = $.jStorage.get('storeIds-generatedBy-' + id);
 				var generatedRev = $.jStorage.get('storeIds-generatedByRev-' + id);
 				if (generatedRev) {
@@ -1071,8 +1118,12 @@ var debugOn = false;
 
 			obj.find(".groupedRelatedBox").each(function() {
 				$(this).toggle(function() {
+					obj.append(globalInnerPageMap[obj.attr("id")]);
 					context.lodlive('docInfo', '', 'close');
 					obj.find('.lastClick').removeClass('lastClick').click();
+					if (obj.children('.innerPage').length == 0) {
+						obj.append(globalInnerPageMap[obj.attr("id")]);
+					}
 					$(this).addClass('lastClick');
 					obj.find("." + $(this).attr("rel") + ":not([class*=exploded])").fadeIn('fast');
 					$(this).fadeTo('fast', 0.3);
@@ -1082,6 +1133,7 @@ var debugOn = false;
 					$(this).removeClass('lastClick');
 					obj.find("." + $(this).attr("rel")).fadeOut('fast');
 					$(this).fadeTo('fast', 1);
+					obj.children('.innerPage').detach();
 				});
 				$(this).hover(function() {
 					context.lodlive('msg', $(this).attr('data-title'), 'show', null, null, $(this).hasClass("inverse"));
@@ -1090,6 +1142,8 @@ var debugOn = false;
 				});
 			});
 
+			globalInnerPageMap[obj.attr("id")] = obj.children('.innerPage');
+			obj.children('.innerPage').detach();
 			// aggiungo le azioni dei tools
 			obj.find(".actionBox[rel=contents]").click(function() {
 				context.lodlive('docInfo', obj, 'open');
@@ -1207,6 +1261,7 @@ var debugOn = false;
 			if (callback) {
 				callback();
 			}
+
 			if (debugOn) {
 				console.debug((new Date().getTime() - start) + '	addClick ');
 			}
@@ -1306,6 +1361,7 @@ var debugOn = false;
 							destBox.css({
 								position : 'fixed',
 								left : $(window).width() - $('#docInfo').width() - 20,
+								height : $(window).height() - 20,
 								top : 0
 							});
 							destBox.attr("data-top", destBox.position().top);
@@ -1513,6 +1569,7 @@ var debugOn = false;
 				});
 				context.lodlive('processDraw', pos1.left + from.width() / 2, pos1.top + from.height() / 2, pos2.left + to.width() / 2, pos2.top + to.height() / 2, aCanvas, to.attr("id"));
 			}
+
 			if (debugOn) {
 				console.debug((new Date().getTime() - start) + '	drawaLine ');
 			}
@@ -1609,7 +1666,7 @@ var debugOn = false;
 			// aggiungo al box le informazioni descrittive della risorsa
 			var jContents = $('<div></div>');
 			var topSection = $('<div class="topSection sprite"><span>&#160;</span></div>');
-			jContents.append(topSection);
+			jResult.append(topSection);
 			topSection.find('span').each(function() {
 				$(this).click(function() {
 					context.lodlive('docInfo', '', 'close');
@@ -1774,6 +1831,10 @@ var debugOn = false;
 						$(this).attr("src", "img/immagine-vuota-" + $.jStorage.get('selectedLanguage') + ".png");
 					});
 				});
+			});
+			jContents.slimScroll({
+				height : $(window).height() - 40,
+				color : '#fff'
 			});
 			if (debugOn) {
 				console.debug((new Date().getTime() - start) + '	formatDoc ');
@@ -2713,7 +2774,12 @@ var debugOn = false;
 					destBox.html(lang('choose'));
 					json = json['results']['bindings'];
 					$.each(json, function(key, value) {
-						classes.push(json[key].object.value);
+						var aclass = json[key].object.value;
+						if (aclass.indexOf('http://www.openlinksw.com/') == -1) {
+							aclass = aclass.replace(/http:\/\//, "");
+							classes.push(aclass);
+						}
+
 					});
 					for ( var i = 0; i < classes.length; i++) {
 						destSelect.append(template.replace(/\{CONTENT\}/g, classes[i]));
