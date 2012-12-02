@@ -99,7 +99,7 @@ body {
 }
 
 #panelContent .videoHelp {
-	display: block; margin-left: 67px; background-position : -781px -549px; cursor: pointer; width: 56px; height: 28px; background-position: -781px -549px;
+	display: block; margin-left: 67px; background-position: -781px -549px; cursor: pointer; width: 56px; height: 28px; background-position: -781px -549px;
 }
 
 #controlPanel .panel.close2 {
@@ -405,4 +405,8 @@ div#msg .separ.inverse {
 
 .queryConsole h4 span {
 	padding: 12px 20px 0 20px
-} 
+}
+
+#docInfo .slimScrollDiv {
+	color: #fff; 
+}

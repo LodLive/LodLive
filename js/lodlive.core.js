@@ -1361,7 +1361,7 @@ var debugOn = false;
 							destBox.css({
 								position : 'fixed',
 								left : $(window).width() - $('#docInfo').width() - 20,
-								height : $(window).height() - 20,
+								//height : $(window).height() - 20,
 								top : 0
 							});
 							destBox.attr("data-top", destBox.position().top);
@@ -1390,6 +1390,7 @@ var debugOn = false;
 					});
 				}
 			} else if (action == 'move') {
+				/*
 				if ($('#docInfo').height() > $(window).height() + 10) {
 					$('#docInfo').css({
 						position : 'absolute',
@@ -1402,7 +1403,7 @@ var debugOn = false;
 						left : $(window).width() - $('#docInfo').width() - 20,
 						top : 0
 					});
-				}
+				}*/
 
 			} else {
 				$('#docInfo').fadeOut('fast', null, function() {
@@ -1801,7 +1802,7 @@ var debugOn = false;
 
 			destBox.append(jResult);
 			destBox.append(jContents);
-			destBox.append("<div class=\"separLast\"></div>");
+			//destBox.append("<div class=\"separLast\"></div>");
 
 			// aggiungo le funzionalita' per la visualizzazione delle immagini
 			jContents.find(".relatedImage").each(function() {
@@ -1832,10 +1833,12 @@ var debugOn = false;
 					});
 				});
 			});
-			jContents.slimScroll({
-				height : $(window).height() - 40,
-				color : '#fff'
-			});
+			if(jContents.height()+40 > $(window).height()){
+				jContents.slimScroll({
+					height : $(window).height() - 40,
+					color : '#fff'
+				});
+			}
 			if (debugOn) {
 				console.debug((new Date().getTime() - start) + '	formatDoc ');
 			}
