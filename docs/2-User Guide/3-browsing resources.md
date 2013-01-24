@@ -1,10 +1,13 @@
 Browsing Resources
 ==================
 
-Using Pre-Defined Starting Points
----------------------------------
+Using the Endpoint Access Panel
+-------------------------------
 
-TBD
+PICTURE
+
+* Choose a class
+* Adding some keywords
 
 Entering Your Own URI 
 ---------------------
