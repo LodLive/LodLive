@@ -4,7 +4,12 @@ User Interface
 Main Screen
 -----------
 
-PICTURE
+![Main Screen][mainscreen]
+![Resource][resource]
+
+[mainscreen]: ../files/mainscreen.png "LodLive Main Screen"
+[resource]: ../files/resource.png "Resource Representation"
+
 
 Large Circle: Resource. Connected Resources have arrows, labeled with name of property. Different colors for different resource types.
 
