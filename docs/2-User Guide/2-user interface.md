@@ -37,17 +37,6 @@ The smaller circles shown next to a resource are *Object Properties*. Different 
 7. Group of *inverse* relations
 8. Show more Object Properties
 
-###Toolbox
-
-![Toolbox][toolbox]
-
-1. Toolbox Button
-2. Access Query Panel
-3. Focus this resource (will close all other resources)
-4. Open this resource in its original location
-5. Expand all Object Properties for this resource
-6. Remove resource from canvas
-
 Additional Information Panel
 ----------------------------
 
@@ -91,5 +80,4 @@ Options Panel
 
 [mainscreen]: ../files/mainscreen.png "LodLive Main Screen"
 [resource]: ../files/resource.png "Resource Representation"
-[toolbox]: ../files/toolbar.png "Toolbox"
 [options]: ../files/options_panel.png "Options Panel"
