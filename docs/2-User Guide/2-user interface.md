@@ -1,15 +1,22 @@
 User Interface
-==============
+============
 
 Main Screen
------------
+------------------
 
 ![Main Screen][mainscreen]
+
+1. LodLive canvas
+2. Resource representation
+3. ding rechts
+4. ding unten links
+5. Image Panel
+6. Map Panel
+7. User Guide
+8. Symbol Explanation
+9. Options Panel
+
 ![Resource][resource]
-
-[mainscreen]: ../files/mainscreen.png "LodLive Main Screen"
-[resource]: ../files/resource.png "Resource Representation"
-
 
 Large Circle: Resource. Connected Resources have arrows, labeled with name of property. Different colors for different resource types.
 
@@ -55,3 +62,5 @@ Map Panel
 ---------
 	See where the resources are located, based on geolocations found while browsing
 
+[mainscreen]: ../files/mainscreen.png "LodLive Main Screen"
+[resource]: ../files/resource.png "Resource Representation"
