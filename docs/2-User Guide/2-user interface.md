@@ -1,57 +1,62 @@
 User Interface
-============
+==============
 
 Main Screen
-------------------
+------------
 
 ![Main Screen][mainscreen]
 
-1. LodLive canvas
-2. Resource representation
-3. ding rechts
-4. ding unten links
+1. LodLive Canvas
+2. Resource Representation
+3. Additional Information Panel
+4. Query Panel
 5. Image Panel
 6. Map Panel
 7. User Guide
 8. Symbol Explanation
 9. Options Panel
+ 
+Resource Representation
+-----------------------
+
+Resources are shown in different colors, for different resource types.
+Relations between resources are shown with arrows, which are labeled with the name of the property. 
+
+The smaller circles shown next to a resource are *Object Properties*. Different colors and shapes show the type of the relation. 
+
+* Click on an Object Property to expand, and follow the relation.
 
 ![Resource][resource]
 
-Large Circle: Resource. Connected Resources have arrows, labeled with name of property. Different colors for different resource types.
+1. Toolbox Button
+2. Additional Information Panel Button
+3. *Group* of relations
+4. Group of *sameAs* relations
+5. Object Property
+6. Group of inverse *sameAs* relations
+7. Group of *inverse* relations
+8. Show more Object Properties
 
-Small circles: Object Properties... click to expand
-Different colors and shapes depending on type of relation
+###Toolbox
 
-Flowers: Group of identical relations, click to expand
-Filled circles: Direct relations
-Empty Cirles: Inverse Relations
+![Toolbox][toolbox]
 
-Circles and FLowers with "S" are owl:sameAs properties LINK
-
-Toolbox
--------
-
-PICTURE
-
-	Left to right:
-		- access Query Panel
-		- focus on the resource, will close all others
-		- Open resource in its original location
-		- Expand all Object Properties for this resource
-		- Remove resource from the graph
+1. Toolbox Button
+2. Access Query Panel
+3. Focus this resource (will close all other resources)
+4. Open this resource in its original location
+5. Expand all Object Properties for this resource
+6. Remove resource from canvas
 
 Additional Information Panel
 ----------------------------
 
--> Panel on the right
 Use configuration to define what will be shown here LINK
 
 Query Panel
 -----------
-PICTURE
-SPARQL Queries showing how LodLive retrieved the RDF data currently displayed in the graph, queries can be expanded.
 
+SPARQL Queries showing how LodLive retrieved the RDF data currently displayed in the graph, queries can be expanded.
 
 Image Panel
 -----------
@@ -60,7 +65,31 @@ All the images connected to the displayed resources. Mouse over to enlarge
 
 Map Panel
 ---------
-	See where the resources are located, based on geolocations found while browsing
+
+See where the resources are located, based on geolocations found while browsing
+
+User Guide
+----------
+
+TBD
+
+Symbol Explanation
+------------------
+
+TBD
+
+Options Panel
+-------------
+
+![Options Panel][options]
+
+1. Generate inverse relations
+2. Auto-expand mode
+3. Generate inverse sameAs relations
+4. Collect images during browsing
+5. Geolocalize resources
 
 [mainscreen]: ../files/mainscreen.png "LodLive Main Screen"
 [resource]: ../files/resource.png "Resource Representation"
+[toolbox]: ../files/toolbar.png "Toolbox"
+[options]: ../files/options_panel.png "Options Panel"
