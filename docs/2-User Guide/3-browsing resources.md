@@ -4,21 +4,51 @@ Browsing Resources
 Using the Endpoint Access Panel
 -------------------------------
 
-PICTURE
+![Endpoint Access Panel][endpoint_panel]
 
-* Choose a class
-* Adding some keywords
+* Choose an Endpoint.
+* Add keywords.
+* Click **Start**.
+
+&rarr; The Endpoint is shown as a resource on the LodLive canvas.
 
 Entering Your Own URI 
 ---------------------
 
-TBD
+In your browser's address bar,
+
+* Append your URI after the question mark `?`.
+* Click **Go**.
+
+Example:
+
+```html
+http://en.lodlive.it/?http://www.domain.com/path/to/resource.rdf
+```
+
+&rarr; The Endpoint is shown as a resource on the LodLive canvas.
+
 
 Browsing
 --------
 
-Here you can follow the direct and inverse connections provided by the resource by moving freely from one "circle" to the others.
+* Clicking an Object Property to open other resources.
+* Drag and Drop resources to arrange them on the canvas.
+* Close resources you are not interested in.
 
-Every new pop-open resource will guide the user to those relating to it, automatically connecting the new "circle" to the ones they have already opened.
+**Please Note:**
+Every time an owl:sameAs property is reached during browsing, LodLive will draw a connection to the related resource. This way, you can browse direct and inverse relations.
 
-Every time an owl:sameAs property is reached throughout the course of navigation, LodLive will connect to the related endpoint, enabling the user to move to the new available resources within the same navigation environment.
+###Toolbox
+
+![Toolbox][toolbox]
+
+1. Toolbox Button
+2. Access Query Panel
+3. Focus this resource (will close all other resources)
+4. Open this resource in its original location
+5. Expand all Object Properties for this resource
+6. Remove resource from canvas
+
+[endpoint_panel]: ../files/predefined_resources.png "Endpoint Access Panel"
+[toolbox]: ../files/toolbar.png "Toolbox"
