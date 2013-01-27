@@ -26,7 +26,7 @@ The smaller circles shown next to a resource are *Object Properties*. Different 
 
 * Click on an Object Property to expand, and follow the relation.
 
-<img src="../files/resource.png" width="50%" alt="Resource Representation">
+<img src="../files/resource.png" width="100%" alt="Resource Representation">
 
 1. Toolbox Button
 2. Additional Information Panel Button
@@ -70,7 +70,7 @@ TBD
 Options Panel
 -------------
 
-<img src="../files/options_panel.png" width="50%" alt="Options Panel">
+<img src="../files/options_panel.png" width="100%" alt="Options Panel">
 
 1. Generate inverse relations
 2. Auto-expand mode

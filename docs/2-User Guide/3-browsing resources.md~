@@ -4,7 +4,7 @@ Browsing Resources
 Using the Endpoint Access Panel
 -------------------------------
 
-<img src="../files/predefined_resources.png" width="100%" alt="Endpoint Access Panel">
+![Endpoint Access Panel](../files/predefined_resources.png)
 
 * Choose an Endpoint.
 * Add keywords.
@@ -39,9 +39,9 @@ Browsing
 **Please Note:**
 Every time an owl:sameAs property is reached during browsing, LodLive will draw a connection to the related resource. This way, you can browse direct and inverse relations.
 
-### Toolbox
+###Toolbox
 
-<img src="../files/toolbar.png" width="50%" alt="Toolbox">
+![Toolbox](../files/toolbar.png)
 
 1. Toolbox Button
 2. Access Query Panel
