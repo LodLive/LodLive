@@ -4,7 +4,7 @@ User Interface
 Main Screen
 ------------
 
-![Main Screen][mainscreen]
+![LodLive Main Screen](../files/mainscreen.png)
 
 1. LodLive Canvas
 2. Resource Representation
@@ -26,7 +26,7 @@ The smaller circles shown next to a resource are *Object Properties*. Different 
 
 * Click on an Object Property to expand, and follow the relation.
 
-![Resource][resource]
+![Resource](../files/resource.png)
 
 1. Toolbox Button
 2. Additional Information Panel Button
@@ -70,14 +70,10 @@ TBD
 Options Panel
 -------------
 
-![Options Panel][options]
+![Options Panel](../files/options_panel.png)
 
 1. Generate inverse relations
 2. Auto-expand mode
 3. Generate inverse sameAs relations
 4. Collect images during browsing
 5. Geolocalize resources
-
-[mainscreen]: ../files/mainscreen.png "LodLive Main Screen"
-[resource]: ../files/resource.png "Resource Representation"
-[options]: ../files/options_panel.png "Options Panel"
