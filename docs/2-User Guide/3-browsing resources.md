@@ -4,7 +4,7 @@ Browsing Resources
 Using the Endpoint Access Panel
 -------------------------------
 
-![Endpoint Access Panel][endpoint_panel]
+![Endpoint Access Panel](../files/predefined_resources.png)
 
 * Choose an Endpoint.
 * Add keywords.
@@ -41,7 +41,7 @@ Every time an owl:sameAs property is reached during browsing, LodLive will draw 
 
 ###Toolbox
 
-![Toolbox][toolbox]
+![Toolbox](../files/toolbar.png)
 
 1. Toolbox Button
 2. Access Query Panel
@@ -49,6 +49,3 @@ Every time an owl:sameAs property is reached during browsing, LodLive will draw 
 4. Open this resource in its original location
 5. Expand all Object Properties for this resource
 6. Remove resource from canvas
-
-[endpoint_panel]: ../files/predefined_resources.png "Endpoint Access Panel"
-[toolbox]: ../files/toolbar.png "Toolbox"
