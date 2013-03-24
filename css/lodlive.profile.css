@@ -362,3 +362,19 @@ div.boxWrapper.DatatypeProperty .groupedRelatedBox.inverse {
 * div.boxWrapper div.relatedBox.isSameAs {
 	background-position: -1032px -412px;
 }
+
+* div.boxWrapper div.groupedRelatedBox.isType {
+	background-position: -1012px -432px;
+}
+
+* div.boxWrapper div.groupedRelatedBox.isType.inverse {
+	background-position: -1012px -472px;
+}
+
+* div.boxWrapper div.relatedBox.isType.inverse {
+	background-position: -1012px -452px;
+}
+
+* div.boxWrapper div.relatedBox.isType {
+	background-position: -1012px -412px;
+}

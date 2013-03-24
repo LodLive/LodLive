@@ -289,6 +289,13 @@ div#msg .separ.inverse {
 .groupedRelatedBox.isSameAs {
 	background-position: -1032px -432px;
 }
+.relatedBox.isType {
+	background-position: -1012px -412px;
+}
+
+.groupedRelatedBox.isType {
+	background-position: -1012px -432px;
+}
 
 .showGroupedRelated div.relatedBox {
 	position: static; display: inline-block;
@@ -408,5 +415,5 @@ div#msg .separ.inverse {
 }
 
 #docInfo .slimScrollDiv {
-	color: #fff; 
+	color: #fff; border:0;
 }

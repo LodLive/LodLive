@@ -2,6 +2,40 @@ $.jStorage.set('profile', {
 	// parametri di connessione agli endpoint
 	'connection' : {
 		// base degli about dei documenti non dell'ontologia
+		'http://data.opendataday.it' : {
+			// il parametro {URI} viene sostituito con la uri del documento da
+			// caricare
+			description : {
+				it : 'Catalogo dei dataset OpenData pubblicati da alcune istituzioni. Generato da fonti CKAN per l\'International Open Data Day Italia.',
+				en : 'Catalogo dei dataset OpenData pubblicati da alcune istituzioni. Generato da fonti CKAN per l\'International Open Data Day Italia.'
+			},
+			sparql : {
+				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
+				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
+				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object} ORDER BY ?property',
+				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
+				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>. FILTER(isIRI(?object))} LIMIT 100',
+				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
+			},
+			useForInverseSameAs : true,
+			endpoint : 'http://data.opendataday.it/sparql',
+			examples : [ {
+				label : 'Catalogo della Provincia di Roma',
+				uri : 'http://data.opendataday.it/resource/dati.provinciaRoma'
+			},{
+				label : 'Catalogo della Regione Lombardia',
+				uri : 'http://data.opendataday.it/resource/dati.lombardia'
+			},{
+				label : 'Catalogo della Regione Toscana',
+				uri : 'http://data.opendataday.it/resource/dati.toscana'
+			},{
+				label : 'Catalogo del Comune di Firenze',
+				uri : 'http://data.opendataday.it/resource/dati.firenze'
+			}
+
+			]
+		},
 		'http://dati.camera.it' : {
 			// il parametro {URI} viene sostituito con la uri del documento da
 			// caricare
@@ -460,13 +494,10 @@ $.jStorage.set('profile', {
 			} ]
 		}
 
-	},
+	}, 
 	uriSubstitutor : [ {
 		findStr : 'mpii.de/yago/resource/',
 		replaceStr : 'yago-knowledge.org/resource/'
-	}, {
-		findStr : 'dbpedia.org/page/',
-		replaceStr : 'dbpedia.org/resource/'
 	} ],
 	/* per ricavare un rdf da risorse non presenti in endpoint */
 	resourceResolver : {
@@ -488,10 +519,10 @@ $.jStorage.set('profile', {
 	'default' : {
 		document : {
 			className : 'standard',
-			titleProperties : [ 'http://www.w3.org/2004/02/skos/core#notation', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#value', 'http://www.geonames.org/ontology#name', 'http://purl.org/dc/elements/1.1/title', 'http://purl.org/dc/terms/title', 'http://www.w3.org/2000/01/rdf-schema#label', 'http://www.w3.org/2004/02/skos/core#prefLabel', 'http://logd.tw.rpi.edu/source/visualizing-org/dataset/2010-global-agenda-council-interlinkage-survey/vocab/enhancement/1/how_councils_interlink', 'http://rdf.freebase.com/ns/type.object.name', 'http://spcdata.digitpa.gov.it/nome_cognome' ,'http://xmlns.com/foaf/0.1/firstName','http://xmlns.com/foaf/0.1/lastName', 'http://xmlns.com/foaf/0.1/surname', 'http://xmlns.com/foaf/0.1/name']
+			titleProperties : [ 'http://www.w3.org/2004/02/skos/core#notation', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#value', 'http://www.geonames.org/ontology#name', 'http://purl.org/dc/elements/1.1/title', 'http://purl.org/dc/terms/title', 'http://www.w3.org/2000/01/rdf-schema#label', 'http://www.w3.org/2004/02/skos/core#prefLabel', 'http://logd.tw.rpi.edu/source/visualizing-org/dataset/2010-global-agenda-council-interlinkage-survey/vocab/enhancement/1/how_councils_interlink', 'http://rdf.freebase.com/ns/type.object.name', 'http://spcdata.digitpa.gov.it/nome_cognome' ,'http://xmlns.com/foaf/0.1/firstName','http://xmlns.com/foaf/0.1/lastName', 'http://xmlns.com/foaf/0.1/surname', 'http://xmlns.com/foaf/0.1/name','http://purl.org/dc/terms/description']
 		},// http://www.w3.org/2000/01/rdf-schema#label
 		images : {
-			properties : [ 'http://xmlns.com/foaf/0.1/depiction', 'http://dbpedia.org/ontology/thumbnail', 'http://dbpedia.org/property/logo', 'http://linkedgeodata.org/ontology/schemaIcon' ]
+					properties : ['http://www.w3.org/2006/vcard/ns#photo', 'http://xmlns.com/foaf/0.1/depiction', 'http://dbpedia.org/ontology/thumbnail', 'http://dbpedia.org/property/logo', 'http://linkedgeodata.org/ontology/schemaIcon' ]
 		},
 		maps : {
 			longs : [ 'http://www.w3.org/2003/01/geo/wgs84_pos#long' ],
@@ -499,7 +530,7 @@ $.jStorage.set('profile', {
 			points : [ 'http://www.georss.org/georss/point' ]
 		},
 		weblinks : {
-			properties : [ 'http://rdfs.org/sioc/ns#links_to', 'http://it.dbpedia.org/property/url', 'http://data.nytimes.com/elements/search_api_query', 'http://www.w3.org/2000/01/rdf-schema#isDefinedBy', 'http://xmlns.com/foaf/0.1/page', 'http://xmlns.com/foaf/0.1/homepage', 'http://purl.org/dc/terms/isReferencedBy', 'http://purl.org/dc/elements/1.1/relation', 'http://dbpedia.org/ontology/wikiPageExternalLink', 'http://data.nytimes.com/elements/topicPage' ]
+			properties : ['http://www.w3.org/ns/dcat#accessURL', 'http://xmlns.com/foaf/0.1/mbox','http://rdfs.org/sioc/ns#links_to', 'http://it.dbpedia.org/property/url', 'http://data.nytimes.com/elements/search_api_query', 'http://www.w3.org/2000/01/rdf-schema#isDefinedBy', 'http://xmlns.com/foaf/0.1/page', 'http://xmlns.com/foaf/0.1/homepage', 'http://purl.org/dc/terms/isReferencedBy', 'http://purl.org/dc/elements/1.1/relation', 'http://dbpedia.org/ontology/wikiPageExternalLink', 'http://data.nytimes.com/elements/topicPage' ]
 		}
 	},
 

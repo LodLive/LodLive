@@ -1361,7 +1361,7 @@ var debugOn = false;
 							destBox.css({
 								position : 'fixed',
 								left : $(window).width() - $('#docInfo').width() - 20,
-								//height : $(window).height() - 20,
+								// height : $(window).height() - 20,
 								top : 0
 							});
 							destBox.attr("data-top", destBox.position().top);
@@ -1391,19 +1391,14 @@ var debugOn = false;
 				}
 			} else if (action == 'move') {
 				/*
-				if ($('#docInfo').height() > $(window).height() + 10) {
-					$('#docInfo').css({
-						position : 'absolute',
-						left : $(window).width() + $('body').scrollLeft() - $('#docInfo').width() - 20,
-						top : $('#docInfo').attr("data-top")
-					});
-				} else {
-					$('#docInfo').css({
-						position : 'fixed',
-						left : $(window).width() - $('#docInfo').width() - 20,
-						top : 0
-					});
-				}*/
+				 * if ($('#docInfo').height() > $(window).height() + 10) {
+				 * $('#docInfo').css({ position : 'absolute', left :
+				 * $(window).width() + $('body').scrollLeft() -
+				 * $('#docInfo').width() - 20, top :
+				 * $('#docInfo').attr("data-top") }); } else {
+				 * $('#docInfo').css({ position : 'fixed', left :
+				 * $(window).width() - $('#docInfo').width() - 20, top : 0 }); }
+				 */
 
 			} else {
 				$('#docInfo').fadeOut('fast', null, function() {
@@ -1802,7 +1797,7 @@ var debugOn = false;
 
 			destBox.append(jResult);
 			destBox.append(jContents);
-			//destBox.append("<div class=\"separLast\"></div>");
+			// destBox.append("<div class=\"separLast\"></div>");
 
 			// aggiungo le funzionalita' per la visualizzazione delle immagini
 			jContents.find(".relatedImage").each(function() {
@@ -1833,11 +1828,16 @@ var debugOn = false;
 					});
 				});
 			});
-			if(jContents.height()+40 > $(window).height()){
+			if (jContents.height() + 40 > $(window).height()) {
+
+				destBox.find("div.separ:last").remove();
+				destBox.find("div.separLast").remove();
 				jContents.slimScroll({
 					height : $(window).height() - 40,
 					color : '#fff'
 				});
+			} else {
+				destBox.append("<div class=\"separLast\"></div>");
 			}
 			if (debugOn) {
 				console.debug((new Date().getTime() - start) + '	formatDoc ');
@@ -1889,6 +1889,15 @@ var debugOn = false;
 							// "");
 						}
 						jContents.append(destBox);
+						if (jContents.height() + 40 > $(window).height()) {
+							jContents.slimScroll({
+								height : $(window).height() - 40,
+								color : '#fff'
+							});
+							jContents.parent().find("div.separLast").remove();
+						} else {
+							jContents.parent().append("<div class=\"separLast\"></div>");
+						}
 					});
 				},
 				error : function(e, b, v) {
@@ -2220,7 +2229,10 @@ var debugOn = false;
 							// containerBox.append(objBox);
 							if (akey.toLowerCase().indexOf('owl#sameas') != -1) {
 								objBox.addClass('isSameAs');
+							} else if (akey.toLowerCase().indexOf('rdf-syntax-ns#type') != -1) {
+								objBox.addClass('isType');
 							}
+
 							objBox.attr('style', 'top:' + (chordsList[a][1] - 8) + 'px;left:' + (chordsList[a][0] - 8) + 'px');
 							objectList.push(objBox);
 							// containerBox.append('<div data-circlePos="' + a +
@@ -2263,6 +2275,8 @@ var debugOn = false;
 						// se si tratta di un sameas applico una classe diversa
 						if (akey.toLowerCase().indexOf('owl#sameas') != -1) {
 							obj.addClass('isSameAs');
+						} else if (akey.toLowerCase().indexOf('rdf-syntax-ns#type') != -1) {
+							obj.addClass('isType');
 						}
 						if (obj.hasClass("aGrouped")) {
 							innerObjectList.push(obj);
@@ -2275,7 +2289,6 @@ var debugOn = false;
 			});
 
 			inserted = {};
-			//
 			$.each(invertedDocs, function(key, value) {
 				if (counter == 16) {
 					counter = 0;
@@ -2298,6 +2311,8 @@ var debugOn = false;
 							// containerBox.append(objBox);
 							if (akey.toLowerCase().indexOf('owl#sameas') != -1) {
 								objBox.addClass('isSameAs');
+							} else if (akey.toLowerCase().indexOf('rdf-syntax-ns#type') != -1) {
+								objBox.addClass('isType');
 							}
 							objBox.attr('style', 'top:' + (chordsList[a][1] - 8) + 'px;left:' + (chordsList[a][0] - 8) + 'px');
 							// containerBox.append('<div data-circlePos="' + a +
@@ -2341,6 +2356,8 @@ var debugOn = false;
 						// se si tratta di un sameas applico una classe diversa
 						if (akey.toLowerCase().indexOf('owl#sameas') != -1) {
 							obj.addClass('isSameAs');
+						} else if (akey.toLowerCase().indexOf('rdf-syntax-ns#type') != -1) {
+							obj.addClass('isType');
 						}
 						if (obj.hasClass("aGrouped")) {
 							innerObjectList.push(obj);
