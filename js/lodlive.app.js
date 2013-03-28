@@ -317,7 +317,7 @@ $(function() {
 			});
 		});
 		form.bind('submit', function() {
-			var value = $(this).find('input[name=startFrom]').val();
+			var value = $(this).find('*[name=startFrom]').val();
 			if (value != '') {
 				document.location = '?' + $.trim(value);
 			} else {

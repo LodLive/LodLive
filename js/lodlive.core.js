@@ -54,7 +54,7 @@ var debugOn = false;
 			// inizializzo la mappa delle classi
 			$.jStorage.set('classMap', {
 				// randomize first color
-				counter :  Math.floor(Math.random() * 13) + 1
+				counter : Math.floor(Math.random() * 13) + 1
 			});
 
 			// imposto le dimensioni dell'area di lavoro

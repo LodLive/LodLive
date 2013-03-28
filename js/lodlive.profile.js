@@ -128,7 +128,7 @@ $.jStorage.set('profile', {
 			},
 			sparql : {
 				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
+				findSubject : 'SELECT DISTINCT ?subject WHERE   {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\')) }  LIMIT 1  ',
 				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
 				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
 				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
