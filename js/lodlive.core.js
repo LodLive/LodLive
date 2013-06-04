@@ -100,7 +100,7 @@ var debugOn = false;
 				var keySplit = key.split(",");
 				for ( var a = 0; a < keySplit.length; a++) {
 					if ((testURI ? testURI : resource).indexOf(keySplit[a]) == 0) {
-						res = value.sparql[module].replace(/\{URI\}/ig, resource);
+						res = value.sparql[module].replace(/\{URI\}/ig, resource.replace(/^.*~~/, ''));
 						if (value.proxy) {
 							url = value.proxy + '?endpoint=' + value.endpoint + "&" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + encodeURIComponent(res);
 						} else {
@@ -1913,13 +1913,18 @@ var debugOn = false;
 		},
 		format : function(destBox, values, uris, inverses) {
 			var context = this;
+
 			if (debugOn) {
 				start = new Date().getTime();
 			}
 			var containerBox = destBox.parent('div');
+			var thisUri = containerBox.attr('rel');
 
 			// recupero il doctype per caricare le configurazioni specifiche
 			var docType = this.lodlive('getJsonValue', uris, 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', 'default');
+			if (thisUri.indexOf("~~") != -1) {
+				docType = 'bnode';
+			}
 			// carico le configurazioni relative allo stile
 			var aClass = this.lodlive("getProperty", "document", "className", docType);
 			// destBox.addClass(aClass);
@@ -1999,7 +2004,7 @@ var debugOn = false;
 					containerBox.attr("data-endpoint", lang('endpointNotConfigured'));
 				}
 				if (uris.length == 0 && values.length == 0) {
-					result = "<div class=\"boxTitle\" threedots=\"" + lang('resourceMissing') + "\"><a target=\"_blank\" href=\"" + containerBox.attr('rel') + "\"><span class=\"spriteLegenda\"></span>" + containerBox.attr('rel') + "</a>";
+					result = "<div class=\"boxTitle\" threedots=\"" + lang('resourceMissing') + "\"><a target=\"_blank\" href=\"" + thisUri + "\"><span class=\"spriteLegenda\"></span>" + thisUri + "</a>";
 				}
 			}
 			result += "</span></div>";
@@ -2020,7 +2025,7 @@ var debugOn = false;
 			});
 
 			destBox.hover(function() {
-				context.lodlive('msg', jResult.attr("threedots") == '' ? jResult.text() : jResult.attr("threedots") + " \n " + containerBox.attr('rel'), 'show', 'fullInfo', containerBox.attr("data-endpoint"));
+				context.lodlive('msg', jResult.attr("threedots") == '' ? jResult.text() : jResult.attr("threedots") + " \n " + thisUri, 'show', 'fullInfo', containerBox.attr("data-endpoint"));
 			}, function() {
 				context.lodlive('msg', null, 'hide');
 			});
@@ -2136,7 +2141,7 @@ var debugOn = false;
 					mapsMap[containerBox.attr("id")] = {
 						longs : connectedLongs[0],
 						lats : connectedLats[0],
-						title : containerBox.attr('rel') + "\n" + escape(resourceTitle)
+						title : thisUri + "\n" + escape(resourceTitle)
 					};
 					$.jStorage.set('mapsMap', mapsMap);
 					context.lodlive('updateMapPanel', $('#controlPanel'));
@@ -2638,9 +2643,13 @@ var debugOn = false;
 						// var control = {};
 						$.each(json, function(key, value) {
 							conta++;
-							if (value.object.type == 'uri') {
+							if (value.object.type == 'uri' || value.object.type == 'bnode') {
 								if (value.object.value != anUri) {
-									eval('uris.push({\'' + value['property']['value'] + '\':\'' + escape(value.object.value) + '\'})');
+									if (value.object.type == 'bnode') {
+										eval('uris.push({\'' + value['property']['value'] + '\':\'' + escape(anUri + '~~' + value.object.value) + '\'})');
+									} else {
+										eval('uris.push({\'' + value['property']['value'] + '\':\'' + escape(value.object.value) + '\'})');
+									}
 								}
 							} else {
 								eval('values.push({\'' + value['property']['value'] + '\':\'' + escape(value.object.value) + '\'})');
