@@ -2,7 +2,64 @@ $.jStorage.set('profile', {
 	// parametri di connessione agli endpoint
 	'connection' : {
 		// base degli about dei documenti non dell'ontologia
-		'http://data.opendataday.it' : {
+		'http://dati.senato.it' : {
+			// il parametro {URI} viene sostituito con la uri del documento da
+			// caricare
+			description : {
+				it : 'Il punto per l\'accesso diretto ai dati del Senato della Repubblica. I disegni di legge con il loro iter, le votazioni elettroniche d\'Aula, le Commissioni, i Gruppi parlamentari...',
+				en : 'Il punto per l\'accesso diretto ai dati del Senato della Repubblica. I disegni di legge con il loro iter, le votazioni elettroniche d\'Aula, le Commissioni, i Gruppi parlamentari...'
+			},
+			sparql : {
+				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
+				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
+				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object} ORDER BY ?property',
+				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
+				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>. FILTER(isIRI(?object))} LIMIT 100',
+				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
+			},
+			useForInverseSameAs : false,
+			endpoint : 'http://dati.senato.it/sparql',
+			examples : [ {
+				label : 'Emilio Colombo (foaf:Person)',
+				uri : 'http://dati.senato.it/senatore/638'
+			},  {
+				label : 'Giulio Andreotti (foaf:Person)',
+				uri : 'http://dati.senato.it/senatore/74'
+			} 
+
+			]
+		},	'http://dati.camera.it' : {
+			// il parametro {URI} viene sostituito con la uri del documento da
+			// caricare
+			description : {
+				it : 'Un catalogo completo di dati e documenti digitali su tutte le legislature precedenti all\'attuale, dalla I del Regno di Sardegna alla XV della Repubblica, che alimentano il Portale storico della Camera dei deputati.<br />Sono inoltre disponibili i primi dataset di atti di indirizzo e controllo, deputati, organi e gruppi parlamentari della legislatura corrente.',
+				en : 'A complete catalogue of digital data and documents of all previous legislatures, from I legislature of the Kingdom of Sardinia to XV legislature of the Republic, which supplies the historical portal of the Chamber of Deputies.<br />There are also the first datasets of Acts of direction and control, Deputies, parliamentary groups and committees of the current legislature.'
+			},
+			sparql : {
+				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
+				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
+				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object} ORDER BY ?property',
+				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
+				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>. FILTER(isIRI(?object))} LIMIT 100',
+				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
+			},
+			useForInverseSameAs : true,
+			endpoint : 'http://dati.camera.it/sparql',
+			examples : [ {
+				label : 'Nilde Iotti (foaf:Person)',
+				uri : 'http://dati.camera.it/ocd/persona.rdf/p3140'
+			}, {
+				label : 'II Governo Moro',
+				uri : 'http://dati.camera.it/ocd/governo.rdf/g17'
+			}, {
+				label : 'ocd:deputato (ontology description)',
+				uri : 'http://dati.camera.it/ocd/deputato'
+			}
+
+			]
+		},'http://data.opendataday.it' : {
 			// il parametro {URI} viene sostituito con la uri del documento da
 			// caricare
 			description : {
@@ -35,38 +92,7 @@ $.jStorage.set('profile', {
 			}
 
 			]
-		},
-		'http://dati.camera.it' : {
-			// il parametro {URI} viene sostituito con la uri del documento da
-			// caricare
-			description : {
-				it : 'Un catalogo completo di dati e documenti digitali su tutte le legislature precedenti all\'attuale, dalla I del Regno di Sardegna alla XV della Repubblica, che alimentano il Portale storico della Camera dei deputati.<br />Sono inoltre disponibili i primi dataset di atti di indirizzo e controllo, deputati, organi e gruppi parlamentari della legislatura corrente.',
-				en : 'A complete catalogue of digital data and documents of all previous legislatures, from I legislature of the Kingdom of Sardinia to XV legislature of the Republic, which supplies the historical portal of the Chamber of Deputies.<br />There are also the first datasets of Acts of direction and control, Deputies, parliamentary groups and committees of the current legislature.'
-			},
-			sparql : {
-				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object} ORDER BY ?property',
-				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>. FILTER(isIRI(?object))} LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
-			},
-			useForInverseSameAs : true,
-			endpoint : 'http://dati.camera.it/sparql',
-			examples : [ {
-				label : 'Nilde Iotti (foaf:Person)',
-				uri : 'http://dati.camera.it/ocd/persona.rdf/p3140'
-			}, {
-				label : 'II Governo Moro',
-				uri : 'http://dati.camera.it/ocd/governo.rdf/g17'
-			}, {
-				label : 'ocd:deputato (ontology description)',
-				uri : 'http://dati.camera.it/ocd/deputato'
-			}
-
-			]
-		},
+		}, 
 		'http://dbpedia.org' : {
 			description : {
 				it : 'DBpedia is a community effort to extract structured information from Wikipedia and to make this information available on the Web. DBpedia allows you to ask sophisticated queries against Wikipedia, and to link other data sets on the Web to Wikipedia data.',
@@ -519,7 +545,7 @@ $.jStorage.set('profile', {
 	'default' : {
 		document : {
 			className : 'standard',
-			titleProperties : [ 'http://www.w3.org/2004/02/skos/core#notation', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#value', 'http://www.geonames.org/ontology#name', 'http://purl.org/dc/elements/1.1/title', 'http://purl.org/dc/terms/title', 'http://www.w3.org/2000/01/rdf-schema#label', 'http://www.w3.org/2004/02/skos/core#prefLabel', 'http://logd.tw.rpi.edu/source/visualizing-org/dataset/2010-global-agenda-council-interlinkage-survey/vocab/enhancement/1/how_councils_interlink', 'http://rdf.freebase.com/ns/type.object.name', 'http://spcdata.digitpa.gov.it/nome_cognome' ,'http://xmlns.com/foaf/0.1/firstName','http://xmlns.com/foaf/0.1/lastName', 'http://xmlns.com/foaf/0.1/surname', 'http://xmlns.com/foaf/0.1/name','http://purl.org/dc/terms/description']
+			titleProperties : [ 'http://dati.senato.it/osr/titolo','http://www.w3.org/2004/02/skos/core#notation', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#value', 'http://www.geonames.org/ontology#name', 'http://purl.org/dc/elements/1.1/title', 'http://purl.org/dc/terms/title', 'http://www.w3.org/2000/01/rdf-schema#label', 'http://www.w3.org/2004/02/skos/core#prefLabel', 'http://logd.tw.rpi.edu/source/visualizing-org/dataset/2010-global-agenda-council-interlinkage-survey/vocab/enhancement/1/how_councils_interlink', 'http://rdf.freebase.com/ns/type.object.name', 'http://spcdata.digitpa.gov.it/nome_cognome' ,'http://xmlns.com/foaf/0.1/firstName','http://xmlns.com/foaf/0.1/lastName', 'http://xmlns.com/foaf/0.1/surname', 'http://xmlns.com/foaf/0.1/name','http://purl.org/dc/terms/description']
 		},// http://www.w3.org/2000/01/rdf-schema#label
 		images : {
 					properties : ['http://www.w3.org/2006/vcard/ns#photo', 'http://xmlns.com/foaf/0.1/depiction', 'http://dbpedia.org/ontology/thumbnail', 'http://dbpedia.org/property/logo', 'http://linkedgeodata.org/ontology/schemaIcon' ]
