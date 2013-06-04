@@ -1,14 +1,14 @@
 /*
- * 
- * lodLive 1.0 
+ *
+ * lodLive 1.0
  * is developed by Diego Valerio Camarda, Silvia Mazzini and Alessandro Antonuccio
- * 
+ *
  * Licensed under the MIT license
- * 
- * plase tell us if you use it! 
- * 
+ *
+ * plase tell us if you use it!
+ *
  * geodimail@gmail.com
- * 
+ *
  */
 
 var debugOn = false;
@@ -28,7 +28,7 @@ var debugOn = false;
 
 			// inizializzo il contenitore delle variabili di ambiente
 			var storeIdsCleaner = $.jStorage.index();
-			for ( var int = 0; int < storeIdsCleaner.length; int++) {
+			for (var int = 0; int < storeIdsCleaner.length; int++) {
 				if (storeIdsCleaner[int].indexOf("storeIds-") == 0) {
 					$.jStorage.deleteKey(storeIdsCleaner[int]);
 				}
@@ -98,8 +98,8 @@ var debugOn = false;
 
 			$.each(lodLiveProfile.connection, function(key, value) {
 				var keySplit = key.split(",");
-				for ( var a = 0; a < keySplit.length; a++) {
-					if ((testURI ? testURI : resource).indexOf(keySplit[a]) == 0) {
+				for (var a = 0; a < keySplit.length; a++) {
+					if (( testURI ? testURI : resource).indexOf(keySplit[a]) == 0) {
 						res = value.sparql[module].replace(/\{URI\}/ig, resource);
 						if (value.proxy) {
 							url = value.proxy + '?endpoint=' + value.endpoint + "&" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + encodeURIComponent(res);
@@ -283,7 +283,7 @@ var debugOn = false;
 					if (toLog.error) {
 						panel.find('h4.t' + localId + ' > span').append('<strong style="float:right">' + lang('enpointNotAvailable') + '</strong>');
 					}
-					if (typeof toLog.founded == typeof 0) {
+					if ( typeof toLog.founded == typeof 0) {
 						if (toLog.founded == 0) {
 							panel.find('h4.t' + localId + ' > span').append('<strong style="float:right">' + lang('propsNotFound') + '</strong>');
 						} else {
@@ -554,16 +554,16 @@ var debugOn = false;
 					var close = $('.close2', panel);
 					var mapsMap = $.jStorage.get('mapsMap');
 					var mapSize = 0;
-					for ( var prop in mapsMap) {
+					for (var prop in mapsMap) {
 						if (mapsMap.hasOwnProperty(prop)) {
 							mapSize++;
 						}
 					}
-					for ( var prop in mapsMap) {
+					for (var prop in mapsMap) {
 						if (mapsMap.hasOwnProperty(prop)) {
 							$('#mapPanel').gmap3({
 								action : 'addMarker',
-								latLng : [ mapsMap[prop].lats, mapsMap[prop].longs ],
+								latLng : [mapsMap[prop].lats, mapsMap[prop].longs],
 								title : unescape(mapsMap[prop].title)
 							}, mapSize > 1 ? {
 								action : "autofit"
@@ -591,7 +591,7 @@ var debugOn = false;
 					var close = $('.close2', panel);
 					var imageMap = $.jStorage.get('imagesMap');
 					var mapSize = 0;
-					for ( var prop in imageMap) {
+					for (var prop in imageMap) {
 						if (imageMap.hasOwnProperty(prop)) {
 							mapSize++;
 						}
@@ -599,10 +599,10 @@ var debugOn = false;
 					if (mapSize > 0) {
 						imagePanel.children('.amsg').remove();
 						var counter = 0;
-						for ( var prop in imageMap) {
+						for (var prop in imageMap) {
 							if (imageMap.hasOwnProperty(prop)) {
-								for ( var a = 0; a < imageMap[prop].length; a++) {
-									for ( var key in imageMap[prop][a]) {
+								for (var a = 0; a < imageMap[prop].length; a++) {
+									for (var key in imageMap[prop][a]) {
 										if (($.jStorage.get('noImagesMap', {})[prop + counter])) {
 											counter--;
 										} else if (imagePanel.children('.img-' + prop + '-' + counter).length == 0) {
@@ -684,7 +684,8 @@ var debugOn = false;
 												});
 												controls.children('.imgControlCenter').click(function() {
 													$('.close2', panel).click();
-													context.lodlive('highlight', $('#' + $(this).parent().parent().attr("data-prop")).children('.box'), 8, 100, '0 0'); // -390px
+													context.lodlive('highlight', $('#' + $(this).parent().parent().attr("data-prop")).children('.box'), 8, 100, '0 0');
+													// -390px
 													return false;
 												});
 												if (counter < 3) {
@@ -763,7 +764,7 @@ var debugOn = false;
 							$('#line-' + $(this).attr("id")).clearCanvas();
 							var generatedRev = $.jStorage.get('storeIds-generatedByRev-' + $(this).attr("id"));
 							if (generatedRev) {
-								for ( var a = 0; a < generatedRev.length; a++) {
+								for (var a = 0; a < generatedRev.length; a++) {
 									generated = $.jStorage.get('storeIds-generatedBy-' + generatedRev[a]);
 									$('#line-' + generatedRev[a]).clearCanvas();
 								}
@@ -774,7 +775,6 @@ var debugOn = false;
 						stop : function(event, ui) {
 							context.lodlive('drawAllLines', $(this));
 						}
-
 					});
 				}
 			});
@@ -867,7 +867,7 @@ var debugOn = false;
 				}
 				var connected = $.jStorage.get('storeIds-generatedBy-' + originalCircus.attr("id"));
 				if (!connected) {
-					connected = [ aId ];
+					connected = [aId];
 				} else {
 					if ($.inArray(aId, connected) == -1) {
 						connected.push(aId);
@@ -881,7 +881,7 @@ var debugOn = false;
 				$.jStorage.set('storeIds-generatedBy-' + originalCircus.attr("id"), connected);
 				connected = $.jStorage.get('storeIds-generatedByRev-' + aId);
 				if (!connected) {
-					connected = [ originalCircus.attr("id") ];
+					connected = [originalCircus.attr("id")];
 				} else {
 					if ($.inArray(originalCircus.attr("id"), connected) == -1) {
 						connected.push(originalCircus.attr("id"));
@@ -998,7 +998,7 @@ var debugOn = false;
 			$("#line-" + id).clearCanvas();
 			var generatedRev = $.jStorage.get('storeIds-generatedByRev-' + id);
 			if (generatedRev) {
-				for ( var a = 0; a < generatedRev.length; a++) {
+				for (var a = 0; a < generatedRev.length; a++) {
 					$('#line-' + generatedRev[a]).clearCanvas();
 				}
 			}
@@ -1048,10 +1048,10 @@ var debugOn = false;
 				var generated = $.jStorage.get('storeIds-generatedBy-' + id);
 				var generatedRev = $.jStorage.get('storeIds-generatedByRev-' + id);
 				if (generatedRev) {
-					for ( var int = 0; int < generatedRev.length; int++) {
+					for (var int = 0; int < generatedRev.length; int++) {
 						var generatedBy = $.jStorage.get('storeIds-generatedBy-' + generatedRev[int]);
 						if (generatedBy) {
-							for ( var int2 = 0; int2 < generatedBy.length; int2++) {
+							for (var int2 = 0; int2 < generatedBy.length; int2++) {
 								if (generatedBy[int2] == id) {
 									generatedBy.splice(int2, 1);
 								}
@@ -1062,10 +1062,10 @@ var debugOn = false;
 				}
 
 				if (generated) {
-					for ( var int = 0; int < generated.length; int++) {
+					for (var int = 0; int < generated.length; int++) {
 						var generatedBy = $.jStorage.get('storeIds-generatedByRev-' + generated[int]);
 						if (generatedBy) {
-							for ( var int2 = 0; int2 < generatedBy.length; int2++) {
+							for (var int2 = 0; int2 < generatedBy.length; int2++) {
 								if (generatedBy[int2] == id) {
 									generatedBy.splice(int2, 1);
 								}
@@ -1076,10 +1076,10 @@ var debugOn = false;
 				}
 				generatedRev = $.jStorage.get('storeIds-generatedByRev-' + id);
 				if (generatedRev) {
-					for ( var a = 0; a < generatedRev.length; a++) {
+					for (var a = 0; a < generatedRev.length; a++) {
 						generated = $.jStorage.get('storeIds-generatedBy-' + generatedRev[a]);
 						if (generated) {
-							for ( var a2 = 0; a2 < generated.length; a2++) {
+							for (var a2 = 0; a2 < generated.length; a2++) {
 								context.lodlive('drawaLine', $('#' + generatedRev[a]), $("#" + generated[a2]));
 							}
 						}
@@ -1319,9 +1319,9 @@ var debugOn = false;
 					},
 					error : function(e, b, v) {
 						destBox.html('');
-						values = [ {
+						values = [{
 							'http://system/msg' : 'risorsa non trovata: ' + destBox.attr('rel')
-						} ];
+						}];
 						context.lodlive('formatDoc', destBox, values, uris, bnodes, URI);
 					}
 				});
@@ -1383,9 +1383,9 @@ var debugOn = false;
 						},
 						error : function(e, b, v) {
 							destBox.html('');
-							values = [ {
+							values = [{
 								'http://system/msg' : 'risorsa non trovata: ' + destBox.attr('rel')
-							} ];
+							}];
 							context.lodlive('formatDoc', destBox, values, uris, bnodes, URI);
 						}
 					});
@@ -1412,6 +1412,7 @@ var debugOn = false;
 			}
 		},
 		processDraw : function(x1, y1, x2, y2, canvas, toId) {
+			var context = this;
 			try {
 				if (debugOn) {
 					start = new Date().getTime();
@@ -1419,11 +1420,15 @@ var debugOn = false;
 				// recupero il nome della proprieta'
 				var label = "";
 
+				var lineStyle = "standardLine";
 				if ($("#" + toId).length > 0) {
 					label = canvas.attr("data-propertyName-" + toId);
 					var labeArray = label.split("\|");
 					label = "\n";
-					for ( var o = 0; o < labeArray.length; o++) {
+					for (var o = 0; o < labeArray.length; o++) {
+						if (lodLiveProfile.arrows[$.trim(labeArray[o])]) {
+							lineStyle = lodLiveProfile.arrows[$.trim(labeArray[o])] + "Line";
+						}
 						var shortKey = $.trim(labeArray[o]);
 						// calcolo una forma breve per la visualizzazione
 						// dell'etichetta della proprieta'
@@ -1438,75 +1443,7 @@ var debugOn = false;
 						}
 					}
 				}
-				var isSameAs = label.toLowerCase().indexOf('sameas') > -1 ? true : false;
-
-				// eseguo i calcoli e scrivo la riga di connessione tra i cerchi
-				var lineangle = (Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI) + 180;
-				var x2bis = x1 - Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-
-				canvas.rotateCanvas({
-					angle : lineangle,
-					x : x1,
-					y : y1
-				}).drawLine({
-					strokeStyle : isSameAs ? "#000" : "#fff",
-					strokeWidth : 1,
-					strokeCap : 'bevel',
-					x1 : x1,
-					y1 : y1,
-					x2 : x2bis,
-					y2 : y1
-				});
-
-				if (lineangle > 90 && lineangle < 270) {
-					canvas.rotateCanvas({
-						angle : 180,
-						x : (x2bis + x1) / 2,
-						y : (y1 + y1) / 2
-					});
-				}
-
-				canvas.drawText({// inserisco l'etichetta
-					fillStyle : isSameAs ? "#000" : "#606060",
-					x : (x2bis + x1) / 2,
-					y : (y1 + y1 - (x1 > x2 ? 18 : -18)) / 2,
-					text : (x1 > x2 ? " «" : "") + label + (x1 > x2 ? "" : "» "),
-					align : "center",
-					baseline : "middle",
-					font : "normal 11px 'Open Sans',Verdana"
-				}).restoreCanvas().restoreCanvas();
-
-				// ed inserisco la freccia per determinarne il verso della
-				// relazione
-				lineangle = Math.atan2(y2 - y1, x2 - x1);
-				var angle = 0.79;
-				var h = Math.abs(8 / Math.cos(angle));
-				var fromx = x2 - 60 * Math.cos(lineangle);
-				var fromy = y2 - 60 * Math.sin(lineangle);
-				var angle1 = lineangle + Math.PI + angle;
-				var topx = (x2 + Math.cos(angle1) * h) - 60 * Math.cos(lineangle);
-				var topy = (y2 + Math.sin(angle1) * h) - 60 * Math.sin(lineangle);
-				var angle2 = lineangle + Math.PI - angle;
-				var botx = (x2 + Math.cos(angle2) * h) - 60 * Math.cos(lineangle);
-				var boty = (y2 + Math.sin(angle2) * h) - 60 * Math.sin(lineangle);
-
-				canvas.drawLine({
-					strokeStyle : isSameAs ? "#000" : "#fff",
-					strokeWidth : 1,
-					x1 : fromx,
-					y1 : fromy,
-					x2 : botx,
-					y2 : boty
-				});
-				canvas.drawLine({
-					strokeStyle : isSameAs ? "#000" : "#fff",
-					strokeWidth : 1,
-					x1 : fromx,
-					y1 : fromy,
-					x2 : topx,
-					y2 : topy
-				});
-
+				context.lodlive(lineStyle, label, x1, y1, x2, y2, canvas, toId);
 				if (debugOn) {
 					console.debug((new Date().getTime() - start) + '	processDraw ');
 				}
@@ -1522,16 +1459,16 @@ var debugOn = false;
 			// box)
 			$('#line-' + obj.attr("id")).clearCanvas();
 			if (generated) {
-				for ( var a = 0; a < generated.length; a++) {
+				for (var a = 0; a < generated.length; a++) {
 					context.lodlive('drawaLine', obj, $("#" + generated[a]));
 				}
 			}
 			if (generatedRev) {
-				for ( var a = 0; a < generatedRev.length; a++) {
+				for (var a = 0; a < generatedRev.length; a++) {
 					generated = $.jStorage.get('storeIds-generatedBy-' + generatedRev[a]);
 					$('#line-' + generatedRev[a]).clearCanvas();
 					if (generated) {
-						for ( var a2 = 0; a2 < generated.length; a2++) {
+						for (var a2 = 0; a2 < generated.length; a2++) {
 							context.lodlive('drawaLine', $('#' + generatedRev[a]), $("#" + generated[a2]));
 						}
 					}
@@ -1589,11 +1526,11 @@ var debugOn = false;
 
 			// se la proprieta' e' stata scritta come stringa la trasformo in un
 			// array
-			if (typeof images == typeof '') {
-				images = [ images ];
+			if ( typeof images == typeof '') {
+				images = [images];
 			}
-			if (typeof weblinks == typeof '') {
-				weblinks = [ weblinks ];
+			if ( typeof weblinks == typeof '') {
+				weblinks = [weblinks];
 			}
 
 			var result = "<div></div>";
@@ -1603,7 +1540,7 @@ var debugOn = false;
 			// estraggo i contenuti
 			var contents = [];
 			$.each(values, function(key, value) {
-				for ( var akey in value) {
+				for (var akey in value) {
 					eval('contents.push({\'' + akey + '\':\'' + value[akey] + '\'})');
 				}
 			});
@@ -1615,7 +1552,7 @@ var debugOn = false;
 			var connectedWeblinks = [];
 			var types = [];
 			$.each(uris, function(key, value) {
-				for ( var akey in value) {
+				for (var akey in value) {
 					// escludo la definizione della classe, le proprieta'
 					// relative alle immagini ed ai link web
 					if (akey != 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') {
@@ -1637,7 +1574,7 @@ var debugOn = false;
 			if (connectedImages.length > 0) {
 				imagesj = $('<div class="section" style="height:80px"></div>');
 				$.each(connectedImages, function(key, value) {
-					for ( var akey in value) {
+					for (var akey in value) {
 						imagesj.append("<a class=\"relatedImage\" href=\"" + unescape(value[akey]) + "\"><img src=\"" + unescape(value[akey]) + "\"/></a> ");
 					}
 				});
@@ -1650,7 +1587,7 @@ var debugOn = false;
 			if (connectedWeblinks.length > 0) {
 				webLinkResult = "<div class=\"section\"><ul style=\"padding:0;margin:0;display:block;overflow:hidden;tex-overflow:ellipses\">";
 				$.each(connectedWeblinks, function(key, value) {
-					for ( var akey in value) {
+					for (var akey in value) {
 						webLinkResult += "<li><a class=\"relatedLink\" target=\"_blank\" data-title=\"" + akey + " \n " + unescape(value[akey]) + "\" href=\"" + unescape(value[akey]) + "\">" + unescape(value[akey]) + "</a></li>";
 					}
 				});
@@ -1690,7 +1627,7 @@ var debugOn = false;
 						context.lodlive('msg', null, 'hide');
 					});
 				});
-				for ( var int = 0; int < types.length; int++) {
+				for (var int = 0; int < types.length; int++) {
 					var shortKey = types[int];
 					// calcolo una forma breve per la
 					// visualizzazione
@@ -1730,7 +1667,7 @@ var debugOn = false;
 				console.debug("formatDoc " + 7);
 			}
 			$.each(contents, function(key, value) {
-				for ( var akey in value) {
+				for (var akey in value) {
 					var shortKey = akey;
 					// calcolo una forma breve per la visualizzazione
 					// dell'etichetta della proprieta'
@@ -1759,7 +1696,7 @@ var debugOn = false;
 			if (bnodes.length > 0) {
 				// processo i blanknode
 				$.each(bnodes, function(key, value) {
-					for ( var akey in value) {
+					for (var akey in value) {
 						var shortKey = akey;
 						// calcolo una forma breve per la visualizzazione
 						// dell'etichetta della proprieta'
@@ -1956,23 +1893,23 @@ var debugOn = false;
 
 			// se la proprieta' e' stata scritta come stringa la trasformo in un
 			// array
-			if (typeof titles == typeof '') {
-				titles = [ titles ];
+			if ( typeof titles == typeof '') {
+				titles = [titles];
 			}
-			if (typeof images == typeof '') {
-				images = [ images ];
+			if ( typeof images == typeof '') {
+				images = [images];
 			}
-			if (typeof weblinks == typeof '') {
-				weblinks = [ weblinks ];
+			if ( typeof weblinks == typeof '') {
+				weblinks = [weblinks];
 			}
-			if (typeof lats == typeof '') {
-				lats = [ lats ];
+			if ( typeof lats == typeof '') {
+				lats = [lats];
 			}
-			if (typeof longs == typeof '') {
-				longs = [ longs ];
+			if ( typeof longs == typeof '') {
+				longs = [longs];
 			}
-			if (typeof points == typeof '') {
-				points = [ points ];
+			if ( typeof points == typeof '') {
+				points = [points];
 			}
 
 			// gestisco l'inserimento di messaggi di sistema come errori o altro
@@ -1980,14 +1917,14 @@ var debugOn = false;
 
 			// aggiungo al box il titolo
 			var result = "<div class=\"boxTitle\"><span class=\"ellipsis_text\">";
-			for ( var a = 0; a < titles.length; a++) {
+			for (var a = 0; a < titles.length; a++) {
 				var resultArray = this.lodlive('getJsonValue', values, titles[a], titles[a].indexOf('http') == 0 ? '' : titles[a]);
 				if (titles[a].indexOf('http') != 0) {
 					if (result.indexOf($.trim(unescape(titles[a])) + " \n") == -1) {
 						result += $.trim(unescape(titles[a])) + " \n";
 					}
 				} else {
-					for ( var af = 0; af < resultArray.length; af++) {
+					for (var af = 0; af < resultArray.length; af++) {
 						if (result.indexOf(unescape(resultArray[af]) + " \n") == -1) {
 							result += unescape(resultArray[af]) + " \n";
 						}
@@ -2037,7 +1974,7 @@ var debugOn = false;
 
 			var sameDocControl = [];
 			$.each(uris, function(key, value) {
-				for ( var akey in value) {
+				for (var akey in value) {
 					// escludo la definizione della classe, le proprieta'
 					// relative alle immagini ed ai link web
 					if (lodLiveProfile.uriSubstitutor) {
@@ -2056,7 +1993,7 @@ var debugOn = false;
 						if ($.inArray(value[akey], sameDocControl) > -1) {
 							var aCounter = 0;
 							$.each(connectedDocs, function(key2, value2) {
-								for ( var akey2 in value2) {
+								for (var akey2 in value2) {
 									if (value2[akey2] == value[akey]) {
 										eval('connectedDocs[' + aCounter + '] = {\'' + akey2 + ' | ' + akey + '\':\'' + value[akey] + '\'}');
 									}
@@ -2074,7 +2011,7 @@ var debugOn = false;
 			if (inverses) {
 				sameDocControl = [];
 				$.each(inverses, function(key, value) {
-					for ( var akey in value) {
+					for (var akey in value) {
 						if (lodLiveProfile.uriSubstitutor) {
 							$.each(lodLiveProfile.uriSubstitutor, function(skey, svalue) {
 								value[akey] = value[akey].replace(escape(svalue.findStr), escape(svalue.replaceStr));
@@ -2085,7 +2022,7 @@ var debugOn = false;
 						if ($.inArray(value[akey], sameDocControl) > -1) {
 							var aCounter = 0;
 							$.each(invertedDocs, function(key2, value2) {
-								for ( var akey2 in value2) {
+								for (var akey2 in value2) {
 									if (value2[akey2] == value[akey]) {
 										var theKey = akey2;
 										if (akey2 != akey) {
@@ -2106,9 +2043,9 @@ var debugOn = false;
 				});
 			}
 			if ($.jStorage.get('doDrawMap', true)) {
-				for ( var a = 0; a < points.length; a++) {
+				for (var a = 0; a < points.length; a++) {
 					var resultArray = context.lodlive('getJsonValue', values, points[a], points[a]);
-					for ( var af = 0; af < resultArray.length; af++) {
+					for (var af = 0; af < resultArray.length; af++) {
 						if (resultArray[af].indexOf(" ") != -1) {
 							eval('connectedLongs.push(\'' + unescape(resultArray[af].split(" ")[1]) + '\')');
 							eval('connectedLats.push(\'' + unescape(resultArray[af].split(" ")[0]) + '\')');
@@ -2118,15 +2055,15 @@ var debugOn = false;
 						}
 					}
 				}
-				for ( var a = 0; a < longs.length; a++) {
+				for (var a = 0; a < longs.length; a++) {
 					var resultArray = context.lodlive('getJsonValue', values, longs[a], longs[a]);
-					for ( var af = 0; af < resultArray.length; af++) {
+					for (var af = 0; af < resultArray.length; af++) {
 						eval('connectedLongs.push(\'' + unescape(resultArray[af]) + '\')');
 					}
 				}
-				for ( var a = 0; a < lats.length; a++) {
+				for (var a = 0; a < lats.length; a++) {
 					var resultArray = context.lodlive('getJsonValue', values, lats[a], lats[a]);
-					for ( var af = 0; af < resultArray.length; af++) {
+					for (var af = 0; af < resultArray.length; af++) {
 						eval('connectedLats.push(\'' + unescape(resultArray[af]) + '\')');
 					}
 				}
@@ -2156,34 +2093,34 @@ var debugOn = false;
 			// quelle uguali
 			if (totRelated > 16) {
 				$.each(connectedDocs, function(key, value) {
-					for ( var akey in value) {
+					for (var akey in value) {
 						if (propertyGroup[akey]) {
 							var t = propertyGroup[akey];
 							t.push(value[akey]);
 							propertyGroup[akey] = t;
 						} else {
-							propertyGroup[akey] = [ value[akey] ];
+							propertyGroup[akey] = [value[akey]];
 						}
 					}
 				});
 				$.each(invertedDocs, function(key, value) {
-					for ( var akey in value) {
+					for (var akey in value) {
 						if (propertyGroupInverted[akey]) {
 							var t = propertyGroupInverted[akey];
 							t.push(value[akey]);
 							propertyGroupInverted[akey] = t;
 						} else {
-							propertyGroupInverted[akey] = [ value[akey] ];
+							propertyGroupInverted[akey] = [value[akey]];
 						}
 					}
 				});
 				totRelated = 0;
-				for ( var prop in propertyGroup) {
+				for (var prop in propertyGroup) {
 					if (propertyGroup.hasOwnProperty(prop)) {
 						totRelated++;
 					}
 				}
-				for ( var prop in propertyGroupInverted) {
+				for (var prop in propertyGroupInverted) {
 					if (propertyGroupInverted.hasOwnProperty(prop)) {
 						totRelated++;
 					}
@@ -2216,7 +2153,7 @@ var debugOn = false;
 				} else if (a == 15) {
 					a = 1;
 				}
-				for ( var akey in value) {
+				for (var akey in value) {
 					var obj = null;
 					if (propertyGroup[akey] && propertyGroup[akey].length > 1) {
 						if (!inserted[akey]) {
@@ -2228,10 +2165,11 @@ var debugOn = false;
 							// "</div>");
 							var objBox = $("<div class=\"groupedRelatedBox sprite\" rel=\"" + MD5(akey) + "\"    data-title=\"" + akey + " \n " + (propertyGroup[akey].length) + " risorse collegate\" ></div>");
 							// containerBox.append(objBox);
-							if (akey.toLowerCase().indexOf('owl#sameas') != -1) {
-								objBox.addClass('isSameAs');
-							} else if (akey.toLowerCase().indexOf('rdf-syntax-ns#type') != -1) {
-								objBox.addClass('isType');
+							var akeyArray = akey.split(" ");
+							for (var i = 0; i < akeyArray.length; i++) {
+								if (lodLiveProfile.arrows[akeyArray[i]]) {
+									objBox.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+								}
 							}
 
 							objBox.attr('style', 'top:' + (chordsList[a][1] - 8) + 'px;left:' + (chordsList[a][0] - 8) + 'px');
@@ -2274,10 +2212,11 @@ var debugOn = false;
 						obj.attr("data-circleId", containerBox.attr('id'));
 						obj.attr("data-property", akey);
 						// se si tratta di un sameas applico una classe diversa
-						if (akey.toLowerCase().indexOf('owl#sameas') != -1) {
-							obj.addClass('isSameAs');
-						} else if (akey.toLowerCase().indexOf('rdf-syntax-ns#type') != -1) {
-							obj.addClass('isType');
+						var akeyArray = akey.split(" ");
+						for (var i = 0; i < akeyArray.length; i++) {
+							if (lodLiveProfile.arrows[akeyArray[i]]) {
+								obj.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+							}
 						}
 						if (obj.hasClass("aGrouped")) {
 							innerObjectList.push(obj);
@@ -2298,7 +2237,7 @@ var debugOn = false;
 				} else if (a == 15) {
 					a = 1;
 				}
-				for ( var akey in value) {
+				for (var akey in value) {
 					var obj = null;
 					if (propertyGroupInverted[akey] && propertyGroupInverted[akey].length > 1) {
 						if (!inserted[akey]) {
@@ -2310,10 +2249,11 @@ var debugOn = false;
 							// "</div>");
 							var objBox = $("<div class=\"groupedRelatedBox sprite inverse\" rel=\"" + MD5(akey) + "-i\"   data-title=\"" + akey + " \n " + (propertyGroupInverted[akey].length) + " risorse collegate\" ></div>");
 							// containerBox.append(objBox);
-							if (akey.toLowerCase().indexOf('owl#sameas') != -1) {
-								objBox.addClass('isSameAs');
-							} else if (akey.toLowerCase().indexOf('rdf-syntax-ns#type') != -1) {
-								objBox.addClass('isType');
+							var akeyArray = akey.split(" ");
+							for (var i = 0; i < akeyArray.length; i++) {
+								if (lodLiveProfile.arrows[akeyArray[i]]) {
+									objBox.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+								}
 							}
 							objBox.attr('style', 'top:' + (chordsList[a][1] - 8) + 'px;left:' + (chordsList[a][0] - 8) + 'px');
 							// containerBox.append('<div data-circlePos="' + a +
@@ -2355,10 +2295,11 @@ var debugOn = false;
 						obj.attr("data-circleId", containerBox.attr('id'));
 						obj.attr("data-property", akey);
 						// se si tratta di un sameas applico una classe diversa
-						if (akey.toLowerCase().indexOf('owl#sameas') != -1) {
-							obj.addClass('isSameAs');
-						} else if (akey.toLowerCase().indexOf('rdf-syntax-ns#type') != -1) {
-							obj.addClass('isType');
+						var akeyArray = akey.split(" ");
+						for (var i = 0; i < akeyArray.length; i++) {
+							if (lodLiveProfile.arrows[akeyArray[i]]) {
+								obj.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+							}
 						}
 						if (obj.hasClass("aGrouped")) {
 							innerObjectList.push(obj);
@@ -2371,7 +2312,7 @@ var debugOn = false;
 			});
 			var page = 0;
 			var totPages = objectList.length > 14 ? (objectList.length / 14 + (objectList.length % 14 > 0 ? 1 : 0)) : 1;
-			for ( var i = 0; i < objectList.length; i++) {
+			for (var i = 0; i < objectList.length; i++) {
 				if (i % 14 == 0) {
 					page++;
 					var aPage = $('<div class="page page' + page + '" style="display:none"></div>');
@@ -2389,7 +2330,7 @@ var debugOn = false;
 			totPages = innerObjectList.length / 24 + (innerObjectList.length % 24 > 0 ? 1 : 0);
 			if (innerObjectList.length > 0) {
 				containerBox.append('<div class="innerPage"></div>');
-				for ( var i = 0; i < innerObjectList.length; i++) {
+				for (var i = 0; i < innerObjectList.length; i++) {
 					containerBox.children('.innerPage').append(innerObjectList[i]);
 				}
 			}
@@ -2401,7 +2342,6 @@ var debugOn = false;
 					$(this).parent().children('.' + pager.attr("data-page")).fadeIn('fast');
 				});
 			});
-
 			{
 				var obj = $("<div class=\"actionBox contents\" rel=\"contents\"  >&#160;</div>");
 				containerBox.append(obj);
@@ -2441,14 +2381,14 @@ var debugOn = false;
 				// servono
 				i = onlyElement;
 				var radian = (2 * Math.PI) * (i / steps);
-				values.push([ centerX + radius * Math.cos(radian), centerY + radius * Math.sin(radian) ]);
+				values.push([centerX + radius * Math.cos(radian), centerY + radius * Math.sin(radian)]);
 			} else {
 				for (; i < steps; i++) {
 					// calcolo le coodinate lungo il cerchio del box per
 					// posizionare
 					// strumenti ed altre risorse
 					var radian = (2 * Math.PI) * (i / steps);
-					values.push([ centerX + radius * Math.cos(radian), centerY + radius * Math.sin(radian) ]);
+					values.push([centerX + radius * Math.cos(radian), centerY + radius * Math.sin(radian)]);
 				}
 			}
 			if (debugOn) {
@@ -2464,14 +2404,14 @@ var debugOn = false;
 			}
 			var returnVal = [];
 			$.each(map, function(skey, value) {
-				for ( var akey in value) {
+				for (var akey in value) {
 					if (akey == key) {
 						returnVal.push(unescape(value[akey]));
 					}
 				}
 			});
 			if (returnVal == []) {
-				returnVal = [ defaultValue ];
+				returnVal = [defaultValue];
 			}
 			if (debugOn) {
 				console.debug((new Date().getTime() - start) + '	getJsonValue');
@@ -2482,13 +2422,13 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			if (typeof context == typeof '') {
+			if ( typeof context == typeof '') {
 				if (lodLiveProfile[context] && lodLiveProfile[context][area]) {
 					return lodLiveProfile[context][area][prop];
 				}
 			} else {
 
-				for ( var a = 0; a < context.length; a++) {
+				for (var a = 0; a < context.length; a++) {
 					if (lodLiveProfile[context[a]] && lodLiveProfile[context[a]][area]) {
 						return lodLiveProfile[context[a]][area][prop];
 
@@ -2802,7 +2742,7 @@ var debugOn = false;
 						}
 
 					});
-					for ( var i = 0; i < classes.length; i++) {
+					for (var i = 0; i < classes.length; i++) {
 						destSelect.append(template.replace(/\{CONTENT\}/g, classes[i]));
 					}
 				},
@@ -2831,7 +2771,7 @@ var debugOn = false;
 					if (!value.useForInverseSameAs) {
 						skip = true;
 					} else {
-						for ( var a = 0; a < keySplit.length; a++) {
+						for (var a = 0; a < keySplit.length; a++) {
 							// salto i sameas interni allo stesso endpoint
 							if (anUri.indexOf(keySplit[a]) != -1) {
 								skip = true;
@@ -2913,7 +2853,7 @@ var debugOn = false;
 			}
 			$.each(lodLiveProfile.connection, function(key, value) {
 				var keySplit = key.split(",");
-				for ( var a = 0; a < keySplit.length; a++) {
+				for (var a = 0; a < keySplit.length; a++) {
 					if (SPARQLquery.indexOf(keySplit[a]) != -1) {
 						SPARQLquery = value.endpoint + "?" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + escape(value.sparql['findSubject'].replace(/\{CLASS\}/g, selectedClass).replace(/\{VALUE\}/g, selectedValue));
 						if (value.proxy) {
@@ -2934,7 +2874,7 @@ var debugOn = false;
 					$.each(json, function(key, value) {
 						values.push(json[key].subject.value);
 					});
-					for ( var i = 0; i < values.length; i++) {
+					for (var i = 0; i < values.length; i++) {
 						// console.debug(destInput)
 						destInput.val(values[i]);
 					}
@@ -2946,12 +2886,219 @@ var debugOn = false;
 			if (debugOn) {
 				console.debug((new Date().getTime() - start) + '	findSubject');
 			}
+		},
+		/* start lines */
+		standardLine : function(label, x1, y1, x2, y2, canvas, toId) {
+
+			// eseguo i calcoli e scrivo la riga di connessione tra i cerchi
+			var lineangle = (Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI) + 180;
+			var x2bis = x1 - Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+
+			canvas.rotateCanvas({
+				angle : lineangle,
+				x : x1,
+				y : y1
+			}).drawLine({
+				strokeStyle : "#fff",
+				strokeWidth : 1,
+				strokeCap : 'bevel',
+				x1 : x1,
+				y1 : y1,
+				x2 : x2bis,
+				y2 : y1
+			});
+
+			if (lineangle > 90 && lineangle < 270) {
+				canvas.rotateCanvas({
+					angle : 180,
+					x : (x2bis + x1) / 2,
+					y : (y1 + y1) / 2
+				});
+			}
+
+			canvas.drawText({// inserisco l'etichetta
+				fillStyle : "#606060",
+				x : (x2bis + x1) / 2,
+				y : (y1 + y1 - (x1 > x2 ? 18 : -18)) / 2,
+				text : (x1 > x2 ? " «" : "") + label + (x1 > x2 ? "" : "» "),
+				align : "center",
+				baseline : "middle",
+				font : "normal 11px 'Open Sans',Verdana"
+			}).restoreCanvas().restoreCanvas();
+
+			// ed inserisco la freccia per determinarne il verso della
+			// relazione
+			lineangle = Math.atan2(y2 - y1, x2 - x1);
+			var angle = 0.79;
+			var h = Math.abs(8 / Math.cos(angle));
+			var fromx = x2 - 60 * Math.cos(lineangle);
+			var fromy = y2 - 60 * Math.sin(lineangle);
+			var angle1 = lineangle + Math.PI + angle;
+			var topx = (x2 + Math.cos(angle1) * h) - 60 * Math.cos(lineangle);
+			var topy = (y2 + Math.sin(angle1) * h) - 60 * Math.sin(lineangle);
+			var angle2 = lineangle + Math.PI - angle;
+			var botx = (x2 + Math.cos(angle2) * h) - 60 * Math.cos(lineangle);
+			var boty = (y2 + Math.sin(angle2) * h) - 60 * Math.sin(lineangle);
+
+			canvas.drawLine({
+				strokeStyle : "#fff",
+				strokeWidth : 1,
+				x1 : fromx,
+				y1 : fromy,
+				x2 : botx,
+				y2 : boty
+			});
+			canvas.drawLine({
+				strokeStyle : "#fff",
+				strokeWidth : 1,
+				x1 : fromx,
+				y1 : fromy,
+				x2 : topx,
+				y2 : topy
+			});
+		},
+		isSameAsLine : function(label, x1, y1, x2, y2, canvas, toId) {
+			// eseguo i calcoli e scrivo la riga di connessione tra i cerchi
+			var lineangle = (Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI) + 180;
+			var x2bis = x1 - Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+
+			canvas.rotateCanvas({
+				angle : lineangle,
+				x : x1,
+				y : y1
+			}).drawLine({
+				strokeStyle : "#000",
+				strokeWidth : 1,
+				strokeCap : 'bevel',
+				x1 : x1,
+				y1 : y1,
+				x2 : x2bis,
+				y2 : y1
+			});
+
+			if (lineangle > 90 && lineangle < 270) {
+				canvas.rotateCanvas({
+					angle : 180,
+					x : (x2bis + x1) / 2,
+					y : (y1 + y1) / 2
+				});
+			}
+
+			canvas.drawText({// inserisco l'etichetta
+				fillStyle : "#000",
+				x : (x2bis + x1) / 2,
+				y : (y1 + y1 - (x1 > x2 ? 18 : -18)) / 2,
+				text : (x1 > x2 ? " «" : "") + label + (x1 > x2 ? "" : "» "),
+				align : "center",
+				baseline : "middle",
+				font : "normal 11px 'Open Sans',Verdana"
+			}).restoreCanvas().restoreCanvas();
+
+			// ed inserisco la freccia per determinarne il verso della
+			// relazione
+			lineangle = Math.atan2(y2 - y1, x2 - x1);
+			var angle = 0.79;
+			var h = Math.abs(8 / Math.cos(angle));
+			var fromx = x2 - 60 * Math.cos(lineangle);
+			var fromy = y2 - 60 * Math.sin(lineangle);
+			var angle1 = lineangle + Math.PI + angle;
+			var topx = (x2 + Math.cos(angle1) * h) - 60 * Math.cos(lineangle);
+			var topy = (y2 + Math.sin(angle1) * h) - 60 * Math.sin(lineangle);
+			var angle2 = lineangle + Math.PI - angle;
+			var botx = (x2 + Math.cos(angle2) * h) - 60 * Math.cos(lineangle);
+			var boty = (y2 + Math.sin(angle2) * h) - 60 * Math.sin(lineangle);
+
+			canvas.drawLine({
+				strokeStyle : "#000",
+				strokeWidth : 1,
+				x1 : fromx,
+				y1 : fromy,
+				x2 : botx,
+				y2 : boty
+			});
+			canvas.drawLine({
+				strokeStyle : "#000",
+				strokeWidth : 1,
+				x1 : fromx,
+				y1 : fromy,
+				x2 : topx,
+				y2 : topy
+			});
+		},
+		isTypeLine : function(label, x1, y1, x2, y2, canvas, toId) {
+			// eseguo i calcoli e scrivo la riga di connessione tra i cerchi
+			var lineangle = (Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI) + 180;
+			var x2bis = x1 - Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+
+			canvas.rotateCanvas({
+				angle : lineangle,
+				x : x1,
+				y : y1
+			}).drawLine({
+				strokeStyle : "#ccc",
+				strokeWidth : 1,
+				strokeCap : 'bevel',
+				x1 : x1,
+				y1 : y1,
+				x2 : x2bis,
+				y2 : y1
+			});
+
+			if (lineangle > 90 && lineangle < 270) {
+				canvas.rotateCanvas({
+					angle : 180,
+					x : (x2bis + x1) / 2,
+					y : (y1 + y1) / 2
+				});
+			}
+
+			canvas.drawText({// inserisco l'etichetta
+				fillStyle : "#ccc",
+				x : (x2bis + x1) / 2,
+				y : (y1 + y1 - (x1 > x2 ? 18 : -18)) / 2,
+				text : (x1 > x2 ? " «" : "") + label + (x1 > x2 ? "" : "» "),
+				align : "center",
+				baseline : "middle",
+				font : "normal 11px 'Open Sans',Verdana"
+			}).restoreCanvas().restoreCanvas();
+
+			// ed inserisco la freccia per determinarne il verso della
+			// relazione
+			lineangle = Math.atan2(y2 - y1, x2 - x1);
+			var angle = 0.79;
+			var h = Math.abs(8 / Math.cos(angle));
+			var fromx = x2 - 60 * Math.cos(lineangle);
+			var fromy = y2 - 60 * Math.sin(lineangle);
+			var angle1 = lineangle + Math.PI + angle;
+			var topx = (x2 + Math.cos(angle1) * h) - 60 * Math.cos(lineangle);
+			var topy = (y2 + Math.sin(angle1) * h) - 60 * Math.sin(lineangle);
+			var angle2 = lineangle + Math.PI - angle;
+			var botx = (x2 + Math.cos(angle2) * h) - 60 * Math.cos(lineangle);
+			var boty = (y2 + Math.sin(angle2) * h) - 60 * Math.sin(lineangle);
+
+			canvas.drawLine({
+				strokeStyle : "#ccc",
+				strokeWidth : 1,
+				x1 : fromx,
+				y1 : fromy,
+				x2 : botx,
+				y2 : boty
+			});
+			canvas.drawLine({
+				strokeStyle : "#ccc",
+				strokeWidth : 1,
+				x1 : fromx,
+				y1 : fromy,
+				x2 : topx,
+				y2 : topy
+			});
 		}
-	};
+	}
+	/* end lines*/;
 	$.fn.lodlive = function(method) {
 		if (methods[method]) {
 			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-		} else if (typeof method === 'object' || !method) {
+		} else if ( typeof method === 'object' || !method) {
 			return methods.init.apply(this, arguments);
 		} else {
 			$.error('Method ' + method + ' does not exist on jQuery.lodlive');
@@ -3012,12 +3159,15 @@ var debugOn = false;
 		function F(x, y, z) {
 			return (x & y) | ((~x) & z);
 		}
+
 		function G(x, y, z) {
 			return (x & z) | (y & (~z));
 		}
+
 		function H(x, y, z) {
 			return (x ^ y ^ z);
 		}
+
 		function I(x, y, z) {
 			return (y ^ (x | (~z)));
 		}
@@ -3026,24 +3176,28 @@ var debugOn = false;
 			a = AddUnsigned(a, AddUnsigned(AddUnsigned(F(b, c, d), x), ac));
 			return AddUnsigned(RotateLeft(a, s), b);
 		}
+
 		;
 
 		function GG(a, b, c, d, x, s, ac) {
 			a = AddUnsigned(a, AddUnsigned(AddUnsigned(G(b, c, d), x), ac));
 			return AddUnsigned(RotateLeft(a, s), b);
 		}
+
 		;
 
 		function HH(a, b, c, d, x, s, ac) {
 			a = AddUnsigned(a, AddUnsigned(AddUnsigned(H(b, c, d), x), ac));
 			return AddUnsigned(RotateLeft(a, s), b);
 		}
+
 		;
 
 		function II(a, b, c, d, x, s, ac) {
 			a = AddUnsigned(a, AddUnsigned(AddUnsigned(I(b, c, d), x), ac));
 			return AddUnsigned(RotateLeft(a, s), b);
 		}
+
 		;
 
 		function ConvertToWordArray(string) {
@@ -3068,24 +3222,26 @@ var debugOn = false;
 			lWordArray[lNumberOfWords - 1] = lMessageLength >>> 29;
 			return lWordArray;
 		}
+
 		;
 
 		function WordToHex(lValue) {
 			var WordToHexValue = "", WordToHexValue_temp = "", lByte, lCount;
-			for (lCount = 0; lCount <= 3; lCount++) {
+			for ( lCount = 0; lCount <= 3; lCount++) {
 				lByte = (lValue >>> (lCount * 8)) & 255;
 				WordToHexValue_temp = "0" + lByte.toString(16);
 				WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length - 2, 2);
 			}
 			return WordToHexValue;
 		}
+
 		;
 
 		function Utf8Encode(string) {
 			string = string.replace(/\r\n/g, "\n");
 			var utftext = "";
 
-			for ( var n = 0; n < string.length; n++) {
+			for (var n = 0; n < string.length; n++) {
 
 				var c = string.charCodeAt(n);
 
@@ -3104,6 +3260,7 @@ var debugOn = false;
 
 			return utftext;
 		}
+
 		;
 
 		var x = Array();
@@ -3122,7 +3279,7 @@ var debugOn = false;
 		c = 0x98BADCFE;
 		d = 0x10325476;
 
-		for (k = 0; k < x.length; k += 16) {
+		for ( k = 0; k < x.length; k += 16) {
 			AA = a;
 			BB = b;
 			CC = c;
@@ -3206,6 +3363,7 @@ var debugOn = false;
 	function lang(obj) {
 		return $.jStorage.get('language')[$.jStorage.get('selectedLanguage')][obj];
 	}
+
 	function breakLines(msg) {
 		msg = msg.replace(/\//g, '/<span style="font-size:1px"> </span>');
 		msg = msg.replace(/&/g, '&<span style="font-size:1px"> </span>');
