@@ -18,9 +18,7 @@ $(function() {
 			top : $(window).height() / 2 + $('body').scrollTop()
 		});
 	}
-	function lang(obj) {
-		return $.jStorage.get('language')[$.jStorage.get('selectedLanguage')][obj];
-	}
+ 
 	var nextSpeed = 500;
 	var fadeSpeed = 100;
 	var loca = $(location).attr('href');
