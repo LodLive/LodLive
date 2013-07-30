@@ -34,7 +34,11 @@ $.jStorage.set('language', {
 		insertUri : 'inserisci un URI',
 		insertUriDescription : 'LodLive è in grado di analizzare e rappresentare risorse RDF anche se non supportate da un EndPoint per l\'accesso SPARQL.<br /><br />Inserendo un qualsiasi URI ad una risorsa RDF è possibile esplorarne contenuti e relazioni.',
 		insertData : 'esplora i tuoi dati',
-		liveLodLive : 'Scegliendo un endpoint tra quelli configurati è possibile navigare la risorsa e ricavare, attraverso delle query SPARQL preimpostate, non solo le proprietà dirette, ma anche tutte le proprietà inverse indipendentemente dal dataset di appartenenza.'
+		liveLodLive : 'Scegliendo un endpoint tra quelli configurati è possibile navigare la risorsa e ricavare, attraverso delle query SPARQL preimpostate, non solo le proprietà dirette, ma anche tutte le proprietà inverse indipendentemente dal dataset di appartenenza.',
+		centerClose : 'centra e chiudi le altre risorse',
+		openOnline : 'visualizza la risorsa online',
+		openRelated : 'espandi tutte le relazioni',
+		removeResource : 'rimuovi questo box'
 	},
 	en : {
 		restart : 'restart',
@@ -70,7 +74,11 @@ $.jStorage.set('language', {
 		simpleSearchDescription : 'DBpedia.org and Freebase allow  their resources to be queried through keywords.<br/><br/>You will be able to find the URIs of the resources  you want to explore by choosing a dataset and typing at least three letters of a keyword for it.',
 		insertUri : 'insert URI',
 		insertUriDescription : 'LodLive is able to analyse and "show"  RDF resources even when they are  not supported by a SPARQL access EndPoint.<br/><br/>By entering any URI to an RDF resource,  you will be able to explore contents and relationships.',
-		insertData : 'browse your data'
+		insertData : 'browse your data',
+		centerClose : 'focus on the resource',
+		openOnline : 'access the online resource',
+		openRelated : 'expand related resources',
+		removeResource : 'remove this box'
 	}
 });
 
