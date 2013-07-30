@@ -2,6 +2,30 @@ $.jStorage.set('profile', {
 	// parametri di connessione agli endpoint
 	'connection' : {
 		// base degli about dei documenti non dell'ontologia
+		
+		'http://dati.culturaitalia.it' : {
+			description : {
+				it : 'Il progetto pilota dati.culturaitalia.it contiene set di open data aggregati in CulturaItalia e rilasciati dai partner del progetto con licenza "CC0 1.0 Universal Public Domain Dedication".',
+			},
+			sparql : {
+				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
+				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
+				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
+				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>.FILTER(isIRI(?object))} LIMIT 100',
+				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
+			},
+			useForInverseSameAs : false,
+			endpoint : 'http://dati.culturaitalia.it/sparql/',
+			proxy : 'http://labs.regesta.com/sparqlProxy/',
+			examples : [{label:'Accademia dei georgofili' ,uri:'http://dati.culturaitalia.it/resource/actor/accademia-dei-georgofili'},  {
+				label : 'Biblioteca universitaria Alessandrina',
+				uri : 'http://dati.culturaitalia.it/resource/title/biblioteca-universitaria-alessandrina'
+			} 
+			]
+		},
+	
 		'http://dati.senato.it' : {
 			// il parametro {URI} viene sostituito con la uri del documento da
 			// caricare
@@ -521,10 +545,16 @@ $.jStorage.set('profile', {
 		}
 
 	}, 
-	uriSubstitutor : [ {
+	arrows : {
+		'http://www.w3.org/2002/07/owl#sameAs' : 'isSameAs',
+		'http://purl.org/dc/terms/isPartOf' : 'isPartOf',
+		'http://purl.org/dc/elements/1.1/type' : 'isType',
+		'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' : 'isType'
+	},
+	uriSubstitutor : [{
 		findStr : 'mpii.de/yago/resource/',
 		replaceStr : 'yago-knowledge.org/resource/'
-	} ],
+	}],
 	/* per ricavare un rdf da risorse non presenti in endpoint */
 	resourceResolver : {
 		sparql : {
@@ -537,7 +567,7 @@ $.jStorage.set('profile', {
 			inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
 		},
 		endpoint : 'http://labs.regesta.com/resourceProxy/'
-	// endpoint : 'http://127.0.0.1:8080/sparql-rdf-proxy/resource/'
+		// endpoint : 'http://127.0.0.1:8080/sparql-rdf-proxy/resource/'
 
 	},
 	// configurazione standard per la rappresentazione di un documento
@@ -545,43 +575,43 @@ $.jStorage.set('profile', {
 	'default' : {
 		document : {
 			className : 'standard',
-			titleProperties : [ 'http://dati.senato.it/osr/titolo','http://www.w3.org/2004/02/skos/core#notation', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#value', 'http://www.geonames.org/ontology#name', 'http://purl.org/dc/elements/1.1/title', 'http://purl.org/dc/terms/title', 'http://www.w3.org/2000/01/rdf-schema#label', 'http://www.w3.org/2004/02/skos/core#prefLabel', 'http://logd.tw.rpi.edu/source/visualizing-org/dataset/2010-global-agenda-council-interlinkage-survey/vocab/enhancement/1/how_councils_interlink', 'http://rdf.freebase.com/ns/type.object.name', 'http://spcdata.digitpa.gov.it/nome_cognome' ,'http://xmlns.com/foaf/0.1/firstName','http://xmlns.com/foaf/0.1/lastName', 'http://xmlns.com/foaf/0.1/surname', 'http://xmlns.com/foaf/0.1/name','http://purl.org/dc/terms/description']
-		},// http://www.w3.org/2000/01/rdf-schema#label
+			titleProperties : ['http://dati.senato.it/osr/titolo', 'http://www.w3.org/2004/02/skos/core#notation', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#value', 'http://www.geonames.org/ontology#name', 'http://purl.org/dc/elements/1.1/title', 'http://purl.org/dc/terms/title', 'http://www.w3.org/2000/01/rdf-schema#label', 'http://www.w3.org/2004/02/skos/core#prefLabel', 'http://logd.tw.rpi.edu/source/visualizing-org/dataset/2010-global-agenda-council-interlinkage-survey/vocab/enhancement/1/how_councils_interlink', 'http://rdf.freebase.com/ns/type.object.name', 'http://spcdata.digitpa.gov.it/nome_cognome', 'http://xmlns.com/foaf/0.1/firstName', 'http://xmlns.com/foaf/0.1/lastName', 'http://xmlns.com/foaf/0.1/surname', 'http://xmlns.com/foaf/0.1/name', 'http://purl.org/dc/terms/description']
+		}, // http://www.w3.org/2000/01/rdf-schema#label
 		images : {
-					properties : ['http://www.w3.org/2006/vcard/ns#photo', 'http://xmlns.com/foaf/0.1/depiction', 'http://dbpedia.org/ontology/thumbnail', 'http://dbpedia.org/property/logo', 'http://linkedgeodata.org/ontology/schemaIcon' ]
+			properties : ['http://www.w3.org/2006/vcard/ns#photo', 'http://xmlns.com/foaf/0.1/depiction', 'http://dbpedia.org/ontology/thumbnail', 'http://dbpedia.org/property/logo', 'http://linkedgeodata.org/ontology/schemaIcon']
 		},
 		maps : {
-			longs : [ 'http://www.w3.org/2003/01/geo/wgs84_pos#long' ],
-			lats : [ 'http://www.w3.org/2003/01/geo/wgs84_pos#lat' ],
-			points : [ 'http://www.georss.org/georss/point' ]
+			longs : ['http://www.w3.org/2003/01/geo/wgs84_pos#long'],
+			lats : ['http://www.w3.org/2003/01/geo/wgs84_pos#lat'],
+			points : ['http://www.georss.org/georss/point']
 		},
 		weblinks : {
-			properties : ['http://www.w3.org/ns/dcat#accessURL', 'http://xmlns.com/foaf/0.1/mbox','http://rdfs.org/sioc/ns#links_to', 'http://it.dbpedia.org/property/url', 'http://data.nytimes.com/elements/search_api_query', 'http://www.w3.org/2000/01/rdf-schema#isDefinedBy', 'http://xmlns.com/foaf/0.1/page', 'http://xmlns.com/foaf/0.1/homepage', 'http://purl.org/dc/terms/isReferencedBy', 'http://purl.org/dc/elements/1.1/relation', 'http://dbpedia.org/ontology/wikiPageExternalLink', 'http://data.nytimes.com/elements/topicPage' ]
+			properties : ['http://www.w3.org/ns/dcat#accessURL', 'http://xmlns.com/foaf/0.1/mbox', 'http://rdfs.org/sioc/ns#links_to', 'http://it.dbpedia.org/property/url', 'http://data.nytimes.com/elements/search_api_query', 'http://www.w3.org/2000/01/rdf-schema#isDefinedBy', 'http://xmlns.com/foaf/0.1/page', 'http://xmlns.com/foaf/0.1/homepage', 'http://purl.org/dc/terms/isReferencedBy', 'http://purl.org/dc/elements/1.1/relation', 'http://dbpedia.org/ontology/wikiPageExternalLink', 'http://data.nytimes.com/elements/topicPage']
 		}
 	},
 
 	'http://www.w3.org/2002/07/owl#Class' : {
 		document : {
 			className : 'Class',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+			titleProperties : ['http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label']
 		}
 	},
 	'http://www.w3.org/2002/07/owl#ObjectProperty' : {
 		document : {
 			className : 'ObjectProperty',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+			titleProperties : ['http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label']
 		}
 	},
 	'http://www.w3.org/2002/07/owl#Restriction' : {
 		document : {
 			className : 'DatatypeProperty',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ]
+			titleProperties : ['http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label']
 		}
 	},
 	'http://www.w3.org/2002/07/owl#DatatypeProperty' : {
 		document : {
 			className : 'DatatypeProperty',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ],
+			titleProperties : ['http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label'],
 			weblinks : {
 				visualizationType : '',
 				properties : []
@@ -591,7 +621,7 @@ $.jStorage.set('profile', {
 	'http://www.w3.org/2002/07/owl#Property' : {
 		document : {
 			className : 'Property',
-			titleProperties : [ 'http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label' ],
+			titleProperties : ['http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label'],
 			weblinks : {
 				visualizationType : '',
 				properties : []
@@ -600,17 +630,17 @@ $.jStorage.set('profile', {
 	},
 	'http://data.oceandrilling.org/core/1/ODP' : {
 		document : {
-			titleProperties : [ 'expedition', 'http://data.oceandrilling.org/core/1/expedition', 'site', 'http://data.oceandrilling.org/core/1/site', 'hole', 'http://data.oceandrilling.org/core/1/hole' ]
+			titleProperties : ['expedition', 'http://data.oceandrilling.org/core/1/expedition', 'site', 'http://data.oceandrilling.org/core/1/site', 'hole', 'http://data.oceandrilling.org/core/1/hole']
 		}
 	},
 	'http://www.w3.org/ns/locn#Address' : {
 		document : {
-			titleProperties : [ 'http://www.w3.org/ns/locn#fullAddress' ]
+			titleProperties : ['http://www.w3.org/ns/locn#fullAddress']
 		}
-	}, 
+	},
 	'http://www.cnr.it/ontology/cnr/personale.owl#UnitaDiPersonaleInterno' : {
 		document : {
-			titleProperties : [ 'http://www.cnr.it/ontology/cnr/personale.owl#cognome', ' ', 'http://www.cnr.it/ontology/cnr/personale.owl#nome' ]
+			titleProperties : ['http://www.cnr.it/ontology/cnr/personale.owl#cognome', ' ', 'http://www.cnr.it/ontology/cnr/personale.owl#nome']
 		}
 	}
 
