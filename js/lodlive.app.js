@@ -23,8 +23,8 @@ $(function() {
 	}
 	var nextSpeed = 500;
 	var fadeSpeed = 100;
-	var loca = $(location).attr('href');
-	if (loca.indexOf('?http') != -1) {
+	var loca = $(location).attr('search');
+	if (loca) {
 		$("#startPanel").remove();
 		$(".paginator").remove();
 		$("#footer").remove();
