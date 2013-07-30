@@ -1152,7 +1152,7 @@ var debugOn = false;
 			obj.find(".actionBox[rel=tools]").click(function() {
 				if ($(".toolBox:visible").length == 0) {
 					var pos = obj.position();
-					var tools = $("<div class=\"toolBox sprite\" style=\"display:none\" ><div class=\"innerActionBox infoQ\" rel=\"infoQ\" title=\"" + lang('moreInfoOnThis') + "\" >&#160;</div><div class=\"innerActionBox center\" rel=\"center\" title=\"centra e chiudi le altre risorse\" >&#160;</div><div class=\"innerActionBox newpage\" rel=\"newpage\" title=\"visualizza la risorsa online\" >&#160;</div><div class=\"innerActionBox expand\" rel=\"expand\" title=\"espandi tutte le relazioni\" >&#160;</div><div class=\"innerActionBox remove\" rel=\"remove\" title=\"rimuovi questo box\" >&#160;</div></div>");
+					var tools = $("<div class=\"toolBox sprite\" style=\"display:none\" ><div class=\"innerActionBox infoQ\" rel=\"infoQ\" title=\"" + lang('moreInfoOnThis') + "\" >&#160;</div><div class=\"innerActionBox center\" rel=\"center\" title=\"" + lang('centerClose') + "\" >&#160;</div><div class=\"innerActionBox newpage\" rel=\"newpage\" title=\"" + lang('openOnline') + "\" >&#160;</div><div class=\"innerActionBox expand\" rel=\"expand\" title=\"" + lang('openRelated') + "\" >&#160;</div><div class=\"innerActionBox remove\" rel=\"remove\" title=\"" + lang('removeResource') + "\" >&#160;</div></div>");
 					context.append(tools);
 					tools.css({
 						top : pos.top - 23,
