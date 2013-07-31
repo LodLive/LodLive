@@ -18,7 +18,7 @@ $(function() {
 			top : $(window).height() / 2 + $('body').scrollTop()
 		});
 	}
- 
+
 	var nextSpeed = 500;
 	var fadeSpeed = 100;
 	var loca = $(location).attr('search');
@@ -29,10 +29,9 @@ $(function() {
 		$("#lang").remove();
 		$('body').append('<div id="aSpace"></div>');
 		var res = $.trim(loca.substring(loca.indexOf("?") + 1));
-		if (res.indexOf("%3A") != -1) {
-			res = res.replace(/%2F/g, '/');
-			res = res.replace(/%3A/g, ':');
-		}
+		res = res.replace(/%2F/g, '/');
+		res = res.replace(/%3A/g, ':');
+		res = res.replace(/%23/g, '#');
 		$("#aSpace").lodlive('init', res);
 	} else {
 		var boxesLength = 0;
@@ -123,7 +122,7 @@ $(function() {
 				jExemples.append('<div class="selectEle" rel="inserisci"><span>' + lang('addUri') + '</span></div>');
 				jExemples.append('<div class="selectEle" rel="cerca"><span>' + lang('findResource') + '</span></div>');
 				if (examples) {
-					for ( var a = 0; a < examples.length; a++) {
+					for (var a = 0; a < examples.length; a++) {
 						jExemples.append('<div class="selectEle" rel="' + examples[a].uri + '"><span>' + lang('example') + ' - ' + examples[a].label + '</span></div>');
 					}
 				}
@@ -299,6 +298,7 @@ $(function() {
 			descrBox.fadeOut('fast');
 		});
 	}
+
 	function addSubmit(form) {
 		var invia = $('<div class="inviaForm"></div>');
 		invia.click(function() {
@@ -324,6 +324,7 @@ $(function() {
 			return false;
 		});
 	}
+
 	function blueBox(firstLine, formTemplate) {
 		var aBox = $('<div class="startBox ' + spriteHome + '" id="boxB"><h1><span>' + lang('insertUri') + '</span><span class="' + spriteHome + ' info"></span></h1></div>');
 		firstLine.append(aBox);
@@ -342,6 +343,7 @@ $(function() {
 		addSubmit(form);
 		form.find('.inviaForm').attr("style", 'top: 138px');
 	}
+
 	function liveOnlodLive(dest) {
 		var aBox = $('<div class="startBox ' + spriteHome + ' endpList"></div>');
 		dest.prepend(aBox);
@@ -364,7 +366,7 @@ $(function() {
 				var label = $(this).attr('rel');
 				var selBox = $("div[rel='" + label + "'].startBox:first").position().left + 310;
 				var pag = (selBox / 930 + "").indexOf(".") > 0 ? parseInt(selBox / 930 + "".replace(/\.[0-9]*/, '')) + 1 : selBox / 930;
-				for ( var a = 0; a < pag - 1; a++) {
+				for (var a = 0; a < pag - 1; a++) {
 					$.doTimeout(205 * a, function() {
 						nextSpeed = 0;
 						fadeSpeed = 0;
@@ -398,6 +400,7 @@ $(function() {
 		});
 
 	}
+
 	function orangeBox(firstLine, formTemplate) {
 		var aBox = $('<div class="startBox ' + spriteHome + '" id="boxO"><h1><span>' + lang('simpleSearch') + '</span><span class="' + spriteHome + ' info"></span></h1></div>');
 		firstLine.append(aBox);
@@ -461,7 +464,7 @@ $(function() {
 						results = findConcept(label, ele2.val(), function() {
 							form.children('div.input').children('img').remove();
 							var jClasses = $('<div class="selectionList"></div>');
-							for ( var int = 0; int < results.length; int++) {
+							for (var int = 0; int < results.length; int++) {
 								var row = results[int];
 								jClasses.append('<div class="selectEle" ><span title="' + decodeURIComponent(row.uri) + '">' + row.label + '</span></div>');
 							}
@@ -510,6 +513,7 @@ $(function() {
 
 		form.find('.inviaForm').attr("style", 'top: 60px');
 	}
+
 	var connection = null;
 	function findConcept(type, value, callback, onAbort) {
 		try {
@@ -547,7 +551,7 @@ $(function() {
 				url : 'https://www.googleapis.com/freebase/v1/search?query=' + value + '&mql_output={"id":null,"name":null}&lang=en&key=AIzaSyBtTcMfVJVhjmhh_MdzeBCnuIC4J0WzPXQ',
 				async : true,
 				success : function(json) {
-					for ( var int = 0; int < json.result.length; int++) {
+					for (var int = 0; int < json.result.length; int++) {
 						var row = json.result[int];
 						result.push({
 							uri : 'http://rdf.freebase.com/ns/' + row.id.replace(/^\//, '').replace(/\//g, '.'),
