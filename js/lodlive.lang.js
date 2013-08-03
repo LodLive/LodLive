@@ -38,7 +38,9 @@ $.jStorage.set('language', {
 		centerClose : 'centra e chiudi le altre risorse',
 		openOnline : 'visualizza la risorsa online',
 		openRelated : 'espandi tutte le relazioni',
-		removeResource : 'rimuovi questo box'
+		removeResource : 'rimuovi questo box',
+		noImage:'immagine non disponibile',
+		connectedResources:'risorse collegate'
 	},
 	en : {
 		restart : 'restart',
@@ -78,7 +80,51 @@ $.jStorage.set('language', {
 		centerClose : 'focus on the resource',
 		openOnline : 'access the online resource',
 		openRelated : 'expand related resources',
-		removeResource : 'remove this box'
+		removeResource : 'remove this box',
+		noImage:'image not available',
+		connectedResources:'connected resources'
+	},
+		fr : {
+		restart : 'redémarrer',
+		generateInverse : 'générer les relations inverses',
+		autoExpand : 'mode auto-expansion',
+		autoSameAs : 'générer les relations inverses sameAs',
+		autoCollectImages : 'récupération des images pendant la navigation',
+		autoDrawMap : 'géolocaliser les ressources',
+		noName : 'sans titre',
+		addUri : 'insérer une URI',
+		findResource : 'chercher ressources',
+		choose : 'choisir...',
+		resourceMissing : 'ressource inconnue',
+		resourceMissingDoc : 'valeurs littérales inconnues ou ressource inconnue ou ressource inaccessible au point d\'accès',
+		options : 'OPTIONS',
+		endpointNotConfigured : 'aucun endpoint n\'est configuré pour cette ressource',
+		endpointNotConfiguredSoInternal : 'aucun endpoint n\'est configuré pour la ressource , génération d\'un graphe temporaire',
+		impostaUnaURI : 'saisir une URI, faire une recherche ou choisir un des exemples fournis',
+		example : 'exemple',
+		noIe : 'Désolé, Internet Explorer n\'est pas complètement supporté',
+		enpointNotAvailable : 'erreur: point d\'accès non disponible',
+		enpointNotAvailableOrSLow : 'erreur: point d\'accès non disponible ou délai dépassé',
+		imagesNotFound : 'aucune image pour les ressources en cours',
+		mapNotFound : 'aucune carte pour les ressources en cours',
+		propsNotFound : 'aucun résultat',
+		propsFound : 'propriétés trouvées',
+		showResource : 'surligner la ressource',
+		zoomIn : 'zoomer',
+		showConsole : 'afficher la console (expérimental)',
+		executeThisQuery : 'exécuter la requête SPARQL query dans une nouvelle fenêtre',
+		moreInfoOnThis : 'plus d\'informations sur cette ressource',
+		simpleSearch : 'simple recherche',
+		simpleSearchDescription : 'DBpedia.org et Freebase autorise les recherches par mots-clés.<br/><br/>Vous pouvez trouver les URI des ressources que vous cherchez en choisissant un jeu de données et en tapant au moins trois lettres d\'un mot clé .',
+		insertUri : 'insérer une URI',
+		insertUriDescription : 'LodLive is capable d\'analyser et de montrer des ressources RDF, y compris quand elles ne sont pas supportées par un point d\'accès SPARQL<br/><br/>En entrant une URI vers une ressource RDF,  vous serez capable d\'explorer son contenu et ses relations.',
+		insertData : 'parcourir vos données',
+		centerClose : 'se recentrer sur cette ressource',
+		openOnline : 'accéder à la ressource en ligne',
+		openRelated : 'déployer toutes les ressources associées',
+		removeResource : 'retirer cette entrée',
+		noImage:'image indisponible',
+		connectedResources:'ressources reliées'
 	}
 });
 

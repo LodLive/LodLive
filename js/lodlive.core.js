@@ -1766,7 +1766,7 @@ var debugOn = false;
 						}
 					});
 					$(this).error(function() {
-						$(this).attr("title", "immagine non disponibile \n" + $(this).attr("src"));
+						$(this).attr("title", lang('noImage')+" \n" + $(this).attr("src"));
 						$(this).attr("src", "img/immagine-vuota-" + $.jStorage.get('selectedLanguage') + ".png");
 					});
 				});
@@ -2168,7 +2168,7 @@ var debugOn = false;
 							// sprite\" rel=\"" + MD5(akey) + "\" title=\"" +
 							// akey + "\" >" + (propertyGroup[akey].length) +
 							// "</div>");
-							var objBox = $("<div class=\"groupedRelatedBox sprite\" rel=\"" + MD5(akey) + "\"    data-title=\"" + akey + " \n " + (propertyGroup[akey].length) + " risorse collegate\" ></div>");
+							var objBox = $("<div class=\"groupedRelatedBox sprite\" rel=\"" + MD5(akey) + "\"    data-title=\"" + akey + " \n " + (propertyGroup[akey].length) + " "+lang('connectedResources')+"\" ></div>");
 							// containerBox.append(objBox);
 							var akeyArray = akey.split(" ");
 							for (var i = 0; i < akeyArray.length; i++) {
@@ -2252,7 +2252,7 @@ var debugOn = false;
 							// sprite\" rel=\"" + MD5(akey) + "\" title=\"" +
 							// akey + "\" >" + (propertyGroup[akey].length) +
 							// "</div>");
-							var objBox = $("<div class=\"groupedRelatedBox sprite inverse\" rel=\"" + MD5(akey) + "-i\"   data-title=\"" + akey + " \n " + (propertyGroupInverted[akey].length) + " risorse collegate\" ></div>");
+							var objBox = $("<div class=\"groupedRelatedBox sprite inverse\" rel=\"" + MD5(akey) + "-i\"   data-title=\"" + akey + " \n " + (propertyGroupInverted[akey].length) + " "+lang('connectedResources')+"\" ></div>");
 							// containerBox.append(objBox);
 							var akeyArray = akey.split(" ");
 							for (var i = 0; i < akeyArray.length; i++) {
