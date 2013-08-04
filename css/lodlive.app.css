@@ -8,7 +8,14 @@ div#logo {
 }
 
 div#lang {
-	position: absolute; left: 50%; margin-left: 416px; width: 80px; top: 25px; z-index: 999; color: #fff; font-size: 11px;
+position: absolute;
+left: 50%;
+margin-left: 394px;
+width: 80px;
+top: 25px;
+z-index: 999;
+color: #fff;
+font-size: 11px;
 }
 
 div#lang a {
@@ -140,7 +147,7 @@ div#boxesCont {
 }
 
 .endpList .slimScrollDiv  .selectEle span {
-	width: 188; word-break: break-all; line-height: 15px; padding-bottom: 5px;
+	width: 188px; word-break: break-all; line-height: 15px; padding-bottom: 5px;
 }
 
 .cerca .slimScrollDiv .selectionList,.endpList .slimScrollDiv .selectionList {
