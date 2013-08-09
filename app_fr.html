@@ -79,7 +79,7 @@
 		<link rel="icon" type="image/png" href="favicon.png" />
 		<script type="text/javascript" src="js/lodlive.app.js?01"></script>
 		<script type="text/javascript">
-			$.jStorage.set('selectedLanguage', 'en')
+			$.jStorage.set('selectedLanguage', 'fr')
 		</script>
 	</head>
 	<body>
@@ -96,41 +96,41 @@
 					<div id="boxesCont"></div>
 				</div>
 				<div class="startBoxMainText">
-					<div>
+					<div style="height: 186px;">
 						<p>
-							LodLive project provides a demonstration of the use of Linked Data standards (RDF, SPARQL) to browse RDF resources. The application aims to spread linked data principles using a simple and friendly interface with reusable techniques.
+							Le projet LodLive fournit un exemple de l'usage qui peut être fait des standards du web sémantique (RDF, SPARQL) pour parcourir librement les ressources RDF. L'application a pour but de parcourir les données liées à l'aide d'une interface simple et accueillante qui fonctionne avec des techniques d'emploi courant.
 						</p>
 					</div>
 					<p>
-						<a href="https://github.com/dvcama/LodLive" target="_blank">DOWNLOAD LodLive</a>
+						<a href="https://github.com/dvcama/LodLive" target="_blank">TÉLÉCHARGER LodLive</a>
 					</p>
 				</div>
 				<div class="startBoxMainTextPlain">
 					<div>
 						<p>
-							The basic principle underlying LodLive is to prove that resources published according to the W3C SPARQL standard are easy to reach and understand, with hopes that the LodLive approach can stimulate Public Administrations and large-scale data owners to add their resources to the LOD and share them. You can start browsing by querying the endpoint for a specific resource, or start from one of the provided URI examples.
+							Le principe qui sous-tend LodLive est notre intention de démontrer que les ressources publiées conformément à la norme W3C SPARQL sont faciles à atteindre et à comprendre, avec l'espoir que l'approche LodLive puisse donner envie aux Administrations publiques et aux propriétaires de données à grande échelle d'ajouter leurs ressources au LOD, afin de les partager. Vous pouvez commencer à naviguer en interrogeant le point d'accès (endpoint) d'une ressource spécifique, ou démarrer à partir de l'un des exemples URI déjà fournis.
 						</p>
 					</div>
 					<p>
-						LodLive is composed of a jQuery plug-in (lodlive-core.js), a JSON configuration map (lodlive-profile.js), an HTML page, a few images (sprites), and some other jQuery public plug-ins. It is as simple as that.
+						<br />LodLive est composé d'un jQuery plug-in (lodlive-core.js), d'une carte de configuration JSON (lodlive-profile.js), d'une page HTML, de quelques images (sprites) et de quelques autres jQuery public plug-ins. C'est aussi simple que cela.<br /><br />
 					</p>
 				</div>
 			</div>
-			<div id="footer">
+			<div id="footer" style="top: 910px;">
 				<div id="footerContainer">
 					<div class="footerBox segnala">
-						<h2>share</h2>
+						<h2>partagez</h2>
 						<a class="tw spriteHomeEn" href="http://twitter.com/home?status=via+%40LodLive+-+%23lodlive+-+browsing+the+web+of+data" target="_blank" title="condividi su Twitter"></a><a class="fb spriteHomeEn" href="http://www.facebook.com/sharer.php?s=100&amp;p[title]=LodLive+-+browsing+the+web+of+data&amp;p[summary]=LodLive+%C3%A8+un+progetto+sperimentale+nato+per+divulgare+la+filosofia+dei+linked+open+data+e+per+creare+uno+strumento+in+grado+di+associare+le+potenzialità+di+un+browser+RDF+all'efficacia+della+rappresentazione+a+grafo.&amp;p[url]=http://lodlive.it&amp;&amp;p[images][0]=http://lodlive.it/img/logoLodLive.jpg" target="_blank" title="condividi su FaceBook"></a>
 						<br />
 						<br />
-						<h2>follow</h2>
+						<h2>suivez</h2>
 						<a class="tw spriteHomeEn" href="https://twitter.com/#!/LodLive" target="_blank" title="segui su Twitter"></a><a class="fb spriteHomeEn" href="https://www.facebook.com/lodlive.browser" target="_blank" title="segui su FaceBook"></a>
 					</div>
 					<div class="footerBox" id="menu">
 						<h2>menu</h2>
 						<ul>
 							<li>
-								<a href="#what">What is LodLive?</a>
+								<a href="#what">Qu'est-ce que LodLive?</a>
 							</li>
 							<li>
 								<a href="http://blog.lodlive.it">Blog/documentation</a>
@@ -139,24 +139,23 @@
 								<a href="#faq">FAQ</a>
 							</li>
 							<li>
-								<a href="#send">Signal an endpoint</a>
+								<a href="#send">Indiquer un endpoint</a>
 							</li>
 							<li>
-								<a href="#links">Useful Links</a>
+								<a href="#links">Liens utiles</a>
 							</li>
 							<li>
-								<a href="#get">Download</a>
+								<a href="#get">Télécharger</a>
 							</li>
 							<li>
-								<a href="#credits">Credits and contacts</a>
+								<a href="#credits">Crédits et contacts</a>
 							</li>
 						</ul>
 					</div>
 					<div class="footerBox">
 						<h2>best experienced with</h2>
-						LodLive does not make use of any server component.
-						<br />
-						For a proper function of the application, we recommend using the latest up-dated browsers. <div class="spriteHomeEn browsers" title="FireFox - Chrome - Safari - Opera"></div>
+						LodLive ne dépend d'aucun composant coté serveur. Pour un bon fonctionnement de l'application, nous vous recommandons d'utiliser un browser de dernière génération.
+						<div class="spriteHomeEn browsers" title="FireFox - Chrome - Safari - Opera"></div>
 					</div>
 					<div class="best">
 						2012, lodlive.it <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC BY-SA</a>, lodlive.js <a href="http://www.opensource.org/licenses/mit-license.php" target="_blank">MIT License</a>
@@ -166,27 +165,23 @@
 			</div>
 			<div id="faq" class="hd">
 				<p>
-					<strong>When navigating the data graph, how will I know which endpoint I'm at?</strong>
+					<strong>Pendant la navigation dans le graphe des données, comment savoir sur quel point d'accès je me trouve?</strong>
+					Quand vous passer la souris sur la ressource, une fenêtre s'ouvre dans le coin inférieur gauche qui précise certaines caractéristiques, dont le point d'accès de la ressource.
 					<br />
-					By going over the resource with your mouse, a box will appear in the lower left-hand corner in which certain features will be indicated, including the resource's endpoint.
-					<br />
-					<br />
-					<strong>The system seems to freeze when I open certain resources, and with IE it does not seem to work.</strong>
-					<br />
-					LodLife makes full use of the computer's power that it is accessing, and this has allowed us to develop an application that does not require any server component. The application can therefore be used immediately once it is downloaded.
-					<br />
-					We recommend using a recently up-dated browser, particularly Opera,
-					Safari or Google Chrome; FireFox will work but with a slower navigation function; Internet Explorer does not currently work with the application because it is not capable of managing certain LodLive features and functions.
+					<strong>Le système semble se figer quand j'ouvre certaines ressources, et avec IE il ne semble pas vouloir fonctionner.</strong>
+					LodLive utilise pleinement la puissance de l'ordinateur qui y accède, et c'est cela qui nous a permis de développer une application qui n‘a besoin d'aucun composant coté serveur. L'application peut donc être utilisée immédiatement une fois qu'elle a été téléchargée.
+					Nous vous recommandons d'utiliser un navigateur récemment mis à jour, par exemple opéra, Safari ou Google Chrome; FireFox fonctionne également,
+					mais la navigation sera plus lente; par contre, actuellement Internet Explorer ne fonctionne pas avec l'application, car il n'est pas en mesure de gérer certaines des fonctions et caractéristiques particulières  du javascript/html5 utilisé par LodLive.
 				</p>
 			</div>
 			<div id="links" class="hd">
 				<p>
-					<strong>Regarding SPARQL</strong>
+					<strong>Au sujet de SPARQL</strong>
 					<br />
 					<a href="http://www.w3.org/TR/rdf-sparql-query/" target="_blank">www.w3.org/TR/rdf-sparql-query</a>
 					<br />
 					<br />
-					<strong>Regarding standards and the semantic web</strong>
+					<strong>Concernant les normes et standards  du web sémantique</strong>
 					<br />
 					<a href="http://www.w3.org/RDF/" target="_blank">www.w3.org/RDF</a>
 					<br />
@@ -195,7 +190,7 @@
 					<a href="http://www.w3.org/DesignIssues/LinkedData.html" target="_blank">www.w3.org/DesignIssues/LinkedData.html</a>
 					<br />
 					<br />
-					<strong>A sparql tutorial for the w3c working group can be found at</strong>
+					<strong>Un tutoriel sparql fait pour le groupe de travail du w3c se trouve à</strong>
 					<br />
 					<a href="http://www.cambridgesemantics.com/it/semantic-university/sparql-by-example"
 					target="_blank">www.cambridgesemantics.com/it/semantic-university/sparql-by-example</a>
@@ -205,96 +200,103 @@
 			</div>
 			<div id="get" class="hd">
 				<p>
-					LodLive is available on GitHub <a href="https://github.com/dvcama/LodLive" target="_blank">https://github.com/dvcama/LodLive</a>
+					LodLive est disponible sur GitHub <a href="https://github.com/dvcama/LodLive" target="_blank">https://github.com/dvcama/LodLive</a>
 				</p>
 			</div>
 			<div id="credits" class="hd">
 				<p>
-					<strong>Direct project participants</strong>
+					<strong>Les personnes qui ont participé à la crèation du projet sont</strong>
 					<br />
-					<span itemscope itemtype="http://data-vocabulary.org/Person"><span itemprop="name">Diego Valerio Camarda</span> (diego@lodlive.it), <span itemprop="name">Silvia Mazzini</span> (silvia@lodlive.it) e <span itemprop="name">Alessandro Antonuccio</span> (ale@lodlive.it)</span>
-					<br />
-					<br />
-					Diego is responsible for the app development, Silvia established the criteria basis, and Alessandro developed the interface design. The group has worked together day after day, and the tasks at hand have often blended through their collaboration.
+					<span itemscope itemtype="http://data-vocabulary.org/Person"><span itemprop="name">Diego Valerio Camarda</span> (diego@lodlive.it), <span itemprop="name">Silvia Mazzini</span> (silvia@lodlive.it) e <span itemprop="name">Alessandro Antonuccio</span> (ale@lodlive.it)</span></span>
 					<br />
 					<br />
-					For further information and contacts: info@lodlive.it.
+					On doit à Diego le développement de l'app; Silvia a établi le contour général et Alessandro a mis au point la conception de l'interface. Le groupe s'est partagé le travail lors d'échanges quotidiens, et il est difficile de préciser les contours de la participation de chacun dans le cadre de cette collaboration étroite.
+					<br />
+					<br />
+					Pour toutes informations et contacts: info@lodlive.it.
 				</p>
 			</div>
 			<div id="send" class="hd">
 				<p>
-					It is possible to signal an endpoint at info@lodlive.it so that it can be inserted in the application and made available at lodlive.it. Generally the best results are obtained with datasets having owl:sameAs properties towards other resources available on SPARQL endpoints.
+					Il est possible de signaler un endpoint à info@lodlive.it afin que celui-ci puisse être introduit dans l'application et devienne disponible à lodlive.it.
 					<br />
-					It is important to provide as much information as possible on the resources existing in the endpoint and on the specificities of the dataset. LodLive can be specifically configured to best represent the contents that it navigates.
+					Généralement les meilleurs résultats sont obtenus avec des ensembles de données ayant des propriétés owl:sameAs vers d'autres ressources disponibles sur les endpoints SPARQL. Il est important de fournir le plus d'informations possible sur les ressources existantes dans  le point d'accès, ainsi que sur les spécificités du dataset. On peut configurer LodLive de façon spécifique pour représenter de la meilleure façon possible les thèmes sur lesquels il est appelé à naviguer.
 				</p>
 			</div>
 			<div id="what" class="hd">
 				<p>
-					LodLive is an experimental project that was set-up to spread and promote the linked-open-data philosophy and to create a tool that can be used for connecting RDF browser capabilities with the effectiveness of data graph representation.
+					LodLive est un projet expérimental qui a été mis en place dans le but de diffuser et de promouvoir la philosophie des linked-open-data et de créer un outil qui puisse être utilisé pour associer les fonctionnalités d'un navigateur RDF à l'efficacité de la représentation graphique de données.
 					<br />
+					LodLive est le premier navigateur à utiliser les ressources RDF qui soit uniquement basées sur des endpoints SPARQL.
 					<br />
-					LodLive is the first navigator to use RDF resources based solely on SPARQL endpoints.
+					LodLive vise à démontrer comment les ressources publiées par les normes et standards du W3C pour le web sémantique peuvent être rendues facilement accessibles et lisibles avec les instruments adéquats.
 					<br />
-					<br />
-					LodLive aims to demonstrate how resources published by W3C standards for the semantic web can be made easily accessible and legible with a few viable tools.
-					<br />
-					<br />
-					LodLive is capable of connecting the resources existing in its configured endpoints, allowing the user to pass from one endpoint to another by making use of LOD interconnection capacities.
+					LodLive est en mesure de relier les ressources qui se trouvent dans les endpoints qui y sont configurés, permettant à l'utilisateur de passer d'un endpoint à l' autre en faisant usage des capacités d'interconnexions caractéristiques des LOD.
 				</p>
 			</div>
 			<div class="help hd">
 				<div>
-					<h2>HELP</h2>
+					<h2>Aide</h2>
 					<p>
 						<a href="http://www.youtube.com/embed/BQ9Ckh2ov-c?rel=0" class="sprite videoHelp"></a>
 					</p>
 					<p>
-						Here you can follow the direct and inverse connections provided by the resource by moving freely from one "circle" to the others.
+						Ici, vous pouvez suivre les connexions directes et inverses fournies par la ressource en vous déplaçant librement d'un « cercle » aux autres.
 					</p>
 					<p>
-						Every new pop-open resource will guide the user to those relating to it, automatically connecting the new "circle" to the ones they have already opened.
+						Chaque nouvelle ressource qui s'ouvre guidera l'utilisateur vers toutes celles qui s'y rapportent, reliant de façon automatique le nouveau « cercle » à ceux qu'il a déjà ouvert.
 					</p>
 					<p>
-						Every time an owl:sameAs property is reached throughout the course of navigation, LodLive will connect to the related endpoint, enabling the user to move to the new available resources within the same navigation environment.
+						Chaque fois qu'une propriété owl:sameAs est atteinte en cours de navigation, LodLive se connecte à l'endpoint qui s'y réfère, ce qui permet à l'utilisateur d'atteindre les nouvelles ressources disponibles sans quitter son environnement de navigation.
 					</p>
 				</div>
 			</div>
 			<div class="legenda hd">
 				<div>
-					<h2>SYMBOL LEGEND</h2>
+					<h2>SYMBOLE DE LÉGENDE</h2>
 					<ul class="optionsList legend">
 						<li>
-							<span class="spriteLegenda"></span>tools
+							<span class="spriteLegenda"></span>outils
 						</li>
 						<li>
-							<span class="spriteLegenda"></span>view additional information
+							<span class="spriteLegenda"></span>afficher des informations <br><span></span> supplémentaires
+
 						</li>
 						<li>
-							<span class="spriteLegenda"></span>close circle
+							<span class="spriteLegenda"></span>fermer le cercle
+
 						</li>
 						<li>
-							<span class="spriteLegenda"></span>focus on circle
+							<span class="spriteLegenda"></span>focus sur le cercle
+
 						</li>
 						<li>
-							<span class="spriteLegenda"></span>open resource URI
+							<span class="spriteLegenda"></span>ouvrir l'URI de la ressource
+
 						</li>
 						<li>
-							<span class="spriteLegenda"></span>expand all visible relations
+							<span class="spriteLegenda"></span>développez toutes les relations <br><span></span> visibles
+
 						</li>
 						<li>
-							<span class="spriteLegenda"></span>direct relation
+							<span class="spriteLegenda"></span>relation directe
+
 						</li>
 						<li>
-							<span class="spriteLegenda"></span>group of direct relations
+							<span class="spriteLegenda"></span>groupe de relations directes
+
 						</li>
 						<li>
-							<span class="spriteLegenda"></span>inverse relation
+							<span class="spriteLegenda"></span>relation inverse
+
 						</li>
 						<li>
-							<span class="spriteLegenda"></span>group of inverse relations
+							<span class="spriteLegenda"></span>groupe des relations inverses
+
 						</li>
 						<li>
-							<span class="spriteLegenda"></span>owl:sameAs relation
+							<span class="spriteLegenda"></span>relation owl:sameAs
+
 						</li>
 					</ul>
 				</div>

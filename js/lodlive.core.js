@@ -438,7 +438,7 @@ var debugOn = false;
 					} else if ($(this).hasClass("legend")) {
 						var legend = $('.legenda').children('div').clone();
 						var counter = 0;
-						legend.find("span").each(function() {
+						legend.find("span.spriteLegenda").each(function() {
 							$(this).css({
 								'background-position' : '-1px -' + (counter * 20) + 'px'
 							});
@@ -450,10 +450,10 @@ var debugOn = false;
 						}
 					}
 				});
-				if (!$.jStorage.get('doDrawMap', true)) {
+				if (!$.jStorage.get('doCollectImages', true)) {
 					panel.children('div.panel2.images').addClass('inactive').hide();
 				}
-				if (!$.jStorage.get('doCollectImages', true)) {
+				if (!$.jStorage.get('doDrawMap', true)) {
 					panel.children('div.panel2.maps').addClass('inactive').hide();
 				}
 
@@ -1766,7 +1766,7 @@ var debugOn = false;
 						}
 					});
 					$(this).error(function() {
-						$(this).attr("title", "immagine non disponibile \n" + $(this).attr("src"));
+						$(this).attr("title", lang('noImage')+" \n" + $(this).attr("src"));
 						$(this).attr("src", "img/immagine-vuota-" + $.jStorage.get('selectedLanguage') + ".png");
 					});
 				});
@@ -2168,7 +2168,7 @@ var debugOn = false;
 							// sprite\" rel=\"" + MD5(akey) + "\" title=\"" +
 							// akey + "\" >" + (propertyGroup[akey].length) +
 							// "</div>");
-							var objBox = $("<div class=\"groupedRelatedBox sprite\" rel=\"" + MD5(akey) + "\"    data-title=\"" + akey + " \n " + (propertyGroup[akey].length) + " risorse collegate\" ></div>");
+							var objBox = $("<div class=\"groupedRelatedBox sprite\" rel=\"" + MD5(akey) + "\"    data-title=\"" + akey + " \n " + (propertyGroup[akey].length) + " "+lang('connectedResources')+"\" ></div>");
 							// containerBox.append(objBox);
 							var akeyArray = akey.split(" ");
 							for (var i = 0; i < akeyArray.length; i++) {
@@ -2252,7 +2252,7 @@ var debugOn = false;
 							// sprite\" rel=\"" + MD5(akey) + "\" title=\"" +
 							// akey + "\" >" + (propertyGroup[akey].length) +
 							// "</div>");
-							var objBox = $("<div class=\"groupedRelatedBox sprite inverse\" rel=\"" + MD5(akey) + "-i\"   data-title=\"" + akey + " \n " + (propertyGroupInverted[akey].length) + " risorse collegate\" ></div>");
+							var objBox = $("<div class=\"groupedRelatedBox sprite inverse\" rel=\"" + MD5(akey) + "-i\"   data-title=\"" + akey + " \n " + (propertyGroupInverted[akey].length) + " "+lang('connectedResources')+"\" ></div>");
 							// containerBox.append(objBox);
 							var akeyArray = akey.split(" ");
 							for (var i = 0; i < akeyArray.length; i++) {
