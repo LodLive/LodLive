@@ -2,6 +2,30 @@ $.jStorage.set('profile', {
 	// parametri di connessione agli endpoint
 	'connection' : {
 		// base degli about dei documenti non dell'ontologia
+		'http://fr.dbpedia.org' : {
+			description : {
+				fr : 'DBpédia en français est le chapitre francophone de DBpedia, il s\'inscrit dans l\'effort d\'internationalisation de DBpedia dont le but est de maintenir des données structurées extraites de différents chapitres de Wikipedia.',
+				en : 'French version of DBpedia'
+			},
+			useForInverseSameAs : true,
+			sparql : {
+				allClasses : 'SELECT DISTINCT ?object  WHERE {[] a ?object} ORDER BY ?object  LIMIT 50  ',
+				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} } LIMIT 1',
+				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.FILTER ((( isIRI(?object) && ?property != <http://xmlns.com/foaf/0.1/depiction> )|| ?property = <http://www.w3.org/2000/01/rdf-schema#label>  || ?property = <http://www.georss.org/georss/point> || ?property = <http://xmlns.com/foaf/0.1/surname> || ?property = <http://xmlns.com/foaf/0.1/name> || ?property = <http://purl.org/dc/elements/1.1/title>))}  ORDER BY ?property',
+				document : 'SELECT DISTINCT *  WHERE  {{<{URI}> ?property ?object. FILTER(!isLiteral(?object))} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="it")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="en")}}  ORDER BY ?property',
+				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
+				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>.FILTER(isIRI(?object))} LIMIT 100',
+				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
+			},
+			endpoint : 'http://fr.dbpedia.org/sparql',
+			examples : [{
+				uri : 'http://fr.dbpedia.org/resource/France',
+				label : 'France'
+			}, {
+				uri : 'http://fr.dbpedia.org/resource/Resource_Description_Framework',
+				label : 'Resource Description Framework'
+			}]
+		},
 		'http://linked.opendata.cz' : {
 			description : {
 				it : 'European Central Bank Exchange Rates (relative to EUR); Common Procurement Vocabulary 2008 converted to RDF; RDF data extracted from excel files published at czso.cz with demographic data; RDF data extracted from excel files published at czso.cz with regions (IDs and hierarchy); Dataset about Czech courts including contacts and abbreviations; Hierarchical list of the Nomenclature of territorial units for statistics - NUTS and the Statistical regions of Europe - 2008 edition; Hierarchical list of the Nomenclature of territorial units for statistics - NUTS and the Statistical regions of Europe - 2008 edition; Metadata for acts from zakonyprolidi.cz - two sample expressions; Metadata for acts from psp.cz; Publications exported from the application OBD UK; Budgets of Czech municipalities; Czech municipalities.',
@@ -17,16 +41,22 @@ $.jStorage.set('profile', {
 				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
 			},
 			useForInverseSameAs : false,
-			endpoint : 'http://linked.opendata.cz/sparql/', 
-			examples : [
-				{label:'Czech municipalities' ,uri:'http://linked.opendata.cz/resource/municipality/00232173'},  				
-				{label:'Publications exported from the application OBD UK' ,uri:'http://linked.opendata.cz/resource/publications/people/cz/cuni/16667789'},  
-				{label : 'Budgets of Czech municipalities', uri : 'http://linked.opendata.cz/resource/wwwinfo.mfcr.cz/income-statement/00573124'} 
-			]
+			endpoint : 'http://linked.opendata.cz/sparql/',
+			examples : [{
+				label : 'Czech municipalities',
+				uri : 'http://linked.opendata.cz/resource/municipality/00232173'
+			}, {
+				label : 'Publications exported from the application OBD UK',
+				uri : 'http://linked.opendata.cz/resource/publications/people/cz/cuni/16667789'
+			}, {
+				label : 'Budgets of Czech municipalities',
+				uri : 'http://linked.opendata.cz/resource/wwwinfo.mfcr.cz/income-statement/00573124'
+			}]
 		},
 		'http://dati.culturaitalia.it' : {
 			description : {
 				it : 'Il progetto pilota dati.culturaitalia.it contiene set di open data aggregati in CulturaItalia e rilasciati dai partner del progetto con licenza "CC0 1.0 Universal Public Domain Dedication".',
+				en : 'Il progetto pilota dati.culturaitalia.it contiene set di open data aggregati in CulturaItalia e rilasciati dai partner del progetto con licenza "CC0 1.0 Universal Public Domain Dedication".'
 			},
 			sparql : {
 				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
@@ -40,13 +70,15 @@ $.jStorage.set('profile', {
 			useForInverseSameAs : false,
 			endpoint : 'http://dati.culturaitalia.it/sparql/',
 			proxy : 'http://labs.regesta.com/sparqlProxy/',
-			examples : [{label:'Accademia dei georgofili' ,uri:'http://dati.culturaitalia.it/resource/actor/accademia-dei-georgofili'},  {
+			examples : [{
+				label : 'Accademia dei georgofili',
+				uri : 'http://dati.culturaitalia.it/resource/actor/accademia-dei-georgofili'
+			}, {
 				label : 'Biblioteca universitaria Alessandrina',
 				uri : 'http://dati.culturaitalia.it/resource/title/biblioteca-universitaria-alessandrina'
-			} 
-			]
+			}]
 		},
-	
+
 		'http://dati.senato.it' : {
 			// il parametro {URI} viene sostituito con la uri del documento da
 			// caricare
@@ -65,16 +97,15 @@ $.jStorage.set('profile', {
 			},
 			useForInverseSameAs : false,
 			endpoint : 'http://dati.senato.it/sparql',
-			examples : [ {
+			examples : [{
 				label : 'Emilio Colombo (foaf:Person)',
 				uri : 'http://dati.senato.it/senatore/638'
-			},  {
+			}, {
 				label : 'Giulio Andreotti (foaf:Person)',
 				uri : 'http://dati.senato.it/senatore/74'
-			} 
-
-			]
-		},	'http://dati.camera.it' : {
+			}]
+		},
+		'http://dati.camera.it' : {
 			// il parametro {URI} viene sostituito con la uri del documento da
 			// caricare
 			description : {
@@ -92,7 +123,7 @@ $.jStorage.set('profile', {
 			},
 			useForInverseSameAs : true,
 			endpoint : 'http://dati.camera.it/sparql',
-			examples : [ {
+			examples : [{
 				label : 'Nilde Iotti (foaf:Person)',
 				uri : 'http://dati.camera.it/ocd/persona.rdf/p3140'
 			}, {
@@ -101,10 +132,9 @@ $.jStorage.set('profile', {
 			}, {
 				label : 'ocd:deputato (ontology description)',
 				uri : 'http://dati.camera.it/ocd/deputato'
-			}
-
-			]
-		},'http://data.opendataday.it' : {
+			}]
+		},
+		'http://data.opendataday.it' : {
 			// il parametro {URI} viene sostituito con la uri del documento da
 			// caricare
 			description : {
@@ -122,22 +152,20 @@ $.jStorage.set('profile', {
 			},
 			useForInverseSameAs : true,
 			endpoint : 'http://data.opendataday.it/sparql',
-			examples : [ {
+			examples : [{
 				label : 'Catalogo della Provincia di Roma',
 				uri : 'http://data.opendataday.it/resource/dati.provinciaRoma'
-			},{
+			}, {
 				label : 'Catalogo della Regione Lombardia',
 				uri : 'http://data.opendataday.it/resource/dati.lombardia'
-			},{
+			}, {
 				label : 'Catalogo della Regione Toscana',
 				uri : 'http://data.opendataday.it/resource/dati.toscana'
-			},{
+			}, {
 				label : 'Catalogo del Comune di Firenze',
 				uri : 'http://data.opendataday.it/resource/dati.firenze'
-			}
-
-			]
-		}, 
+			}]
+		},
 		'http://dbpedia.org' : {
 			description : {
 				it : 'DBpedia is a community effort to extract structured information from Wikipedia and to make this information available on the Web. DBpedia allows you to ask sophisticated queries against Wikipedia, and to link other data sets on the Web to Wikipedia data.',
@@ -154,7 +182,7 @@ $.jStorage.set('profile', {
 			},
 			useForInverseSameAs : true,
 			endpoint : 'http://dbpedia.org/sparql',
-			examples : [ {
+			examples : [{
 				label : 'Giulio Andreotti (foaf:Person)',
 				uri : 'http://dbpedia.org/resource/Giulio_Andreotti'
 			}, {
@@ -169,7 +197,7 @@ $.jStorage.set('profile', {
 			}, {
 				label : 'Linked data',
 				uri : 'http://dbpedia.org/resource/Linked_data'
-			} ]
+			}]
 		},
 		'http://yago-knowledge.org' : {
 			description : {
@@ -187,10 +215,10 @@ $.jStorage.set('profile', {
 			},
 			endpoint : 'http://lod.openlinksw.com/sparql',
 			useForInverseSameAs : true,
-			examples : [ {
+			examples : [{
 				uri : 'http://yago-knowledge.org/resource/Mario_Monti',
 				label : 'Mario Monti'
-			} ]
+			}]
 		},
 		'http://data.nature.com,http://ns.nature.com,http://dx.doi.org' : {
 			description : {
@@ -209,8 +237,13 @@ $.jStorage.set('profile', {
 			useForInverseSameAs : false,
 			endpoint : 'http://data.nature.com/query',
 			proxy : 'http://labs.regesta.com/sparqlProxy/',
-			examples : [{label:'Stem cells' ,uri:'http://ns.nature.com/subjects/stem_cells'},  {label:'Higgs boson: The need for new physics',uri:'http://dx.doi.org/10.1038/481024a'}
-			]
+			examples : [{
+				label : 'Stem cells',
+				uri : 'http://ns.nature.com/subjects/stem_cells'
+			}, {
+				label : 'Higgs boson: The need for new physics',
+				uri : 'http://dx.doi.org/10.1038/481024a'
+			}]
 		},
 		'http://worldbank.270a.info' : {
 			description : {
@@ -229,7 +262,7 @@ $.jStorage.set('profile', {
 			useForInverseSameAs : true,
 			endpoint : 'http://worldbank.270a.info/sparql',
 			proxy : 'http://labs.regesta.com/sparqlProxy/',
-			examples : [ {
+			examples : [{
 				label : 'Canada (country)',
 				uri : 'http://worldbank.270a.info/classification/country/CA'
 			}, {
@@ -241,9 +274,7 @@ $.jStorage.set('profile', {
 			}, {
 				label : 'Canadian Dollar (currency)',
 				uri : 'http://worldbank.270a.info/classification/currency/CAD'
-			}
-
-			]
+			}]
 		},
 		'http://ReLoad,http://lod.xdams.org' : {
 			description : {
@@ -260,10 +291,10 @@ $.jStorage.set('profile', {
 				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
 			},
 			endpoint : 'http://lod.xdams.org/sparql',
-			examples : [ {
+			examples : [{
 				uri : 'http://lod.xdams.org/reload/oad/uod/IT-ACS-AS0002-0019726',
 				label : 'uod'
-			} ]
+			}]
 		},
 
 		'http://data.oceandrilling.org' : {
@@ -282,7 +313,7 @@ $.jStorage.set('profile', {
 			},
 			useForInverseSameAs : false,
 			endpoint : 'http://data.oceandrilling.org/sparql',
-			examples : [ {
+			examples : [{
 				uri : 'http://data.oceandrilling.org/core/1/ODP',
 				label : 'Ocean Drilling Program'
 			}, {
@@ -291,7 +322,7 @@ $.jStorage.set('profile', {
 			}, {
 				uri : 'http://data.oceandrilling.org/codices/lsh/104/642/D',
 				label : 'Expedition 104 site 642 hole D'
-			} ]
+			}]
 		},
 		'http://linkedgeodata.org' : {
 			description : {
@@ -309,13 +340,13 @@ $.jStorage.set('profile', {
 			},
 			useForInverseSameAs : true,
 			endpoint : 'http://linkedgeodata.org/sparql',
-			examples : [ {
+			examples : [{
 				uri : 'http://linkedgeodata.org/triplify/node243496028',
 				label : 'Roma'
 			}, {
 				uri : 'http://linkedgeodata.org/triplify/node61753365',
 				label : 'Livorno'
-			} ]
+			}]
 		},
 		'http://data.linkedmdb.org' : {
 			description : {
@@ -334,32 +365,32 @@ $.jStorage.set('profile', {
 			endpointType : 'sesame',
 			proxy : 'http://labs.regesta.com/sparqlProxy/',
 			endpoint : 'http://data.linkedmdb.org/sparql',
-			examples : [ {
+			examples : [{
 				uri : 'http://data.linkedmdb.org/resource/film/2014',
 				label : 'Shining'
-			} ]
-		},/*
-		'http://data.nytimes.com' : {
-			description : {
-				it : 'For the last 150 years, The New York Times has maintained one of the most authoritative news vocabularies ever developed. In 2009, we began to publish this vocabulary as linked open data.<br />As of 13 January 2010, The New York Times has published 10,000 subject headings as linked open data under a CC BY license.',
-				en : 'For the last 150 years, The New York Times has maintained one of the most authoritative news vocabularies ever developed. In 2009, we began to publish this vocabulary as linked open data.<br />As of 13 January 2010, The New York Times has published 10,000 subject headings as linked open data under a CC BY license.'
-			},
-			sparql : {
-				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
-			},
-			useForInverseSameAs : true,
-			endpoint : 'http://api.talis.com/stores/nytimes/services/sparql',
-			examples : [ {
-				uri : 'http://data.nytimes.com/55630655163615370853',
-				label : 'Romano Prodi'
-			} ]
-		},*/
+			}]
+		}, /*
+		 'http://data.nytimes.com' : {
+		 description : {
+		 it : 'For the last 150 years, The New York Times has maintained one of the most authoritative news vocabularies ever developed. In 2009, we began to publish this vocabulary as linked open data.<br />As of 13 January 2010, The New York Times has published 10,000 subject headings as linked open data under a CC BY license.',
+		 en : 'For the last 150 years, The New York Times has maintained one of the most authoritative news vocabularies ever developed. In 2009, we began to publish this vocabulary as linked open data.<br />As of 13 January 2010, The New York Times has published 10,000 subject headings as linked open data under a CC BY license.'
+		 },
+		 sparql : {
+		 allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
+		 findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
+		 documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+		 document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+		 bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
+		 inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
+		 inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
+		 },
+		 useForInverseSameAs : true,
+		 endpoint : 'http://api.talis.com/stores/nytimes/services/sparql',
+		 examples : [ {
+		 uri : 'http://data.nytimes.com/55630655163615370853',
+		 label : 'Romano Prodi'
+		 } ]
+		 },*/
 		'http://data.ordnancesurvey.co.uk' : {
 			description : {
 				it : 'Ordnance Survey is Great Britain\'s national mapping agency, providing geographic data, relied on by government, business and individuals. <br/>Ordnance Survey has published three separate linked data resources: the 1:50 000 Scale Gazetteer, Code-Point Open and the administrative geography gazetteer for Great Britain.',
@@ -375,13 +406,13 @@ $.jStorage.set('profile', {
 				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
 			},
 			endpoint : 'http://api.talis.com/stores/ordnance-survey/services/sparql',
-			examples : [ {
+			examples : [{
 				uri : 'http://data.ordnancesurvey.co.uk/id/7000000000041428',
 				label : 'London'
 			}, {
 				uri : 'http://data.ordnancesurvey.co.uk/id/ordnancesurvey',
 				label : 'Ordnance Survey'
-			} ]
+			}]
 		},
 		'http://it.dbpedia.org' : {
 			description : {
@@ -399,13 +430,13 @@ $.jStorage.set('profile', {
 				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
 			},
 			endpoint : 'http://it.dbpedia.org/sparql',
-			examples : [ {
+			examples : [{
 				uri : 'http://it.dbpedia.org/resource/L\'armata_Brancaleone',
 				label : 'L\'armata Brancaleone (movie)'
 			}, {
 				uri : 'http://it.dbpedia.org/resource/Duomo_di_Bressanone',
 				label : 'Duomo di Bressanone'
-			} ]
+			}]
 		},
 		'http://www.cnr.it' : {
 			description : {
@@ -422,13 +453,13 @@ $.jStorage.set('profile', {
 				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
 			},
 			endpoint : 'http://data.cnr.it/sparql-proxy/',
-			examples : [ {
+			examples : [{
 				uri : 'http://www.cnr.it/ontology/cnr/individuo/unitaDiPersonaleInterno/MATRICOLA7247',
 				label : 'Agata Gambacorta'
 			}, {
 				uri : 'http://www.cnr.it/ontology/cnr/individuo/brevetti-brevetto/ID1000',
 				label : 'an optical system.. '
-			} ]
+			}]
 		},
 		'http://sindice.com,http://www.semanlink.net' : {
 			description : {
@@ -445,10 +476,10 @@ $.jStorage.set('profile', {
 				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
 			},
 			endpoint : 'http://sparql.sindice.com/sparql',
-			examples : [ {
+			examples : [{
 				uri : 'http://www.semanlink.net/tag/dbpedia',
 				label : 'Dbpedia'
-			} ]
+			}]
 		},
 		'http://reference.data.gov.uk' : {
 			description : {
@@ -466,13 +497,13 @@ $.jStorage.set('profile', {
 			},
 
 			endpoint : 'http://services.data.gov.uk/reference/sparql',
-			examples : [ {
+			examples : [{
 				uri : 'http://reference.data.gov.uk/id/minister/dfe/secretary-of-state-for-education',
 				label : 'Secretary of State for Education'
 			}, {
 				uri : 'http://reference.data.gov.uk/id/mp/witney/david-cameron',
 				label : 'David Cameron'
-			} ]
+			}]
 		},
 		'http://spcdata.digitpa.gov.it' : {
 			description : {
@@ -490,10 +521,10 @@ $.jStorage.set('profile', {
 			},
 			useForInverseSameAs : true,
 			endpoint : 'http://spcdata.digitpa.gov.it:8899/sparql',
-			examples : [ {
+			examples : [{
 				uri : 'http://spcdata.digitpa.gov.it/UnitaOrganizzativa/2612',
 				label : 'Economato'
-			} ]
+			}]
 		},
 		'http://comune.fi.it,http://sr-vm091-opend.comune.fi.it' : {
 			description : {
@@ -511,13 +542,13 @@ $.jStorage.set('profile', {
 			},
 			endpointType : 'arcSparql',
 			endpoint : 'http://sr-vm091-opend.comune.fi.it:2020/sparql',
-			examples : [ {
+			examples : [{
 				uri : 'http://sr-vm091-opend.comune.fi.it:8080/resource/musei/GALLERIA_DEGLI_UFFIZI',
 				label : 'Galleria degli Uffizi'
 			}, {
 				uri : 'http://sr-vm091-opend.comune.fi.it:8080/resource/sinistri/Borgo_San_Iacopo',
 				label : 'Sinistri avvenuti in Borgo San Iacopo'
-			} ]
+			}]
 		},
 		'http://provincia.carboniaiglesias.it,http://www.provincia.carboniaiglesias.it' : {
 			description : {
@@ -535,13 +566,13 @@ $.jStorage.set('profile', {
 			},
 			endpointType : 'arcSparql',
 			endpoint : 'http://www.provincia.carboniaiglesias.it/sparql',
-			examples : [ {
+			examples : [{
 				uri : 'http://www.provincia.carboniaiglesias.it/taxonomy_term/39',
 				label : 'Area dei servizi ambientali'
 			}, {
 				uri : 'http://www.provincia.carboniaiglesias.it/taxonomy_term/78',
 				label : 'Segretario Generale Reggente'
-			} ]
+			}]
 		},
 		'http://dblp.l3s.de' : {
 			description : {
@@ -559,13 +590,13 @@ $.jStorage.set('profile', {
 			},
 
 			endpoint : 'http://dblp.l3s.de/d2r/sparql',
-			examples : [ {
+			examples : [{
 				uri : 'http://dblp.l3s.de/d2r/resource/authors/Oktie_Hassanzadeh',
 				label : 'Oktie Hassanzadeh'
-			} ]
+			}]
 		}
 
-	}, 
+	},
 	arrows : {
 		'http://www.w3.org/2002/07/owl#sameAs' : 'isSameAs',
 		'http://purl.org/dc/terms/isPartOf' : 'isPartOf',
