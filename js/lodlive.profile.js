@@ -2,7 +2,28 @@ $.jStorage.set('profile', {
 	// parametri di connessione agli endpoint
 	'connection' : {
 		// base degli about dei documenti non dell'ontologia
-		
+		'http://linked.opendata.cz' : {
+			description : {
+				it : 'European Central Bank Exchange Rates (relative to EUR); Common Procurement Vocabulary 2008 converted to RDF; RDF data extracted from excel files published at czso.cz with demographic data; RDF data extracted from excel files published at czso.cz with regions (IDs and hierarchy); Dataset about Czech courts including contacts and abbreviations; Hierarchical list of the Nomenclature of territorial units for statistics - NUTS and the Statistical regions of Europe - 2008 edition; Hierarchical list of the Nomenclature of territorial units for statistics - NUTS and the Statistical regions of Europe - 2008 edition; Metadata for acts from zakonyprolidi.cz - two sample expressions; Metadata for acts from psp.cz; Publications exported from the application OBD UK; Budgets of Czech municipalities; Czech municipalities.',
+				en : 'European Central Bank Exchange Rates (relative to EUR); Common Procurement Vocabulary 2008 converted to RDF; RDF data extracted from excel files published at czso.cz with demographic data; RDF data extracted from excel files published at czso.cz with regions (IDs and hierarchy); Dataset about Czech courts including contacts and abbreviations; Hierarchical list of the Nomenclature of territorial units for statistics - NUTS and the Statistical regions of Europe - 2008 edition; Hierarchical list of the Nomenclature of territorial units for statistics - NUTS and the Statistical regions of Europe - 2008 edition; Metadata for acts from zakonyprolidi.cz - two sample expressions; Metadata for acts from psp.cz; Publications exported from the application OBD UK; Budgets of Czech municipalities; Czech municipalities.'
+			},
+			sparql : {
+				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
+				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
+				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
+				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>.FILTER(isIRI(?object))} LIMIT 100',
+				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
+			},
+			useForInverseSameAs : false,
+			endpoint : 'http://linked.opendata.cz/sparql/', 
+			examples : [
+				{label:'Czech municipalities' ,uri:'http://linked.opendata.cz/resource/municipality/00232173'},  				
+				{label:'Publications exported from the application OBD UK' ,uri:'http://linked.opendata.cz/resource/publications/people/cz/cuni/16667789'},  
+				{label : 'Budgets of Czech municipalities', uri : 'http://linked.opendata.cz/resource/wwwinfo.mfcr.cz/income-statement/00573124'} 
+			]
+		},
 		'http://dati.culturaitalia.it' : {
 			description : {
 				it : 'Il progetto pilota dati.culturaitalia.it contiene set di open data aggregati in CulturaItalia e rilasciati dai partner del progetto con licenza "CC0 1.0 Universal Public Domain Dedication".',
