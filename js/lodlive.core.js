@@ -438,7 +438,7 @@ var debugOn = false;
 					} else if ($(this).hasClass("legend")) {
 						var legend = $('.legenda').children('div').clone();
 						var counter = 0;
-						legend.find("span").each(function() {
+						legend.find("span.spriteLegenda").each(function() {
 							$(this).css({
 								'background-position' : '-1px -' + (counter * 20) + 'px'
 							});
@@ -450,10 +450,10 @@ var debugOn = false;
 						}
 					}
 				});
-				if (!$.jStorage.get('doDrawMap', true)) {
+				if (!$.jStorage.get('doCollectImages', true)) {
 					panel.children('div.panel2.images').addClass('inactive').hide();
 				}
-				if (!$.jStorage.get('doCollectImages', true)) {
+				if (!$.jStorage.get('doDrawMap', true)) {
 					panel.children('div.panel2.maps').addClass('inactive').hide();
 				}
 

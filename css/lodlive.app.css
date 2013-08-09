@@ -33,6 +33,9 @@ div#startPanel {
 .spriteHomeEn {
 	background: url(../img/sprite-home-eng.png) no-repeat
 }
+.spriteHomeFr {
+	background: url(../img/sprite-home-fr.png) no-repeat
+}
 
 div.startBox {
 	width: 300px; float: left; border: 0; background-position: -10px -10px; color: #575757; height: 300px; margin-bottom: 10px; overflow: auto; margin-right: 10px;

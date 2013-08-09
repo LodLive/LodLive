@@ -3,6 +3,8 @@ $(function() {
 	var spriteHome = 'spriteHome';
 	if ($.jStorage.get('selectedLanguage') == 'en') {
 		spriteHome = 'spriteHomeEn';
+	}else if ($.jStorage.get('selectedLanguage') == 'fr') {
+		spriteHome = 'spriteHomeFr';
 	}
 
 	function myAlert(msg) {
