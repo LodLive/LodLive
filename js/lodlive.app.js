@@ -86,7 +86,11 @@ $(function() {
 			var examples = value.examples;
 			// index++;
 			var aBox = $('<div class="startBox ' + spriteHome + '" rel="' + key + '"><h1><span>' + key.replace(/,.*/g, '').replace(/http:\/\//gi, '') + '</span><span class="' + spriteHome + ' info"></span></h1></div>');
-			var descrBox = $('<div class="startBox infoHome hdPage" rel="' + key + '"><h1><span>' + key.replace(/,.*/g, '').replace(/http:\/\//gi, '') + '</span></h1><p>' + value.description[$.jStorage.get('selectedLanguage')] + '</p></div>');
+			var descr = value.description[$.jStorage.get('selectedLanguage')];
+			if(!descr){
+				descr = value.description['en'];
+			}
+			var descrBox = $('<div class="startBox infoHome hdPage" rel="' + key + '"><h1><span>' + key.replace(/,.*/g, '').replace(/http:\/\//gi, '') + '</span></h1><p>' + descr + '</p></div>');
 			var form = $(formTemplate);
 			aBox.append(form);
 			// if (index == 3) {
