@@ -1726,7 +1726,7 @@ var debugOn = false;
 				});
 			}
 
-			if (uris.length == 0 && bnodes.length == 0) {
+			if (contents.length == 0 && bnodes.length == 0) {
 				var jSection = $("<div class=\"section\"><label data-title=\"" + lang('resourceMissingDoc') + "\"></label><div>" + lang('resourceMissingDoc') + "</div></div><div class=\"separ sprite\"></div>");
 				jSection.find('label').each(function() {
 					$(this).hover(function() {
