@@ -156,6 +156,7 @@ var debugOn = false;
 				msgPanel.hide();
 			} else {
 				msgPanel.empty();
+				msg = msg.replace(/http:\/\/[^~]+~~/g, '')
 				msg = breakLines(msg);
 				msg = msg.replace(/\|/g, '<br />');
 				var msgs = msg.split(" \n ");
@@ -1952,7 +1953,7 @@ var debugOn = false;
 			}
 			result += "</span></div>";
 			var jResult = $(result);
-			if (jResult.text() == '' && thisUri.indexOf("~~")!=-1) {
+			if (jResult.text() == '' && thisUri.indexOf("~~") != -1) {
 				jResult.text('[blank node]');
 			} else if (jResult.text() == '') {
 				jResult.text(lang('noName'));
@@ -2280,7 +2281,8 @@ var debugOn = false;
 						// if (alredyInserted <
 						// document.lodliveVars['relationsLimit']) {
 						if (innerCounter < 25) {
-							obj = $("<div class=\"aGrouped relatedBox sprite inverse " + MD5(akey) + "-i " + MD5(unescape(value[akey])) + " \" rel=\"" + unescape(value[akey]) + "\"  data-title=\"" + akey + " \n " + unescape(value[akey]) + "\" ></div>");
+							var destUri = unescape(value[akey].indexOf('~~') == 0 ? thisUri + value[akey] : value[akey]);
+							obj = $("<div class=\"aGrouped relatedBox sprite inverse " + MD5(akey) + "-i " + MD5(unescape(value[akey])) + " \" rel=\"" + destUri + "\"  data-title=\"" + akey + " \n " + unescape(value[akey]) + "\" ></div>");
 							// containerBox.append(obj);
 							obj.attr('style', 'display:none;position:absolute;top:' + (chordsListGrouped[innerCounter][1] - 8) + 'px;left:' + (chordsListGrouped[innerCounter][0] - 8) + 'px');
 							obj.attr("data-circlePos", innerCounter);
@@ -2353,7 +2355,8 @@ var debugOn = false;
 				pager.parent().fadeOut('fast', null, function() {
 					$(this).parent().children('.' + pager.attr("data-page")).fadeIn('fast');
 				});
-			}); {
+			});
+			{
 				var obj = $("<div class=\"actionBox contents\" rel=\"contents\"  >&#160;</div>");
 				containerBox.append(obj);
 				obj.hover(function() {
@@ -2435,13 +2438,13 @@ var debugOn = false;
 			}
 			if ( typeof context == typeof '') {
 				if (lodLiveProfile[context] && lodLiveProfile[context][area]) {
-					return lodLiveProfile[context][area][prop]?lodLiveProfile[context][area][prop]:lodLiveProfile['default'][area][prop];
+					return lodLiveProfile[context][area][prop] ? lodLiveProfile[context][area][prop] : lodLiveProfile['default'][area][prop];
 				}
 			} else {
 
 				for (var a = 0; a < context.length; a++) {
 					if (lodLiveProfile[context[a]] && lodLiveProfile[context[a]][area]) {
-						return lodLiveProfile[context[a]][area][prop]?lodLiveProfile[context[a]][area][prop]:lodLiveProfile['default'][area][prop];
+						return lodLiveProfile[context[a]][area][prop] ? lodLiveProfile[context[a]][area][prop] : lodLiveProfile['default'][area][prop];
 
 					}
 				}
@@ -2632,7 +2635,7 @@ var debugOn = false;
 									// destBox.children('.box').append(aSpan);
 									$.each(json, function(key, value) {
 										conta++;
-										eval('inverses.push({\'' + value['property']['value'] + '\':\'' + escape(value.object.value) + '\'})');
+										eval('inverses.push({\'' + value['property']['value'] + '\':\'' + (value.object.type == 'bnode' ? '~~' : '') + escape(value.object.value) + '\'})');
 										// aSpan.text(conta + '/' + tot);
 									});
 									if ($.jStorage.get('showInfoConsole')) {
