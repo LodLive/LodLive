@@ -679,12 +679,7 @@ $.jStorage.set('profile', {
 				properties : []
 			}
 		}
-	},
-	'bnode' : {
-		document : {
-			className : 'Property'
-		}
-	},
+	}, 
 	'http://data.oceandrilling.org/core/1/ODP' : {
 		document : {
 			titleProperties : ['expedition', 'http://data.oceandrilling.org/core/1/expedition', 'site', 'http://data.oceandrilling.org/core/1/site', 'hole', 'http://data.oceandrilling.org/core/1/hole']

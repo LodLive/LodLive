@@ -156,7 +156,9 @@ var debugOn = false;
 				msgPanel.hide();
 			} else {
 				msgPanel.empty();
-				msg = msg.replace(/http:\/\/[^~]+~~/g, '')
+				msg = msg.replace(/http:\/\/.+~~/g, '')
+				msg = msg.replace(/nodeID:\/\/.+~~/g, '')
+				msg = msg.replace(/_:\/\/.+~~/g, '')
 				msg = breakLines(msg);
 				msg = msg.replace(/\|/g, '<br />');
 				var msgs = msg.split(" \n ");
@@ -1871,6 +1873,9 @@ var debugOn = false;
 			}
 			// carico le configurazioni relative allo stile
 			var aClass = this.lodlive("getProperty", "document", "className", docType);
+			if (docType == 'bnode') {
+				aClass = 'bnode';
+			}
 			// destBox.addClass(aClass);
 			if (aClass == null || aClass == 'standard' || aClass == '') {
 				if ($.jStorage.get('classMap')[docType]) {
@@ -1953,7 +1958,7 @@ var debugOn = false;
 			}
 			result += "</span></div>";
 			var jResult = $(result);
-			if (jResult.text() == '' && thisUri.indexOf("~~") != -1) {
+			if (jResult.text() == '' && docType == 'bnode') {
 				jResult.text('[blank node]');
 			} else if (jResult.text() == '') {
 				jResult.text(lang('noName'));
@@ -1988,6 +1993,7 @@ var debugOn = false;
 			var sameDocControl = [];
 			$.each(uris, function(key, value) {
 				for (var akey in value) {
+
 					// escludo la definizione della classe, le proprieta'
 					// relative alle immagini ed ai link web
 					if (lodLiveProfile.uriSubstitutor) {
@@ -2025,6 +2031,9 @@ var debugOn = false;
 				sameDocControl = [];
 				$.each(inverses, function(key, value) {
 					for (var akey in value) {
+						if (docType == 'bnode' && value[akey].indexOf("~~") != -1) {
+							continue;
+						}
 						if (lodLiveProfile.uriSubstitutor) {
 							$.each(lodLiveProfile.uriSubstitutor, function(skey, svalue) {
 								value[akey] = value[akey].replace(escape(svalue.findStr), escape(svalue.replaceStr));
@@ -2179,12 +2188,15 @@ var debugOn = false;
 							var objBox = $("<div class=\"groupedRelatedBox sprite\" rel=\"" + MD5(akey) + "\"    data-title=\"" + akey + " \n " + (propertyGroup[akey].length) + " " + lang('connectedResources') + "\" ></div>");
 							// containerBox.append(objBox);
 							var akeyArray = akey.split(" ");
-							for (var i = 0; i < akeyArray.length; i++) {
-								if (lodLiveProfile.arrows[akeyArray[i]]) {
-									objBox.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+							if (akey.indexOf('~~') != -1) {
+								objBox.addClass('isBnode');
+							} else {
+								for (var i = 0; i < akeyArray.length; i++) {
+									if (lodLiveProfile.arrows[akeyArray[i]]) {
+										objBox.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+									}
 								}
 							}
-
 							objBox.attr('style', 'top:' + (chordsList[a][1] - 8) + 'px;left:' + (chordsList[a][0] - 8) + 'px');
 							objectList.push(objBox);
 							// containerBox.append('<div data-circlePos="' + a +
@@ -2226,9 +2238,13 @@ var debugOn = false;
 						obj.attr("data-property", akey);
 						// se si tratta di un sameas applico una classe diversa
 						var akeyArray = akey.split(" ");
-						for (var i = 0; i < akeyArray.length; i++) {
-							if (lodLiveProfile.arrows[akeyArray[i]]) {
-								obj.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+						if (obj.attr('rel').indexOf('~~') != -1) {
+							obj.addClass('isBnode');
+						} else {
+							for (var i = 0; i < akeyArray.length; i++) {
+								if (lodLiveProfile.arrows[akeyArray[i]]) {
+									obj.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+								}
 							}
 						}
 						if (obj.hasClass("aGrouped")) {
@@ -2310,11 +2326,17 @@ var debugOn = false;
 						obj.attr("data-property", akey);
 						// se si tratta di un sameas applico una classe diversa
 						var akeyArray = akey.split(" ");
-						for (var i = 0; i < akeyArray.length; i++) {
-							if (lodLiveProfile.arrows[akeyArray[i]]) {
-								obj.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+
+						if (obj.attr('rel').indexOf('~~') != -1) {
+							obj.addClass('isBnode');
+						} else {
+							for (var i = 0; i < akeyArray.length; i++) {
+								if (lodLiveProfile.arrows[akeyArray[i]]) {
+									obj.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+								}
 							}
 						}
+
 						if (obj.hasClass("aGrouped")) {
 							innerObjectList.push(obj);
 						} else {
@@ -2355,8 +2377,7 @@ var debugOn = false;
 				pager.parent().fadeOut('fast', null, function() {
 					$(this).parent().children('.' + pager.attr("data-page")).fadeIn('fast');
 				});
-			});
-			{
+			}); {
 				var obj = $("<div class=\"actionBox contents\" rel=\"contents\"  >&#160;</div>");
 				containerBox.append(obj);
 				obj.hover(function() {
@@ -2635,7 +2656,7 @@ var debugOn = false;
 									// destBox.children('.box').append(aSpan);
 									$.each(json, function(key, value) {
 										conta++;
-										eval('inverses.push({\'' + value['property']['value'] + '\':\'' + (value.object.type == 'bnode' ? '~~' : '') + escape(value.object.value) + '\'})');
+										eval('inverses.push({\'' + value['property']['value'] + '\':\'' + (value.object.type == 'bnode' ? anUri + '~~' : '') + escape(value.object.value) + '\'})');
 										// aSpan.text(conta + '/' + tot);
 									});
 									if ($.jStorage.get('showInfoConsole')) {
@@ -2910,7 +2931,7 @@ var debugOn = false;
 
 			// eseguo i calcoli e scrivo la riga di connessione tra i cerchi
 			var lineangle = (Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI) + 180;
-			var x2bis = x1 - Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+			var x2bis = x1 - Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)) + 60;
 
 			canvas.rotateCanvas({
 				angle : lineangle,
@@ -2920,7 +2941,7 @@ var debugOn = false;
 				strokeStyle : "#fff",
 				strokeWidth : 1,
 				strokeCap : 'bevel',
-				x1 : x1,
+				x1 : x1 - 60,
 				y1 : y1,
 				x2 : x2bis,
 				y2 : y1
