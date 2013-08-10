@@ -2435,13 +2435,13 @@ var debugOn = false;
 			}
 			if ( typeof context == typeof '') {
 				if (lodLiveProfile[context] && lodLiveProfile[context][area]) {
-					return lodLiveProfile[context][area][prop];
+					return lodLiveProfile[context][area][prop]?lodLiveProfile[context][area][prop]:lodLiveProfile['default'][area][prop];
 				}
 			} else {
 
 				for (var a = 0; a < context.length; a++) {
 					if (lodLiveProfile[context[a]] && lodLiveProfile[context[a]][area]) {
-						return lodLiveProfile[context[a]][area][prop];
+						return lodLiveProfile[context[a]][area][prop]?lodLiveProfile[context[a]][area][prop]:lodLiveProfile['default'][area][prop];
 
 					}
 				}
