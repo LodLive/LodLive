@@ -2,7 +2,7 @@ div.box.errorBox {
 	background-position: -1690px -390px;
 }
 
-div.boxWrapper.standard .box {
+div.boxWrapper.bnode .box {
 	background-position: 0 0;
 }
 
@@ -377,4 +377,22 @@ div.boxWrapper.DatatypeProperty .groupedRelatedBox.inverse {
 
 * div.boxWrapper div.relatedBox.isType {
 	background-position: -1012px -412px;
+}
+
+
+
+* div.boxWrapper div.groupedRelatedBox.isBnode {
+	background-position: -992px -432px;
+}
+
+* div.boxWrapper div.groupedRelatedBox.isBnode.inverse {
+	background-position: -992px -472px;
+}
+
+* div.boxWrapper div.relatedBox.isBnode.inverse {
+	background-position: -992px -452px;
+}
+
+* div.boxWrapper div.relatedBox.isBnode {
+	background-position: -992px -412px;
 }

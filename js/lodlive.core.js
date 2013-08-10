@@ -100,7 +100,8 @@ var debugOn = false;
 				var keySplit = key.split(",");
 				for (var a = 0; a < keySplit.length; a++) {
 					if (( testURI ? testURI : resource).indexOf(keySplit[a]) == 0) {
-						res = value.sparql[module].replace(/\{URI\}/ig, resource);
+						res = value.sparql[module].replace(/\{URI\}/ig, resource.replace(/^.*~~/, ''));
+
 						if (value.proxy) {
 							url = value.proxy + '?endpoint=' + value.endpoint + "&" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + encodeURIComponent(res);
 						} else {
@@ -155,6 +156,9 @@ var debugOn = false;
 				msgPanel.hide();
 			} else {
 				msgPanel.empty();
+				msg = msg.replace(/http:\/\/.+~~/g, '')
+				msg = msg.replace(/nodeID:\/\/.+~~/g, '')
+				msg = msg.replace(/_:\/\/.+~~/g, '')
 				msg = breakLines(msg);
 				msg = msg.replace(/\|/g, '<br />');
 				var msgs = msg.split(" \n ");
@@ -1766,7 +1770,7 @@ var debugOn = false;
 						}
 					});
 					$(this).error(function() {
-						$(this).attr("title", lang('noImage')+" \n" + $(this).attr("src"));
+						$(this).attr("title", lang('noImage') + " \n" + $(this).attr("src"));
 						$(this).attr("src", "img/immagine-vuota-" + $.jStorage.get('selectedLanguage') + ".png");
 					});
 				});
@@ -1855,15 +1859,23 @@ var debugOn = false;
 		},
 		format : function(destBox, values, uris, inverses) {
 			var context = this;
+
 			if (debugOn) {
 				start = new Date().getTime();
 			}
 			var containerBox = destBox.parent('div');
+			var thisUri = containerBox.attr('rel');
 
 			// recupero il doctype per caricare le configurazioni specifiche
 			var docType = this.lodlive('getJsonValue', uris, 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', 'default');
+			if (thisUri.indexOf("~~") != -1) {
+				docType = 'bnode';
+			}
 			// carico le configurazioni relative allo stile
 			var aClass = this.lodlive("getProperty", "document", "className", docType);
+			if (docType == 'bnode') {
+				aClass = 'bnode';
+			}
 			// destBox.addClass(aClass);
 			if (aClass == null || aClass == 'standard' || aClass == '') {
 				if ($.jStorage.get('classMap')[docType]) {
@@ -1941,13 +1953,14 @@ var debugOn = false;
 					containerBox.attr("data-endpoint", lang('endpointNotConfigured'));
 				}
 				if (uris.length == 0 && values.length == 0) {
-					result = "<div class=\"boxTitle\" threedots=\"" + lang('resourceMissing') + "\"><a target=\"_blank\" href=\"" + containerBox.attr('rel') + "\"><span class=\"spriteLegenda\"></span>" + containerBox.attr('rel') + "</a>";
+					result = "<div class=\"boxTitle\" threedots=\"" + lang('resourceMissing') + "\"><a target=\"_blank\" href=\"" + thisUri + "\"><span class=\"spriteLegenda\"></span>" + thisUri + "</a>";
 				}
 			}
 			result += "</span></div>";
 			var jResult = $(result);
-
-			if (jResult.text() == '') {
+			if (jResult.text() == '' && docType == 'bnode') {
+				jResult.text('[blank node]');
+			} else if (jResult.text() == '') {
 				jResult.text(lang('noName'));
 			}
 			destBox.append(jResult);
@@ -1962,7 +1975,7 @@ var debugOn = false;
 			});
 
 			destBox.hover(function() {
-				context.lodlive('msg', jResult.attr("threedots") == '' ? jResult.text() : jResult.attr("threedots") + " \n " + containerBox.attr('rel'), 'show', 'fullInfo', containerBox.attr("data-endpoint"));
+				context.lodlive('msg', jResult.attr("threedots") == '' ? jResult.text() : jResult.attr("threedots") + " \n " + thisUri, 'show', 'fullInfo', containerBox.attr("data-endpoint"));
 			}, function() {
 				context.lodlive('msg', null, 'hide');
 			});
@@ -1980,6 +1993,7 @@ var debugOn = false;
 			var sameDocControl = [];
 			$.each(uris, function(key, value) {
 				for (var akey in value) {
+
 					// escludo la definizione della classe, le proprieta'
 					// relative alle immagini ed ai link web
 					if (lodLiveProfile.uriSubstitutor) {
@@ -2017,6 +2031,9 @@ var debugOn = false;
 				sameDocControl = [];
 				$.each(inverses, function(key, value) {
 					for (var akey in value) {
+						if (docType == 'bnode' && value[akey].indexOf("~~") != -1) {
+							continue;
+						}
 						if (lodLiveProfile.uriSubstitutor) {
 							$.each(lodLiveProfile.uriSubstitutor, function(skey, svalue) {
 								value[akey] = value[akey].replace(escape(svalue.findStr), escape(svalue.replaceStr));
@@ -2078,7 +2095,7 @@ var debugOn = false;
 					mapsMap[containerBox.attr("id")] = {
 						longs : connectedLongs[0],
 						lats : connectedLats[0],
-						title : containerBox.attr('rel') + "\n" + escape(resourceTitle)
+						title : thisUri + "\n" + escape(resourceTitle)
 					};
 					$.jStorage.set('mapsMap', mapsMap);
 					context.lodlive('updateMapPanel', $('#controlPanel'));
@@ -2168,15 +2185,18 @@ var debugOn = false;
 							// sprite\" rel=\"" + MD5(akey) + "\" title=\"" +
 							// akey + "\" >" + (propertyGroup[akey].length) +
 							// "</div>");
-							var objBox = $("<div class=\"groupedRelatedBox sprite\" rel=\"" + MD5(akey) + "\"    data-title=\"" + akey + " \n " + (propertyGroup[akey].length) + " "+lang('connectedResources')+"\" ></div>");
+							var objBox = $("<div class=\"groupedRelatedBox sprite\" rel=\"" + MD5(akey) + "\"    data-title=\"" + akey + " \n " + (propertyGroup[akey].length) + " " + lang('connectedResources') + "\" ></div>");
 							// containerBox.append(objBox);
 							var akeyArray = akey.split(" ");
-							for (var i = 0; i < akeyArray.length; i++) {
-								if (lodLiveProfile.arrows[akeyArray[i]]) {
-									objBox.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+							if (akey.indexOf('~~') != -1) {
+								objBox.addClass('isBnode');
+							} else {
+								for (var i = 0; i < akeyArray.length; i++) {
+									if (lodLiveProfile.arrows[akeyArray[i]]) {
+										objBox.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+									}
 								}
 							}
-
 							objBox.attr('style', 'top:' + (chordsList[a][1] - 8) + 'px;left:' + (chordsList[a][0] - 8) + 'px');
 							objectList.push(objBox);
 							// containerBox.append('<div data-circlePos="' + a +
@@ -2218,9 +2238,13 @@ var debugOn = false;
 						obj.attr("data-property", akey);
 						// se si tratta di un sameas applico una classe diversa
 						var akeyArray = akey.split(" ");
-						for (var i = 0; i < akeyArray.length; i++) {
-							if (lodLiveProfile.arrows[akeyArray[i]]) {
-								obj.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+						if (obj.attr('rel').indexOf('~~') != -1) {
+							obj.addClass('isBnode');
+						} else {
+							for (var i = 0; i < akeyArray.length; i++) {
+								if (lodLiveProfile.arrows[akeyArray[i]]) {
+									obj.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+								}
 							}
 						}
 						if (obj.hasClass("aGrouped")) {
@@ -2252,7 +2276,7 @@ var debugOn = false;
 							// sprite\" rel=\"" + MD5(akey) + "\" title=\"" +
 							// akey + "\" >" + (propertyGroup[akey].length) +
 							// "</div>");
-							var objBox = $("<div class=\"groupedRelatedBox sprite inverse\" rel=\"" + MD5(akey) + "-i\"   data-title=\"" + akey + " \n " + (propertyGroupInverted[akey].length) + " "+lang('connectedResources')+"\" ></div>");
+							var objBox = $("<div class=\"groupedRelatedBox sprite inverse\" rel=\"" + MD5(akey) + "-i\"   data-title=\"" + akey + " \n " + (propertyGroupInverted[akey].length) + " " + lang('connectedResources') + "\" ></div>");
 							// containerBox.append(objBox);
 							var akeyArray = akey.split(" ");
 							for (var i = 0; i < akeyArray.length; i++) {
@@ -2273,7 +2297,8 @@ var debugOn = false;
 						// if (alredyInserted <
 						// document.lodliveVars['relationsLimit']) {
 						if (innerCounter < 25) {
-							obj = $("<div class=\"aGrouped relatedBox sprite inverse " + MD5(akey) + "-i " + MD5(unescape(value[akey])) + " \" rel=\"" + unescape(value[akey]) + "\"  data-title=\"" + akey + " \n " + unescape(value[akey]) + "\" ></div>");
+							var destUri = unescape(value[akey].indexOf('~~') == 0 ? thisUri + value[akey] : value[akey]);
+							obj = $("<div class=\"aGrouped relatedBox sprite inverse " + MD5(akey) + "-i " + MD5(unescape(value[akey])) + " \" rel=\"" + destUri + "\"  data-title=\"" + akey + " \n " + unescape(value[akey]) + "\" ></div>");
 							// containerBox.append(obj);
 							obj.attr('style', 'display:none;position:absolute;top:' + (chordsListGrouped[innerCounter][1] - 8) + 'px;left:' + (chordsListGrouped[innerCounter][0] - 8) + 'px');
 							obj.attr("data-circlePos", innerCounter);
@@ -2301,11 +2326,17 @@ var debugOn = false;
 						obj.attr("data-property", akey);
 						// se si tratta di un sameas applico una classe diversa
 						var akeyArray = akey.split(" ");
-						for (var i = 0; i < akeyArray.length; i++) {
-							if (lodLiveProfile.arrows[akeyArray[i]]) {
-								obj.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+
+						if (obj.attr('rel').indexOf('~~') != -1) {
+							obj.addClass('isBnode');
+						} else {
+							for (var i = 0; i < akeyArray.length; i++) {
+								if (lodLiveProfile.arrows[akeyArray[i]]) {
+									obj.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+								}
 							}
 						}
+
 						if (obj.hasClass("aGrouped")) {
 							innerObjectList.push(obj);
 						} else {
@@ -2428,13 +2459,13 @@ var debugOn = false;
 			}
 			if ( typeof context == typeof '') {
 				if (lodLiveProfile[context] && lodLiveProfile[context][area]) {
-					return lodLiveProfile[context][area][prop]?lodLiveProfile[context][area][prop]:lodLiveProfile['default'][area][prop];
+					return lodLiveProfile[context][area][prop] ? lodLiveProfile[context][area][prop] : lodLiveProfile['default'][area][prop];
 				}
 			} else {
 
 				for (var a = 0; a < context.length; a++) {
 					if (lodLiveProfile[context[a]] && lodLiveProfile[context[a]][area]) {
-						return lodLiveProfile[context[a]][area][prop]?lodLiveProfile[context[a]][area][prop]:lodLiveProfile['default'][area][prop];
+						return lodLiveProfile[context[a]][area][prop] ? lodLiveProfile[context[a]][area][prop] : lodLiveProfile['default'][area][prop];
 
 					}
 				}
@@ -2582,9 +2613,13 @@ var debugOn = false;
 						// var control = {};
 						$.each(json, function(key, value) {
 							conta++;
-							if (value.object.type == 'uri') {
+							if (value.object.type == 'uri' || value.object.type == 'bnode') {
 								if (value.object.value != anUri) {
-									eval('uris.push({\'' + value['property']['value'] + '\':\'' + escape(value.object.value) + '\'})');
+									if (value.object.type == 'bnode') {
+										eval('uris.push({\'' + value['property']['value'] + '\':\'' + escape(anUri + '~~' + value.object.value) + '\'})');
+									} else {
+										eval('uris.push({\'' + value['property']['value'] + '\':\'' + escape(value.object.value) + '\'})');
+									}
 								}
 							} else {
 								eval('values.push({\'' + value['property']['value'] + '\':\'' + escape(value.object.value) + '\'})');
@@ -2621,7 +2656,7 @@ var debugOn = false;
 									// destBox.children('.box').append(aSpan);
 									$.each(json, function(key, value) {
 										conta++;
-										eval('inverses.push({\'' + value['property']['value'] + '\':\'' + escape(value.object.value) + '\'})');
+										eval('inverses.push({\'' + value['property']['value'] + '\':\'' + (value.object.type == 'bnode' ? anUri + '~~' : '') + escape(value.object.value) + '\'})');
 										// aSpan.text(conta + '/' + tot);
 									});
 									if ($.jStorage.get('showInfoConsole')) {
@@ -2896,7 +2931,7 @@ var debugOn = false;
 
 			// eseguo i calcoli e scrivo la riga di connessione tra i cerchi
 			var lineangle = (Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI) + 180;
-			var x2bis = x1 - Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+			var x2bis = x1 - Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)) + 60;
 
 			canvas.rotateCanvas({
 				angle : lineangle,
@@ -2906,7 +2941,7 @@ var debugOn = false;
 				strokeStyle : "#fff",
 				strokeWidth : 1,
 				strokeCap : 'bevel',
-				x1 : x1,
+				x1 : x1 - 60,
 				y1 : y1,
 				x2 : x2bis,
 				y2 : y1
