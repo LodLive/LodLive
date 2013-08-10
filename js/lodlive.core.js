@@ -2188,7 +2188,7 @@ var debugOn = false;
 							var objBox = $("<div class=\"groupedRelatedBox sprite\" rel=\"" + MD5(akey) + "\"    data-title=\"" + akey + " \n " + (propertyGroup[akey].length) + " " + lang('connectedResources') + "\" ></div>");
 							// containerBox.append(objBox);
 							var akeyArray = akey.split(" ");
-							if (akey.indexOf('~~') != -1) {
+							if (unescape(propertyGroup[akey][0]).indexOf('~~') != -1) {
 								objBox.addClass('isBnode');
 							} else {
 								for (var i = 0; i < akeyArray.length; i++) {
@@ -2279,9 +2279,13 @@ var debugOn = false;
 							var objBox = $("<div class=\"groupedRelatedBox sprite inverse\" rel=\"" + MD5(akey) + "-i\"   data-title=\"" + akey + " \n " + (propertyGroupInverted[akey].length) + " " + lang('connectedResources') + "\" ></div>");
 							// containerBox.append(objBox);
 							var akeyArray = akey.split(" ");
-							for (var i = 0; i < akeyArray.length; i++) {
-								if (lodLiveProfile.arrows[akeyArray[i]]) {
-									objBox.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+							if (unescape(propertyGroupInverted[akey][0]).indexOf('~~') != -1) {
+								objBox.addClass('isBnode');
+							} else {
+								for (var i = 0; i < akeyArray.length; i++) {
+									if (lodLiveProfile.arrows[akeyArray[i]]) {
+										objBox.addClass(lodLiveProfile.arrows[akeyArray[i]]);
+									}
 								}
 							}
 							objBox.attr('style', 'top:' + (chordsList[a][1] - 8) + 'px;left:' + (chordsList[a][0] - 8) + 'px');
