@@ -24,6 +24,9 @@ var MD5 = function(string) {
 	if (!string) {
 		return "";
 	}
+	string = string.replace(/http:\/\/.+~~/g, '')
+	string = string.replace(/nodeID:\/\/.+~~/g, '')
+	string = string.replace(/_:\/\/.+~~/g, '')
 	function RotateLeft(lValue, iShiftBits) {
 		return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
 	}
