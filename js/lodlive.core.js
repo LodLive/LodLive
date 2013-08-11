@@ -190,12 +190,12 @@ var debugOn = false;
 				}
 				/*
 				 * msgPanel.css({ left : $('body').scrollLeft(), top :
-				 * $('body').scrollTop() + $(window).height() -
+				 * $('body').scrollTop() + document.body.clientHeight -
 				 * msgPanel.height(), zIndex : 99999999 });
 				 */
 				msgPanel.css({
 					left : 0,
-					top : $(window).height() - msgPanel.height(),
+					top : document.body.clientHeight - msgPanel.height(),
 					position : 'fixed',
 					zIndex : 99999999
 				});
@@ -243,21 +243,25 @@ var debugOn = false;
 								y : -650
 							});
 						});
-						h4.toggle(function() {
-							$(this).setBackgroundPosition({
-								x : -1290
-							});
-							panel.find('.slideOpen').click();
-							$(this).addClass('slideOpen');
-							$(this).next('div').slideToggle();
-						}, function() {
-							$(this).setBackgroundPosition({
-								x : -680
-							});
-							$(this).removeClass('slideOpen');
-							$(this).next('div').slideToggle();
-
-						});
+						h4.click(function() {
+							if ($(this).data('show')) {
+								$(this).data('show', false);
+								$('div.selectionList', form).remove();
+								$(this).setBackgroundPosition({
+									x : -680
+								});
+								$(this).removeClass('slideOpen');
+								$(this).next('div').slideToggle();
+							} else {
+								$(this).data('show', true);
+								$(this).setBackgroundPosition({
+									x : -1290
+								});
+								panel.find('.slideOpen').click();
+								$(this).addClass('slideOpen');
+								$(this).next('div').slideToggle();
+							}
+						})
 					}
 
 					if (toLog.text) {
@@ -435,7 +439,7 @@ var debugOn = false;
 							'overlayShow' : false
 						});
 						panelContent.append(help);
-						if (help.height() > $(window).height() + 10) {
+						if (help.height() > document.body.clientHeight + 10) {
 							panel.addClass("justX");
 						}
 
@@ -449,7 +453,7 @@ var debugOn = false;
 							counter++;
 						});
 						panelContent.append(legend);
-						if (legend.height() > $(window).height() + 10) {
+						if (legend.height() > document.body.clientHeight + 10) {
 							panel.addClass("justX");
 						}
 					}
@@ -801,7 +805,7 @@ var debugOn = false;
 			};
 
 			window.scrollBy(-context.width(), -context.height());
-			window.scrollBy($(context).width() / 2 - $(window).width() / 2 + 25, $(context).height() / 2 - $(window).height() / 2 + 65);
+			window.scrollBy($(context).width() / 2 - $(window).width() / 2 + 25, $(context).height() / 2 - document.body.clientHeight / 2 + 65);
 
 			try {
 				aBox.animate(props, 1000);
@@ -1122,24 +1126,28 @@ var debugOn = false;
 			});
 
 			obj.find(".groupedRelatedBox").each(function() {
-				$(this).toggle(function() {
-					obj.append(globalInnerPageMap[obj.attr("id")]);
-					context.lodlive('docInfo', '', 'close');
-					obj.find('.lastClick').removeClass('lastClick').click();
-					if (obj.children('.innerPage').length == 0) {
+				$(this).click(function() {
+					if ($(this).data('show')) {
+						$(this).data('show', false);
+						context.lodlive('docInfo', '', 'close');
+						$(this).removeClass('lastClick');
+						obj.find("." + $(this).attr("rel")).fadeOut('fast');
+						$(this).fadeTo('fast', 1);
+						obj.children('.innerPage').detach();
+					} else {
+						$(this).data('show', true);
 						obj.append(globalInnerPageMap[obj.attr("id")]);
+						context.lodlive('docInfo', '', 'close');
+						obj.find('.lastClick').removeClass('lastClick').click();
+						if (obj.children('.innerPage').length == 0) {
+							obj.append(globalInnerPageMap[obj.attr("id")]);
+						}
+						$(this).addClass('lastClick');
+						obj.find("." + $(this).attr("rel") + ":not([class*=exploded])").fadeIn('fast');
+						$(this).fadeTo('fast', 0.3);
 					}
-					$(this).addClass('lastClick');
-					obj.find("." + $(this).attr("rel") + ":not([class*=exploded])").fadeIn('fast');
-					$(this).fadeTo('fast', 0.3);
-					// obj.find("." + $(this).attr("rel")).slideDown();
-				}, function() {
-					context.lodlive('docInfo', '', 'close');
-					$(this).removeClass('lastClick');
-					obj.find("." + $(this).attr("rel")).fadeOut('fast');
-					$(this).fadeTo('fast', 1);
-					obj.children('.innerPage').detach();
-				});
+				})
+
 				$(this).hover(function() {
 					context.lodlive('msg', $(this).attr('data-title'), 'show', null, null, $(this).hasClass("inverse"));
 				}, function() {
@@ -1351,6 +1359,7 @@ var debugOn = false;
 				}
 				// predispongo il div contenente il documento
 				var destBox = $('<div id="docInfo" rel="info-' + URI + '"></div>');
+				$('body').append(destBox);
 				var SPARQLquery = context.lodlive('composeQuery', URI, 'document');
 				var uris = [];
 				var bnodes = [];
@@ -1361,12 +1370,11 @@ var debugOn = false;
 					$.jsonp({
 						url : SPARQLquery,
 						beforeSend : function() {
-							$('body').append(destBox);
 							destBox.html('<img style=\"margin-left:' + (destBox.width() / 2) + 'px;margin-top:147px\" src="img/ajax-loader-gray.gif"/>');
 							destBox.css({
 								position : 'fixed',
 								left : $(window).width() - $('#docInfo').width() - 20,
-								// height : $(window).height() - 20,
+								// height : document.body.clientHeight - 20,
 								top : 0
 							});
 							destBox.attr("data-top", destBox.position().top);
@@ -1396,7 +1404,7 @@ var debugOn = false;
 				}
 			} else if (action == 'move') {
 				/*
-				 * if ($('#docInfo').height() > $(window).height() + 10) {
+				 * if ($('#docInfo').height() > document.body.clientHeight + 10) {
 				 * $('#docInfo').css({ position : 'absolute', left :
 				 * $(window).width() + $('body').scrollLeft() -
 				 * $('#docInfo').width() - 20, top :
@@ -1775,12 +1783,11 @@ var debugOn = false;
 					});
 				});
 			});
-			if (jContents.height() + 40 > $(window).height()) {
-
+			if (jContents.height() + 40 > document.body.clientHeight) {
 				destBox.find("div.separ:last").remove();
 				destBox.find("div.separLast").remove();
 				jContents.slimScroll({
-					height : $(window).height() - 40,
+					height : document.body.clientHeight - 40,
 					color : '#fff'
 				});
 			} else {
@@ -1836,9 +1843,9 @@ var debugOn = false;
 							// "");
 						}
 						jContents.append(destBox);
-						if (jContents.height() + 40 > $(window).height()) {
+						if (jContents.height() + 40 > document.body.clientHeight) {
 							jContents.slimScroll({
-								height : $(window).height() - 40,
+								height : document.body.clientHeight - 40,
 								color : '#fff'
 							});
 							jContents.parent().find("div.separLast").remove();

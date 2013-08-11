@@ -3,7 +3,7 @@ $(function() {
 	var spriteHome = 'spriteHome';
 	if ($.jStorage.get('selectedLanguage') == 'en') {
 		spriteHome = 'spriteHomeEn';
-	}else if ($.jStorage.get('selectedLanguage') == 'fr') {
+	} else if ($.jStorage.get('selectedLanguage') == 'fr') {
 		spriteHome = 'spriteHomeFr';
 	}
 
@@ -86,19 +86,16 @@ $(function() {
 			var examples = value.examples;
 			// index++;
 			var aBox = $('<div class="startBox ' + spriteHome + '" rel="' + key + '"><h1><span>' + key.replace(/,.*/g, '').replace(/http:\/\//gi, '') + '</span><span class="' + spriteHome + ' info"></span></h1></div>');
+			$('#startPanel').children('#boxes').children('#boxesCont').append(aBox);
 			var descr = value.description[$.jStorage.get('selectedLanguage')];
-			if(!descr){
+			if (!descr) {
 				descr = value.description['en'];
 			}
 			var descrBox = $('<div class="startBox infoHome hdPage" rel="' + key + '"><h1><span>' + key.replace(/,.*/g, '').replace(/http:\/\//gi, '') + '</span></h1><p>' + descr + '</p></div>');
+			$('#startPanel').children('#boxes').children('#boxesCont').append(descrBox);
 			var form = $(formTemplate);
 			aBox.append(form);
-			// if (index == 3) {
-			// page++;
-			// index = 0;
-			// }
-			$('#startPanel').children('#boxes').children('#boxesCont').append(aBox);
-			$('#startPanel').children('#boxes').children('#boxesCont').append(descrBox);
+
 			aBox.children('h1').children('span').click(function() {
 				descrBox.css({
 					position : 'absolute',
@@ -122,132 +119,143 @@ $(function() {
 				}
 				return false;
 			});
-			form.find('div.select').toggle(function() {
-				var ele = $(this);
-				var jExemples = $('<div class="selectionList"></div>');
-				jExemples.append('<div class="selectEle" rel="inserisci"><span>' + lang('addUri') + '</span></div>');
-				jExemples.append('<div class="selectEle" rel="cerca"><span>' + lang('findResource') + '</span></div>');
-				if (examples) {
-					for (var a = 0; a < examples.length; a++) {
-						jExemples.append('<div class="selectEle" rel="' + examples[a].uri + '"><span>' + lang('example') + ' - ' + examples[a].label + '</span></div>');
+			form.find('div.select').click(function() {
+				if ($(this).data('show')) {
+					$('div.selectionList', form).remove();
+					$(this).data('show', false);
+				} else {
+					$(this).data('show', true);
+					var ele = $(this);
+					var jExemples = $('<div class="selectionList"></div>');
+					form.append(jExemples);
+					jExemples.append('<div class="selectEle" rel="inserisci"><span>' + lang('addUri') + '</span></div>');
+					jExemples.append('<div class="selectEle" rel="cerca"><span>' + lang('findResource') + '</span></div>');
+					if (examples) {
+						for (var a = 0; a < examples.length; a++) {
+							jExemples.append('<div class="selectEle" rel="' + examples[a].uri + '"><span>' + lang('example') + ' - ' + examples[a].label + '</span></div>');
+						}
 					}
-				}
-				jExemples.hover(function() {
-				}, function() {
-					ele.click();
-				});
-				form.append(jExemples);
-				form.find('.selectEle').click(function() {
-					ele.click();
-					var label = $(this).attr('rel');
-					if (label == 'cerca') {
-						form.parent().setBackgroundPosition({
-							y : -320
-						});
-						if ($('div.cerca', form).length == 0) {
-							var cerca = $('<div class="cerca"><div class="select"><span>' + lang('choose') + '</span><span class="' + spriteHome + ' arrow"></span></div><div class="inputClass"><input type="text" name="classFrom" value="" readonly="readonly"/></div></div>');
-							form.find('input[name=startFrom]').val('').attr('readonly', 'readonly').css({
+					jExemples.hover(function() {
+					}, function() {
+						ele.click();
+					});
+					form.find('.selectEle').click(function() {
+						ele.click();
+						var label = $(this).attr('rel');
+						if (label == 'cerca') {
+							form.parent().setBackgroundPosition({
+								y : -320
+							});
+							if ($('div.cerca', form).length == 0) {
+								var cerca = $('<div class="cerca"><div class="select"><span>' + lang('choose') + '</span><span class="' + spriteHome + ' arrow"></span></div><div class="inputClass"><input type="text" name="classFrom" value="" readonly="readonly"/></div></div>');
+								form.find('input[name=startFrom]').val('').attr('readonly', 'readonly').css({
+									background : '#bdbdbd',
+									color : '#575757'
+								}).parent().css({
+									background : '#bdbdbd'
+								}).before(cerca);
+								form.find('.inviaForm').attr("style", 'top: 20px;');
+
+								var jClasses = $('<div class="selectionList" style="display:none"></div>');
+								var template = '<div class="selectEle" ><span>{CONTENT}</span></div>';
+								$("#aSpace").lodlive('allClasses', form.parent().attr('rel'), cerca.find('div.select > span:first'), jClasses, template);
+
+								cerca.find('div.select').click(function() {
+									if ($(this).data('show')) {
+
+										$('.slimScrollDiv', cerca).remove();
+										// $('div.selectionList', cerca).remove();
+
+										$(this).data('show', false);
+									} else {
+										$(this).data('show', true);
+
+										cerca.append(jClasses);
+										var ele2 = $(this);
+										cerca.find('.selectEle').click(function() {
+											ele2.click();
+											var label = $(this).text();
+											ele2.find('span:first').text(label);
+											cerca.find('input[name=classFrom]').val('').removeAttr('readonly').css({
+												background : '#fff',
+												color : '#000'
+											}).focus().parent().css({
+												background : '#fff'
+											});
+										});
+										var invia2 = $('<div class="inviaForm2"></div>');
+										if (cerca.find('.inviaForm2').length != 0) {
+											cerca.find('.inviaForm2').remove();
+										}
+										invia2.click(function() {
+											$("#aSpace").lodlive('findSubject', form.parent().attr('rel'), "http://" + ele2.find('span:first').text(), cerca.find('input[name=classFrom]').val(), form.find('input[name=startFrom]'), form.find('input[name=startFrom]'));
+										});
+										cerca.append(invia2);
+										invia2.hover(function() {
+											cerca.parent().parent().setBackgroundPosition({
+												x : -630
+											});
+										}, function() {
+											cerca.parent().parent().setBackgroundPosition({
+												x : -10
+											});
+										});
+										$('.slimScrollDiv', cerca).remove();
+										jClasses.css({
+											display : 'block'
+										});
+										jClasses.slimScroll({
+											height : 8 * 20,
+											width : 260,
+											color : '#000'
+										});
+										$('.slimScrollDiv', cerca).css({
+											position : 'absolute',
+											display : 'block',
+											left : ele2.position().left,
+											top : ele2.position().top + 60
+										});
+										$('.slimScrollDiv', cerca).hover(function() {
+										}, function() {
+											ele2.click();
+										});
+									}
+								});
+							}
+						} else if (label == 'inserisci') {
+							form.find('input[name=startFrom]').val('').removeAttr('readonly').css({
+								background : '#fff',
+								color : '#575757'
+							}).focus().parent().css({
+								background : '#fff'
+							});
+							$('.cerca', form).remove();
+							form.find('.inviaForm').attr("style", '');
+							form.parent().setBackgroundPosition({
+								y : -10
+							});
+						} else {
+							form.find('input[name=startFrom]').attr('readonly', 'readonly').css({
 								background : '#bdbdbd',
 								color : '#575757'
-							}).parent().css({
+							}).val(label).parent().css({
 								background : '#bdbdbd'
-							}).before(cerca);
-							form.find('.inviaForm').attr("style", 'top: 20px;');
-
-							var jClasses = $('<div class="selectionList" style="display:none"></div>');
-							var template = '<div class="selectEle" ><span>{CONTENT}</span></div>';
-							$("#aSpace").lodlive('allClasses', form.parent().attr('rel'), cerca.find('div.select > span:first'), jClasses, template);
-
-							cerca.find('div.select').toggle(function() {
-								cerca.append(jClasses);
-								var ele2 = $(this);
-								cerca.find('.selectEle').click(function() {
-									ele2.click();
-									var label = $(this).text();
-									ele2.find('span:first').text(label);
-									cerca.find('input[name=classFrom]').val('').removeAttr('readonly').css({
-										background : '#fff',
-										color : '#000'
-									}).focus().parent().css({
-										background : '#fff'
-									});
-								});
-								var invia2 = $('<div class="inviaForm2"></div>');
-								if (cerca.find('.inviaForm2').length != 0) {
-									cerca.find('.inviaForm2').remove();
-								}
-								invia2.click(function() {
-									$("#aSpace").lodlive('findSubject', form.parent().attr('rel'), "http://" + ele2.find('span:first').text(), cerca.find('input[name=classFrom]').val(), form.find('input[name=startFrom]'), form.find('input[name=startFrom]'));
-								});
-								cerca.append(invia2);
-								invia2.hover(function() {
-									cerca.parent().parent().setBackgroundPosition({
-										x : -630
-									});
-								}, function() {
-									cerca.parent().parent().setBackgroundPosition({
-										x : -10
-									});
-								});
-								$('.slimScrollDiv', cerca).remove();
-								jClasses.css({
-									display : 'block'
-								});
-								jClasses.slimScroll({
-									height : 8 * 20,
-									width : 260,
-									color : '#000'
-								});
-								$('.slimScrollDiv', cerca).css({
-									position : 'absolute',
-									display : 'block',
-									left : ele2.position().left,
-									top : ele2.position().top + 60
-								});
-								$('.slimScrollDiv', cerca).hover(function() {
-								}, function() {
-									ele2.click();
-								});
-							}, function() {
-								$('.slimScrollDiv', cerca).remove();
-								// $('div.selectionList', cerca).remove();
+							});
+							$('.cerca', form).remove();
+							form.find('.inviaForm').attr("style", '');
+							form.parent().setBackgroundPosition({
+								y : -10
 							});
 						}
-					} else if (label == 'inserisci') {
-						form.find('input[name=startFrom]').val('').removeAttr('readonly').css({
-							background : '#fff',
-							color : '#575757'
-						}).focus().parent().css({
-							background : '#fff'
-						});
-						$('.cerca', form).remove();
-						form.find('.inviaForm').attr("style", '');
-						form.parent().setBackgroundPosition({
-							y : -10
-						});
-					} else {
-						form.find('input[name=startFrom]').attr('readonly', 'readonly').css({
-							background : '#bdbdbd',
-							color : '#575757'
-						}).val(label).parent().css({
-							background : '#bdbdbd'
-						});
-						$('.cerca', form).remove();
-						form.find('.inviaForm').attr("style", '');
-						form.parent().setBackgroundPosition({
-							y : -10
-						});
-					}
-					form.find('div.select > span:first').text($(this).find('span').text());
-				});
-				jExemples.css({
-					position : 'absolute',
-					zIndex : '9999',
-					left : ele.position().left,
-					top : ele.position().top + 60
-				});
-			}, function() {
-				$('div.selectionList', form).remove();
+						form.find('div.select > span:first').text($(this).find('span').text());
+					});
+					jExemples.css({
+						position : 'absolute',
+						zIndex : '9999',
+						left : ele.position().left,
+						top : ele.position().top + 60
+					});
+				}
 			});
 			var invia = $('<div class="inviaForm"></div>');
 			invia.click(function() {
@@ -285,7 +293,7 @@ $(function() {
 		});
 
 	}
-	if ($.browser.msie) {
+	if (!$.support.canvas) {
 		myAlert(lang('noIe'));
 	}
 	function showDescrBox(aBox, descrBox) {
@@ -355,56 +363,60 @@ $(function() {
 		dest.prepend(aBox);
 		var form = $('<form><div class="select"><span>' + lang('choose') + '</span><span class="' + spriteHome + ' arrow"></span></div></form>');
 		aBox.append(form);
-		aBox.find('div.select').toggle(function() {
-			var ele = $(this);
-			var jEndpoints = $('<div class="selectionList"></div>');
 
-			$.each($.jStorage.get('profile').connection, function(key, value) {
-				jEndpoints.append('<div class="selectEle" rel="' + key + '"><span>' + key.replace(/,.*/g, '').replace(/http:\/\//gi, '') + '</span></div>');
-			});
+		aBox.find('div.select').click(function() {
+			if ($(this).data('show')) {
+				$(this).data('show', false);
+				$('.slimScrollDiv', form).remove();
+			} else {
+				$(this).data('show', true);
+				var ele = $(this);
+				var jEndpoints = $('<div class="selectionList"></div>');
 
-			form.append(jEndpoints);
-			jEndpoints.css({
-				left : ele.position().left
-			});
-			form.find('.selectEle').click(function() {
-				ele.click();
-				var label = $(this).attr('rel');
-				var selBox = $("div[rel='" + label + "'].startBox:first").position().left + 310;
-				var pag = (selBox / 930 + "").indexOf(".") > 0 ? parseInt(selBox / 930 + "".replace(/\.[0-9]*/, '')) + 1 : selBox / 930;
-				for (var a = 0; a < pag - 1; a++) {
-					$.doTimeout(205 * a, function() {
-						nextSpeed = 0;
-						fadeSpeed = 0;
-						$("#nextPage").click();
-					});
-				}
-			});
-			$('.slimScrollDiv', form).remove();
-			jEndpoints.css({
-				display : 'block'
-			});
-			jEndpoints.slimScroll({
-				height : 5 * 20,
-				width : 200,
-				color : '#000'
-			});
-			$('.slimScrollDiv', form).css({
-				position : 'absolute',
-				display : 'block',
-				zIndex : '9999',
-				left : ele.position().left,
-				top : ele.position().top + 280
-			});
-			$('.slimScrollDiv', form).hover(function() {
-			}, function() {
-				aBox.find('div.select').click();
-			});
+				$.each($.jStorage.get('profile').connection, function(key, value) {
+					jEndpoints.append('<div class="selectEle" rel="' + key + '"><span>' + key.replace(/,.*/g, '').replace(/http:\/\//gi, '') + '</span></div>');
+				});
 
-		}, function() {
-			$('.slimScrollDiv', form).remove();
-		});
+				form.append(jEndpoints);
+				jEndpoints.css({
+					left : ele.position().left
+				});
+				form.find('.selectEle').click(function() {
+					ele.click();
+					var label = $(this).attr('rel');
+					var selBox = $("div[rel='" + label + "'].startBox:first").position().left + 310;
+					var pag = (selBox / 930 + "").indexOf(".") > 0 ? parseInt(selBox / 930 + "".replace(/\.[0-9]*/, '')) + 1 : selBox / 930;
+					for (var a = 0; a < pag - 1; a++) {
+						$.doTimeout(205 * a, function() {
+							nextSpeed = 0;
+							fadeSpeed = 0;
+							$("#nextPage").click();
+						});
+					}
+				});
+				$('.slimScrollDiv', form).remove();
+				jEndpoints.css({
+					display : 'block'
+				});
+				jEndpoints.slimScroll({
+					height : 5 * 20,
+					width : 200,
+					color : '#000'
+				});
+				$('.slimScrollDiv', form).css({
+					position : 'absolute',
+					display : 'block',
+					zIndex : '9999',
+					left : ele.position().left,
+					top : ele.position().top + 280
+				});
+				$('.slimScrollDiv', form).hover(function() {
+				}, function() {
+					aBox.find('div.select').click();
+				});
 
+			}
+		})
 	}
 
 	function orangeBox(firstLine, formTemplate) {
@@ -418,103 +430,109 @@ $(function() {
 		firstLine.children('#boxO').append(form);
 
 		form.children('.input').before($('<div class="inputClass"><input type="text" name="classFrom" value="" readonly="readonly"></div>'));
-		form.find('div.select').toggle(function() {
-			var ele = $(this);
-			var jEndpoints = $('<div class="selectionList"></div>');
-			jEndpoints.append('<div class="selectEle" rel="dbpedia"><span>dbpedia.org</span></div>');
-			jEndpoints.append('<div class="selectEle" rel="freebase"><span>freebase.com</span></div>');
-			jEndpoints.hover(function() {
-			}, function() {
-				ele.click();
-			});
-			form.append(jEndpoints);
-			jEndpoints.css({
-				position : 'absolute',
-				zIndex : '9999',
-				left : ele.position().left,
-				top : ele.position().top + 60
-			});
-			form.find('.selectEle').click(function() {
-				ele.click();
-				var label = $(this).attr('rel');
-				var ele2 = form.find('input[name=classFrom]');
-				ele2.unbind('focus');
-				ele2.unbind('keyup');
-				ele2.val('').removeAttr('readonly').css({
-					background : '#fff',
-					color : '#975E1C'
-				}).focus().parent().css({
-					background : '#fff'
-				});
-				var invia2 = $('<div class="inviaForm2" style="display:none"></div>');
-				var cerca = form.find('.inputClass');
-				var timer = null;
-				ele2.keyup(function() {
-					if ($(this).val().length > 0) {
-						clearTimeout(timer);
-						timer = setTimeout(function() {
-							invia2.click();
-						}, 250);
-					}
-				});
-				ele2.focus(function() {
-					form.find('.selectionList').remove();
-					invia2.click();
-				});
-				invia2.click(function() {
-					form.find('.selectionList').remove();
-					if (ele2.val().length > 0) {
-						form.children('div.input').children('img').remove();
-						form.children('div.input').prepend('<img src="img/ajax-loader-white.gif" style="margin-left:6px;margin-top:2px"/>');
-						var results = [];
-						results = findConcept(label, ele2.val(), function() {
-							form.children('div.input').children('img').remove();
-							var jClasses = $('<div class="selectionList"></div>');
-							for (var int = 0; int < results.length; int++) {
-								var row = results[int];
-								jClasses.append('<div class="selectEle" ><span title="' + decodeURIComponent(row.uri) + '">' + row.label + '</span></div>');
-							}
-							form.append(jClasses);
-							jClasses.find('span').click(function() {
-								ele2.val($(this).text());
-								form.find('input[name=startFrom]').val($(this).attr('title'));
-								$('.selectionList').remove();
-							});
-							jClasses.hover(function() {
-							}, function() {
-								form.find('.selectionList').remove();
-							});
-							jClasses.css({
-								position : 'absolute',
-								zIndex : '9999',
-								display : 'block',
-								left : ele2.position().left,
-								top : ele2.position().top + 20
-							});
-						}, function() {
-							form.children('div.input').children('img').remove();
-						});
 
-					}
-				});
-				cerca.append(invia2);
-				invia2.hover(function() {
-					cerca.parent().parent().setBackgroundPosition({
-						x : -630
-					});
+		form.find('div.select').click(function() {
+			if ($(this).data('show')) {
+				$(this).data('show', false);
+				$('div.selectionList', form).remove();
+			} else {
+				$(this).data('show', true);
+				var ele = $(this);
+				var jEndpoints = $('<div class="selectionList"></div>');
+				jEndpoints.append('<div class="selectEle" rel="dbpedia"><span>dbpedia.org</span></div>');
+				jEndpoints.append('<div class="selectEle" rel="freebase"><span>freebase.com</span></div>');
+				jEndpoints.hover(function() {
 				}, function() {
-					cerca.parent().parent().setBackgroundPosition({
-						x : -10
-					});
+					ele.click();
 				});
-				/*
-				 * form.parent().setBackgroundPosition({ y : -10 });
-				 */
-				form.children('div.select').children('span:first').text($(this).find('span').text());
-			});
-		}, function() {
-			$('div.selectionList', form).remove();
-		});
+				form.append(jEndpoints);
+				jEndpoints.css({
+					position : 'absolute',
+					zIndex : '9999',
+					left : ele.position().left,
+					top : ele.position().top + 60
+				});
+				form.find('.selectEle').click(function() {
+					ele.click();
+					var label = $(this).attr('rel');
+					var ele2 = form.find('input[name=classFrom]');
+					ele2.unbind('focus');
+					ele2.unbind('keyup');
+					ele2.val('').removeAttr('readonly').css({
+						background : '#fff',
+						color : '#975E1C'
+					}).focus().parent().css({
+						background : '#fff'
+					});
+					var invia2 = $('<div class="inviaForm2" style="display:none"></div>');
+					var cerca = form.find('.inputClass');
+					var timer = null;
+					ele2.keyup(function() {
+						if ($(this).val().length > 0) {
+							clearTimeout(timer);
+							timer = setTimeout(function() {
+								invia2.click();
+							}, 250);
+						}
+					});
+					ele2.focus(function() {
+						form.find('.selectionList').remove();
+						invia2.click();
+					});
+					invia2.click(function() {
+						form.find('.selectionList').remove();
+						if (ele2.val().length > 0) {
+							form.children('div.input').children('img').remove();
+							form.children('div.input').prepend('<img src="img/ajax-loader-white.gif" style="margin-left:6px;margin-top:2px"/>');
+							var results = [];
+							results = findConcept(label, ele2.val(), function() {
+								form.children('div.input').children('img').remove();
+								var jClasses = $('<div class="selectionList"></div>');
+								for (var int = 0; int < results.length; int++) {
+									var row = results[int];
+									jClasses.append('<div class="selectEle" ><span title="' + decodeURIComponent(row.uri) + '">' + row.label + '</span></div>');
+								}
+								form.append(jClasses);
+								jClasses.find('span').click(function() {
+									ele2.val($(this).text());
+									form.find('input[name=startFrom]').val($(this).attr('title'));
+									$('.selectionList').remove();
+								});
+								jClasses.hover(function() {
+								}, function() {
+									form.find('.selectionList').remove();
+								});
+								jClasses.css({
+									position : 'absolute',
+									zIndex : '9999',
+									display : 'block',
+									left : ele2.position().left,
+									top : ele2.position().top + 20
+								});
+							}, function() {
+								form.children('div.input').children('img').remove();
+							});
+
+						}
+					});
+					cerca.append(invia2);
+					invia2.hover(function() {
+						cerca.parent().parent().setBackgroundPosition({
+							x : -630
+						});
+					}, function() {
+						cerca.parent().parent().setBackgroundPosition({
+							x : -10
+						});
+					});
+					/*
+					 * form.parent().setBackgroundPosition({ y : -10 });
+					 */
+					form.children('div.select').children('span:first').text($(this).find('span').text());
+				});
+
+			}
+		})
 		addSubmit(form);
 
 		form.find('.inviaForm').attr("style", 'top: 60px');
