@@ -100,7 +100,7 @@ var debugOn = false;
 				var keySplit = key.split(",");
 				for (var a = 0; a < keySplit.length; a++) {
 					if (( testURI ? testURI : resource).indexOf(keySplit[a]) == 0) {
-						res = value.sparql[module].replace(/\{URI\}/ig, resource.replace(/^.*~~/, ''));
+						res = getSparqlConf(module, value, lodLiveProfile).replace(/\{URI\}/ig, resource.replace(/^.*~~/, ''));
 
 						if (value.proxy) {
 							url = value.proxy + '?endpoint=' + value.endpoint + "&" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + encodeURIComponent(res);
@@ -1287,10 +1287,10 @@ var debugOn = false;
 			var uris = [];
 			var bnodes = [];
 			var values = [];
-			if (lodLiveProfile['resourceResolver']) {
+			if (lodLiveProfile['default']) {
 				// attivo lo sparql interno basato su sesame
-				var res = lodLiveProfile['resourceResolver'].sparql['document'].replace(/\{URI\}/ig, URI);
-				var url = lodLiveProfile['resourceResolver'].endpoint + "?uri=" + encodeURIComponent(URI) + "&query=" + encodeURIComponent(res);
+				var res = getSparqlConf('document', lodLiveProfile['default'], lodLiveProfile).replace(/\{URI\}/ig, URI);
+				var url = lodLiveProfile['default'].endpoint + "?uri=" + encodeURIComponent(URI) + "&query=" + encodeURIComponent(res);
 				if ($.jStorage.get('showInfoConsole')) {
 					context.lodlive('queryConsole', 'log', {
 						title : lang('endpointNotConfiguredSoInternal'),
@@ -2388,7 +2388,8 @@ var debugOn = false;
 				pager.parent().fadeOut('fast', null, function() {
 					$(this).parent().children('.' + pager.attr("data-page")).fadeIn('fast');
 				});
-			}); {
+			});
+			{
 				var obj = $("<div class=\"actionBox contents\" rel=\"contents\"  >&#160;</div>");
 				containerBox.append(obj);
 				obj.hover(function() {
@@ -2495,10 +2496,10 @@ var debugOn = false;
 			var context = this;
 			var values = [];
 			var uris = [];
-			if (lodLiveProfile['resourceResolver']) {
+			if (lodLiveProfile['default']) {
 				// attivo lo sparql interno basato su sesame
-				var res = lodLiveProfile['resourceResolver'].sparql['documentUri'].replace(/\{URI\}/ig, resource);
-				var url = lodLiveProfile['resourceResolver'].endpoint + "?uri=" + encodeURIComponent(resource) + "&query=" + encodeURIComponent(res);
+				var res = getSparqlConf('documentUri', lodLiveProfile['default'], lodLiveProfile).replace(/\{URI\}/ig, resource);
+				var url = lodLiveProfile['default'].endpoint + "?uri=" + encodeURIComponent(resource) + "&query=" + encodeURIComponent(res);
 				if ($.jStorage.get('showInfoConsole')) {
 					context.lodlive('queryConsole', 'log', {
 						title : lang('endpointNotConfiguredSoInternal'),
@@ -2811,9 +2812,10 @@ var debugOn = false;
 			}
 			var innerCounter = 0;
 			$.each(lodLiveProfile.connection, function(key, value) {
-				var SPARQLquery = value.endpoint + "?" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + escape(value.sparql['inverseSameAs'].replace(/\{URI\}/g, anUri));
+				console.info()
+				var SPARQLquery = value.endpoint + "?" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + escape(getSparqlConf('inverseSameAs', value, lodLiveProfile).replace(/\{URI\}/g, anUri));
 				if (value.proxy) {
-					SPARQLquery = value.proxy + '?endpoint=' + value.endpoint + "&" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + escape(value.sparql['inverseSameAs'].replace(/\{URI\}/g, anUri));
+					SPARQLquery = value.proxy + '?endpoint=' + value.endpoint + "&" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + escape(getSparqlConf('inverseSameAs', value, lodLiveProfile).replace(/\{URI\}/g, anUri));
 				}
 				if (innerCounter == counter) {
 					var skip = false;
@@ -2844,7 +2846,7 @@ var debugOn = false;
 							if ($.jStorage.get('showInfoConsole')) {
 								context.lodlive('queryConsole', 'log', {
 									title : value.endpoint,
-									text : value.sparql['inverseSameAs'].replace(/\{URI\}/g, anUri),
+									text : getSparqlConf('inverseSameAs', value, lodLiveProfile).replace(/\{URI\}/g, anUri),
 									id : SPARQLquery,
 									uriId : anUri
 								});
@@ -2905,9 +2907,9 @@ var debugOn = false;
 				var keySplit = key.split(",");
 				for (var a = 0; a < keySplit.length; a++) {
 					if (SPARQLquery.indexOf(keySplit[a]) != -1) {
-						SPARQLquery = value.endpoint + "?" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + escape(value.sparql['findSubject'].replace(/\{CLASS\}/g, selectedClass).replace(/\{VALUE\}/g, selectedValue));
+						SPARQLquery = value.endpoint + "?" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + escape(getSparqlConf('findSubject', value, lodLiveProfile).replace(/\{CLASS\}/g, selectedClass).replace(/\{VALUE\}/g, selectedValue));
 						if (value.proxy) {
-							SPARQLquery = value.proxy + "?endpoint=" + value.endpoint + "&" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + escape(value.sparql['findSubject'].replace(/\{CLASS\}/g, selectedClass).replace(/\{VALUE\}/g, selectedValue));
+							SPARQLquery = value.proxy + "?endpoint=" + value.endpoint + "&" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + escape(getSparqlConf('findSubject', value, lodLiveProfile).replace(/\{CLASS\}/g, selectedClass).replace(/\{VALUE\}/g, selectedValue));
 						}
 					}
 				}
