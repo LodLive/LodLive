@@ -7,12 +7,12 @@ $.jStorage.set('profile', {
 				fr : 'DBpédia en français est le chapitre francophone de DBpedia, il s\'inscrit dans l\'effort d\'internationalisation de DBpedia dont le but est de maintenir des données structurées extraites de différents chapitres de Wikipedia.',
 				en : 'French version of DBpedia'
 			},
-			useForInverseSameAs : true,
+			useForInverseSameAs : false,
 			sparql : {
 				allClasses : 'SELECT DISTINCT ?object  WHERE {[] a ?object} ORDER BY ?object  LIMIT 50  ',
 				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} } LIMIT 1',
 				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.FILTER ((( isIRI(?object) && ?property != <http://xmlns.com/foaf/0.1/depiction> )|| ?property = <http://www.w3.org/2000/01/rdf-schema#label>  || ?property = <http://www.georss.org/georss/point> || ?property = <http://xmlns.com/foaf/0.1/surname> || ?property = <http://xmlns.com/foaf/0.1/name> || ?property = <http://purl.org/dc/elements/1.1/title>))}  ORDER BY ?property',
-				document : 'SELECT DISTINCT *  WHERE  {{<{URI}> ?property ?object. FILTER(!isLiteral(?object))} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="fr")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="en")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="fr")}}  ORDER BY ?property',
+				document : 'SELECT DISTINCT *  WHERE  {{<{URI}> ?property ?object. FILTER(!isLiteral(?object))} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="fr")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) =en)} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="fr")}}  ORDER BY ?property',
 				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
 				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
 				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
@@ -58,15 +58,6 @@ $.jStorage.set('profile', {
 				it : 'Il progetto pilota dati.culturaitalia.it contiene set di open data aggregati in CulturaItalia e rilasciati dai partner del progetto con licenza "CC0 1.0 Universal Public Domain Dedication".',
 				en : 'Il progetto pilota dati.culturaitalia.it contiene set di open data aggregati in CulturaItalia e rilasciati dai partner del progetto con licenza "CC0 1.0 Universal Public Domain Dedication".'
 			},
-			sparql : {
-				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
-			},
 			useForInverseSameAs : false,
 			endpoint : 'http://dati.culturaitalia.it/sparql/',
 			proxy : 'http://labs.regesta.com/sparqlProxy/',
@@ -86,16 +77,7 @@ $.jStorage.set('profile', {
 				it : 'Il punto per l\'accesso diretto ai dati del Senato della Repubblica. I disegni di legge con il loro iter, le votazioni elettroniche d\'Aula, le Commissioni, i Gruppi parlamentari...',
 				en : 'Il punto per l\'accesso diretto ai dati del Senato della Repubblica. I disegni di legge con il loro iter, le votazioni elettroniche d\'Aula, le Commissioni, i Gruppi parlamentari...'
 			},
-			sparql : {
-				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object} ORDER BY ?property',
-				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>.  } LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
-			},
-			useForInverseSameAs : false,
+			seForInverseSameAs : false,
 			endpoint : 'http://dati.senato.it/sparql',
 			examples : [{
 				label : 'Emilio Colombo (foaf:Person)',
@@ -111,15 +93,6 @@ $.jStorage.set('profile', {
 			description : {
 				it : 'Un catalogo completo di dati e documenti digitali su tutte le legislature precedenti all\'attuale, dalla I del Regno di Sardegna alla XV della Repubblica, che alimentano il Portale storico della Camera dei deputati.<br />Sono inoltre disponibili i primi dataset di atti di indirizzo e controllo, deputati, organi e gruppi parlamentari della legislatura corrente.',
 				en : 'A complete catalogue of digital data and documents of all previous legislatures, from I legislature of the Kingdom of Sardinia to XV legislature of the Republic, which supplies the historical portal of the Chamber of Deputies.<br />There are also the first datasets of Acts of direction and control, Deputies, parliamentary groups and committees of the current legislature.'
-			},
-			sparql : {
-				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object} ORDER BY ?property',
-				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>. FILTER(isIRI(?object))} LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
 			},
 			useForInverseSameAs : true,
 			endpoint : 'http://dati.camera.it/sparql',
@@ -141,16 +114,7 @@ $.jStorage.set('profile', {
 				it : 'Catalogo dei dataset OpenData pubblicati da alcune istituzioni. Generato da fonti CKAN per l\'International Open Data Day Italia.',
 				en : 'Catalogo dei dataset OpenData pubblicati da alcune istituzioni. Generato da fonti CKAN per l\'International Open Data Day Italia.'
 			},
-			sparql : {
-				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object} ORDER BY ?property',
-				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>. FILTER(isIRI(?object))} LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
-			},
-			useForInverseSameAs : true,
+			useForInverseSameAs : false,
 			endpoint : 'http://data.opendataday.it/sparql',
 			examples : [{
 				label : 'Catalogo della Provincia di Roma',
@@ -208,7 +172,7 @@ $.jStorage.set('profile', {
 				allClasses : 'SELECT DISTINCT ?object  WHERE {[] a ?object} ORDER BY ?object  LIMIT 50  ',
 				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://rdf.freebase.com/ns/type.object.name> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} } LIMIT 1',
 				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.FILTER (isIRI(?object) || ?property = <http://www.w3.org/2000/01/rdf-schema#label> || ?property = <http://rdf.freebase.com/ns/type.object.name> || ?property = <http://purl.org/dc/elements/1.1/title>)} ORDER BY ?property',
-				document : 'SELECT DISTINCT *  WHERE  {{<{URI}> ?property ?object. FILTER(!isLiteral(?object))} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="it")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="en")}}',
+				document : 'SELECT DISTINCT *  WHERE  {{<{URI}> ?property ?object. FILTER(!isLiteral(?object))} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="it")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) =en)}}',
 				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
 				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>.FILTER(isIRI(?object) && ?property != <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> && ?property != <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> && !REGEX(?object,"fact_"))} LIMIT 100',
 				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
@@ -259,9 +223,8 @@ $.jStorage.set('profile', {
 				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
 				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
 			},
-			useForInverseSameAs : true,
+			useForInverseSameAs : false,
 			endpoint : 'http://worldbank.270a.info/sparql',
-			proxy : 'http://labs.regesta.com/sparqlProxy/',
 			examples : [{
 				label : 'Canada (country)',
 				uri : 'http://worldbank.270a.info/classification/country/CA'
@@ -332,7 +295,7 @@ $.jStorage.set('profile', {
 			sparql : {
 				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
 				findSubject : 'SELECT DISTINCT ?subject WHERE {  {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-				documentUri : 'SELECT DISTINCT * WHERE {{<{URI}> ?property ?object. FILTER(!isLiteral(?object))}  UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="it")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="en")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="")}} ORDER BY ?property',
+				documentUri : 'SELECT DISTINCT * WHERE {{<{URI}> ?property ?object. FILTER(!isLiteral(?object))}  UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="it")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) =en)} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="")}} ORDER BY ?property',
 				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
 				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
 				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
@@ -424,7 +387,7 @@ $.jStorage.set('profile', {
 				allClasses : 'SELECT DISTINCT ?object  WHERE {[] a ?object} ORDER BY ?object  LIMIT 50  ',
 				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} } LIMIT 1',
 				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.FILTER ((( isIRI(?object) && ?property != <http://xmlns.com/foaf/0.1/depiction> )|| ?property = <http://www.w3.org/2000/01/rdf-schema#label>  || ?property = <http://www.georss.org/georss/point> || ?property = <http://xmlns.com/foaf/0.1/surname> || ?property = <http://xmlns.com/foaf/0.1/name> || ?property = <http://purl.org/dc/elements/1.1/title>))}  ORDER BY ?property',
-				document : 'SELECT DISTINCT *  WHERE  {{<{URI}> ?property ?object. FILTER(!isLiteral(?object))} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="it")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="en")}}  ORDER BY ?property',
+				document : 'SELECT DISTINCT *  WHERE  {{<{URI}> ?property ?object. FILTER(!isLiteral(?object))} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="it")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) =en)}}  ORDER BY ?property',
 				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
 				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
 				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
@@ -519,7 +482,7 @@ $.jStorage.set('profile', {
 				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
 				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
 			},
-			useForInverseSameAs : true,
+			useForInverseSameAs : false,
 			endpoint : 'http://spcdata.digitpa.gov.it:8899/sparql',
 			examples : [{
 				uri : 'http://spcdata.digitpa.gov.it/UnitaOrganizzativa/2612',
@@ -530,15 +493,6 @@ $.jStorage.set('profile', {
 			description : {
 				it : 'In quest\'area sono accessibili i linked open data del Comune di Firenze. Al momento sono disponibili i dataset musei, viario, sinistri e toponomastica.',
 				en : 'The linked open data of the City of Florence are available here. Museums, traffic, accidents and place names datasets are currently available.'
-			},
-			sparql : {
-				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/terms/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>; <http://purl.org/dc/terms/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.FILTER (isIRI(?object) || ?property = <http://www.w3.org/2000/01/rdf-schema#label> || ?property = <http://purl.org/dc/terms/title> || ?property = <http://www.w3.org/2003/01/geo/wgs84_pos#long> || ?property = <http://www.w3.org/2003/01/geo/wgs84_pos#lat>)} ORDER BY ?property',
-				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
 			},
 			endpointType : 'arcSparql',
 			endpoint : 'http://sr-vm091-opend.comune.fi.it:2020/sparql',
@@ -555,15 +509,6 @@ $.jStorage.set('profile', {
 				it : 'I linked open data degli atti amministrativi della Provincia di Carbonia Iglesias, relativi alle Determine e Delibere.',
 				en : 'The linked open data of the administrative acts of the Province of Carbonia Iglesias, relative to resolutions, are available here.'
 			},
-			sparql : {
-				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/terms/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>; <http://purl.org/dc/terms/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.FILTER (isIRI(?object) || ?property = <http://www.w3.org/2000/01/rdf-schema#label> || ?property = <http://purl.org/dc/terms/title> || ?property = <http://www.w3.org/2003/01/geo/wgs84_pos#long> || ?property = <http://www.w3.org/2003/01/geo/wgs84_pos#lat>)} ORDER BY ?property',
-				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
-			},
 			endpointType : 'arcSparql',
 			endpoint : 'http://www.provincia.carboniaiglesias.it/sparql',
 			examples : [{
@@ -579,21 +524,47 @@ $.jStorage.set('profile', {
 				it : 'The DBLP Computer Science Bibliography.',
 				en : 'The DBLP Computer Science Bibliography.'
 			},
-			sparql : {
-				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/terms/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>; <http://purl.org/dc/terms/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.FILTER (isIRI(?object) || ?property = <http://www.w3.org/2000/01/rdf-schema#label> || ?property = <http://purl.org/dc/terms/title> || ?property = <http://www.w3.org/2003/01/geo/wgs84_pos#long> || ?property = <http://www.w3.org/2003/01/geo/wgs84_pos#lat>)} ORDER BY ?property',
-				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
-			},
-
 			endpoint : 'http://dblp.l3s.de/d2r/sparql',
 			examples : [{
 				uri : 'http://dblp.l3s.de/d2r/resource/authors/Oktie_Hassanzadeh',
 				label : 'Oktie Hassanzadeh'
 			}]
+		},
+		"http://transparency.270a.info" : {
+			endpoint : "http://transparency.270a.info/sparql",
+			description : {
+				en : "Transparency International Linked Data: A world in which government, politics, business, civil society and the daily lives of people are free of corruption"
+			}
+		},
+		"http://imf.270a.info" : {
+			endpoint : "http://imf.270a.info/sparql",
+			description : {
+				en : "International Monetary Fund Linked Data: Working to foster global monetary cooperation, secure financial stability, facilitate international trade, promote high employment and sustainable economic growth, and reduce poverty around the world"
+			}
+		},
+		"http://ecb.270a.info" : {
+			endpoint : "http://ecb.270a.info/sparql",
+			description : {
+				en : "European Central Bank Linked Data: Whose main task is to maintain the euro's purchasing power and thus price stability in the euro area"
+			}
+		},
+		"http://bfs.270a.info" : {
+			endpoint : "http://bfs.270a.info/sparql",
+			description : {
+				en : "Swiss Federal Statistics Office Linked Data: A wide range of statistical information on the most important areas of life: population, health, economy, employment, education and more"
+			}
+		},
+		"http://fao.270a.info" : {
+			endpoint : "http://fao.270a.info/sparql",
+			description : {
+				en : "Food and Agriculture Organization of the United Nations Linked Data: Achieving food security for all is at the heart of FAO's efforts - to make sure people have regular access to enough high-quality food to lead active, healthy lives"
+			}
+		},
+		"http://oecd.270a.info" : {
+			endpoint : "http://oecd.270a.info/sparql",
+			description : {
+				en : "Organisation for Economic Co-operation and Development Linked Data: The mission of OECD is to promote policies that will improve the economic and social well-being of people around the world"
+			}
 		}
 
 	},
@@ -607,24 +578,20 @@ $.jStorage.set('profile', {
 		findStr : 'mpii.de/yago/resource/',
 		replaceStr : 'yago-knowledge.org/resource/'
 	}],
-	/* per ricavare un rdf da risorse non presenti in endpoint */
-	resourceResolver : {
-		sparql : {
-			allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object} ORDER BY ?object',
-			findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-			documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object. } ORDER BY ?property',
-			document : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object} ORDER BY ?property',
-			bnode : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-			inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>.FILTER(isIRI(?object) && REGEX(STR(?property),"rdf-schema" ))} LIMIT 100',
-			inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
-		},
-		endpoint : 'http://labs.regesta.com/resourceProxy/'
-		// endpoint : 'http://127.0.0.1:8080/sparql-rdf-proxy/resource/'
 
-	},
 	// configurazione standard per la rappresentazione di un documento
 	// utilizzata nel caso manchi una specifica configurazione per la classe
 	'default' : {
+		sparql : {
+			allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
+			findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
+			documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object} ORDER BY ?property',
+			document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
+			bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
+			inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>. FILTER(isIRI(?object))} LIMIT 100',
+			inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
+		},
+		endpoint : 'http://labs.regesta.com/resourceProxy/',
 		document : {
 			className : 'standard',
 			titleProperties : ['http://dati.senato.it/osr/titolo', 'http://www.w3.org/2004/02/skos/core#notation', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#value', 'http://www.geonames.org/ontology#name', 'http://purl.org/dc/elements/1.1/title', 'http://purl.org/dc/terms/title', 'http://www.w3.org/2000/01/rdf-schema#label', 'http://www.w3.org/2004/02/skos/core#prefLabel', 'http://logd.tw.rpi.edu/source/visualizing-org/dataset/2010-global-agenda-council-interlinkage-survey/vocab/enhancement/1/how_councils_interlink', 'http://rdf.freebase.com/ns/type.object.name', 'http://spcdata.digitpa.gov.it/nome_cognome', 'http://xmlns.com/foaf/0.1/firstName', 'http://xmlns.com/foaf/0.1/lastName', 'http://xmlns.com/foaf/0.1/surname', 'http://xmlns.com/foaf/0.1/name', 'http://purl.org/dc/terms/description']
@@ -644,42 +611,30 @@ $.jStorage.set('profile', {
 
 	'http://www.w3.org/2002/07/owl#Class' : {
 		document : {
-			className : 'Class',
-			titleProperties : ['http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label']
+			className : 'Class'/*,
+			 titleProperties : ['http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label']*/
 		}
 	},
 	'http://www.w3.org/2002/07/owl#ObjectProperty' : {
 		document : {
-			className : 'ObjectProperty',
-			titleProperties : ['http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label']
+			className : 'ObjectProperty'
 		}
 	},
 	'http://www.w3.org/2002/07/owl#Restriction' : {
 		document : {
-			className : 'DatatypeProperty',
-			titleProperties : ['http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label']
+			className : 'DatatypeProperty'
 		}
 	},
 	'http://www.w3.org/2002/07/owl#DatatypeProperty' : {
 		document : {
-			className : 'DatatypeProperty',
-			titleProperties : ['http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label'],
-			weblinks : {
-				visualizationType : '',
-				properties : []
-			}
+			className : 'DatatypeProperty'
 		}
 	},
 	'http://www.w3.org/2002/07/owl#Property' : {
 		document : {
-			className : 'Property',
-			titleProperties : ['http://purl.org/dc/elements/1.1/title', 'http://www.w3.org/2000/01/rdf-schema#label'],
-			weblinks : {
-				visualizationType : '',
-				properties : []
-			}
+			className : 'Property'
 		}
-	}, 
+	},
 	'http://data.oceandrilling.org/core/1/ODP' : {
 		document : {
 			titleProperties : ['expedition', 'http://data.oceandrilling.org/core/1/expedition', 'site', 'http://data.oceandrilling.org/core/1/site', 'hole', 'http://data.oceandrilling.org/core/1/hole']

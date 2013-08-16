@@ -266,3 +266,6 @@ function breakLines(msg) {
 	msg = msg.replace(/%/g, '%<span style="font-size:1px"> </span>');
 	return msg;
 }
+function getSparqlConf(what,where,lodLiveProfile){
+	return where.sparql && where.sparql[what]?where.sparql[what]:lodLiveProfile['default'].sparql[what]
+}
