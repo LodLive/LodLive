@@ -12,7 +12,7 @@ $.jStorage.set('profile', {
 				allClasses : 'SELECT DISTINCT ?object  WHERE {[] a ?object} ORDER BY ?object  LIMIT 50  ',
 				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} } LIMIT 1',
 				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.FILTER ((( isIRI(?object) && ?property != <http://xmlns.com/foaf/0.1/depiction> )|| ?property = <http://www.w3.org/2000/01/rdf-schema#label>  || ?property = <http://www.georss.org/georss/point> || ?property = <http://xmlns.com/foaf/0.1/surname> || ?property = <http://xmlns.com/foaf/0.1/name> || ?property = <http://purl.org/dc/elements/1.1/title>))}  ORDER BY ?property',
-				document : 'SELECT DISTINCT *  WHERE  {{<{URI}> ?property ?object. FILTER(!isLiteral(?object))} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="fr")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) =en)} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="fr")}}  ORDER BY ?property',
+				document : 'SELECT DISTINCT *  WHERE  {{<{URI}> ?property ?object. FILTER(!isLiteral(?object))} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="fr")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="en")} UNION 	 {<{URI}> ?property 	 ?object.FILTER(isLiteral(?object)).FILTER(lang(?object) ="it")}}  ORDER BY ?property',
 				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
 				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
 				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
@@ -30,16 +30,7 @@ $.jStorage.set('profile', {
 			description : {
 				it : 'European Central Bank Exchange Rates (relative to EUR); Common Procurement Vocabulary 2008 converted to RDF; RDF data extracted from excel files published at czso.cz with demographic data; RDF data extracted from excel files published at czso.cz with regions (IDs and hierarchy); Dataset about Czech courts including contacts and abbreviations; Hierarchical list of the Nomenclature of territorial units for statistics - NUTS and the Statistical regions of Europe - 2008 edition; Hierarchical list of the Nomenclature of territorial units for statistics - NUTS and the Statistical regions of Europe - 2008 edition; Metadata for acts from zakonyprolidi.cz - two sample expressions; Metadata for acts from psp.cz; Publications exported from the application OBD UK; Budgets of Czech municipalities; Czech municipalities.',
 				en : 'European Central Bank Exchange Rates (relative to EUR); Common Procurement Vocabulary 2008 converted to RDF; RDF data extracted from excel files published at czso.cz with demographic data; RDF data extracted from excel files published at czso.cz with regions (IDs and hierarchy); Dataset about Czech courts including contacts and abbreviations; Hierarchical list of the Nomenclature of territorial units for statistics - NUTS and the Statistical regions of Europe - 2008 edition; Hierarchical list of the Nomenclature of territorial units for statistics - NUTS and the Statistical regions of Europe - 2008 edition; Metadata for acts from zakonyprolidi.cz - two sample expressions; Metadata for acts from psp.cz; Publications exported from the application OBD UK; Budgets of Czech municipalities; Czech municipalities.'
-			},
-			sparql : {
-				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
-			},
+			}, 
 			useForInverseSameAs : false,
 			endpoint : 'http://linked.opendata.cz/sparql/',
 			examples : [{
@@ -301,7 +292,6 @@ $.jStorage.set('profile', {
 				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
 				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
 			},
-			useForInverseSameAs : true,
 			endpoint : 'http://linkedgeodata.org/sparql',
 			examples : [{
 				uri : 'http://linkedgeodata.org/triplify/node243496028',
@@ -588,7 +578,7 @@ $.jStorage.set('profile', {
 			documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object} ORDER BY ?property',
 			document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
 			bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-			inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>. FILTER(isIRI(?object))} LIMIT 100',
+			inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>.} LIMIT 100',
 			inverseSameAs : 'SELECT DISTINCT * WHERE {{?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}> } UNION { ?object <http://www.w3.org/2004/02/skos/core#exactMatch> <{URI}>}}'
 		},
 		endpoint : 'http://labs.regesta.com/resourceProxy/',

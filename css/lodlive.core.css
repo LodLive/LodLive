@@ -3,43 +3,79 @@
 }
 
 body {
-	padding: 0; margin: 0; font-family: 'Open Sans', verdana; font-size: 10px; background: #c7c7c7
+	padding: 0;
+	margin: 0;
+	font-family: 'Open Sans', verdana;
+	font-size: 10px;
+	background: #c7c7c7
 }
 
 .spriteLegenda {
-	background: url(../img/sprite-legenda.png); background-repeat-x: no-repeat; background-repeat-y: no-repeat;
+	background: url(../img/sprite-legenda.png);
+	background-repeat-x: no-repeat;
+	background-repeat-y: no-repeat;
 }
 
 .sprite {
-	background: url(../img/sprite-balls.png); background-repeat-x: no-repeat; background-repeat-y: no-repeat;
+	background: url(../img/sprite-balls.png);
+	background-repeat-x: no-repeat;
+	background-repeat-y: no-repeat;
 }
 
 #lodlogo {
-	background-position: -785px -450px; position: fixed; z-index: 0; left: 60px; top: 29px; width: 97px; height: 23px;
+	background-position: -785px -450px;
+	position: fixed;
+	z-index: 0;
+	left: 60px;
+	top: 29px;
+	width: 97px;
+	height: 23px;
 }
 
 #controlPanel {
-	position: absolute; width: 30px;
+	position: absolute;
+	width: 30px;
 }
 
-#controlPanel .panel,#controlPanel .panel2 {
-	height: 40px; width: 30px; margin-top: 10px;
+#controlPanel .panel, #controlPanel .panel2 {
+	height: 40px;
+	width: 30px;
+	margin-top: 10px;
 }
 
 #controlPanel .panel.options {
-	background-position: -655px -400px; cursor: pointer;
+	background-position: -655px -400px;
+	cursor: pointer;
 }
 
-#panelcontent ul.optionslist {
-	list-style: none; margin: 0 0 20px 10px; padding: 0; font-size: 11px; line-height: 20px;
+#panelContent ul.optionsList {
+	list-style: none;
+	margin: 0 0 20px 10px;
+	padding: 0;
+	font-size: 11px;
+	line-height: 20px;
 }
 
-#panelcontent ul.optionslist li {
-	list-style: none; margin: 0; padding: 0; font-size: 11px; line-height: 20px; cursor: pointer; display: block; padding-left: 10px;
+#panelContent ul.optionsList li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-size: 11px;
+	line-height: 20px;
+	cursor: pointer;
+	display: block;
+	padding-left: 10px;
 }
-
-#panelcontent ul.optionslist li span {
-	display: block; float: left; height: 10px; margin-right: -10px; margin-top: 6px; width: 10px; position: relative; left: -20px;
+ 
+#panelContent ul.optionsList li span {
+	display: block;
+	float: left;
+	height: 10px;
+	margin-right: -10px;
+	margin-top: 6px;
+	width: 10px;
+	position: relative;
+	left: -20px;
 }
 
 #panelContent ul.optionsList.legend * {
@@ -47,7 +83,13 @@ body {
 }
 
 #panelContent ul.optionsList.legend li span {
-	display: block; float: left; height: 20px; margin: 0; width: 20px; position: relative; left: -7px;
+	display: block;
+	float: left;
+	height: 20px;
+	margin: 0;
+	width: 20px;
+	position: relative;
+	left: -7px;
 }
 
 #panelContent ul.optionsList li.reload span {
@@ -75,59 +117,112 @@ body {
 }
 
 #controlPanel .panel.legend {
-	background-position: -700px -400px; cursor: pointer;
+	background-position: -700px -400px;
+	cursor: pointer;
 }
 
-#panelcontent  ul.optionslist.legend {
+#panelContent  ul.optionsList.legend {
 	margin: 0 0 20px -5px;
 }
 
 #controlPanel .panel2.images {
-	background-position: -610px -400px; cursor: pointer;
+	background-position: -610px -400px;
+	cursor: pointer;
 }
 
 #mapsCnt {
-	display: block; width: 765px; height: 370px; margin: 0; padding: 0
+	display: block;
+	width: 765px;
+	height: 370px;
+	margin: 0;
+	padding: 0
 }
 
 #controlPanel .panel2.maps {
-	background-position: -565px -400px; cursor: pointer;
+	background-position: -565px -400px;
+	cursor: pointer;
 }
 
 #controlPanel .panel.help {
-	background-position: -745px -400px; cursor: pointer;
+	background-position: -745px -400px;
+	cursor: pointer;
 }
 
 #panelContent .videoHelp {
-	display: block; margin-left: 67px; background-position: -781px -549px; cursor: pointer; width: 56px; height: 28px; background-position: -781px -549px;
+	display: block;
+	margin-left: 67px;
+	background-position: -781px -549px;
+	cursor: pointer;
+	width: 56px;
+	height: 28px;
+	background-position: -781px -549px;
 }
 
 #controlPanel .panel.close2 {
-	background-position: -565px -500px; cursor: pointer;
+	background-position: -565px -500px;
+	cursor: pointer;
 }
 
 #controlPanel .panel.close {
-	background-position: -655px -500px; cursor: pointer;
+	background-position: -655px -500px;
+	cursor: pointer;
 }
 
 #controlPanel div#panelContent {
-	width: 240px; background: url(../img/pannelloBlackBackground.png); color: #fff; left: 0; top: 10px; position: absolute; font-size: 11px; line-height: 20px;
+	width: 240px;
+	background: url(../img/pannelloBlackBackground.png);
+	color: #fff;
+	left: 0;
+	top: 10px;
+	position: absolute;
+	font-size: 11px;
+	line-height: 20px;
 }
 
 #controlPanel div#panel2Content {
-	height: 400px; background: url(../img/pannelloBlueBackground.png); background: url(../img/pannelloBlueBackground.png); color: #fff; left: 0; top: 10px; position: absolute; font-size: 11px; line-height: 20px; overflow: hidden; color: #fff; left: 0; top: 10px; position: absolute; font-size: 11px; line-height: 20px; overflow: hidden;
+	height: 400px;
+	background: url(../img/pannelloBlueBackground.png);
+	background: url(../img/pannelloBlueBackground.png);
+	color: #fff;
+	left: 0;
+	top: 10px;
+	position: absolute;
+	font-size: 11px;
+	line-height: 20px;
+	overflow: hidden;
+	color: #fff;
+	left: 0;
+	top: 10px;
+	position: absolute;
+	font-size: 11px;
+	line-height: 20px;
+	overflow: hidden;
 }
 
 #imagePanel span#imgesCnt {
-	background: url(../img/thumbBlueNoFoto.png); float: left; width: 100%; height: 375px; display: block;
+	background: url(../img/thumbBlueNoFoto.png);
+	float: left;
+	width: 100%;
+	height: 375px;
+	display: block;
 }
 
 #imagePanel a.relatedImage {
-	background-position: -1825px -395px; text-decoration: none; color: #fff; display: block; float: left; width: 113px; margin-bottom: 15px; margin-right: 15px; overflow: hidden; height: 113px;
+	background-position: -1825px -395px;
+	text-decoration: none;
+	color: #fff;
+	display: block;
+	float: left;
+	width: 113px;
+	margin-bottom: 15px;
+	margin-right: 15px;
+	overflow: hidden;
+	height: 113px;
 }
 
 #imagePanel a.relatedImage span {
-	display: block; text-align: left;
+	display: block;
+	text-align: left;
 }
 
 #imagePanel a.relatedImage span.imgControls {
@@ -135,23 +230,49 @@ body {
 }
 
 #imagePanel a.relatedImage span.imgTitle {
-	cursor: auto; margin: 30px 10px 10px 10px; float: none; line-height: 13px;
+	cursor: auto;
+	margin: 30px 10px 10px 10px;
+	float: none;
+	line-height: 13px;
 }
 
 #imagePanel a.relatedImage span.imgControls span.imgControlCenter {
-	cursor: pointer; margin: -25px 5px 0 2px; float: right; width: 13px; height: 13px;
+	cursor: pointer;
+	margin: -25px 5px 0 2px;
+	float: right;
+	width: 13px;
+	height: 13px;
 }
 
 #imagePanel a.relatedImage span.imgControls span.imgControlZoom {
-	cursor: pointer; margin: -25px 0 0 0; float: right; width: 13px; height: 13px; position: relative; left: -20px;
+	cursor: pointer;
+	margin: -25px 0 0 0;
+	float: right;
+	width: 13px;
+	height: 13px;
+	position: relative;
+	left: -20px;
 }
 
 .bullet {
-	margin-right: 5px; width: 3px; height: 5px; display: block; float: left; position: relative; left: -4px; top: 8px; padding-left: 10px; background-position: -560px -400px;
+	margin-right: 5px;
+	width: 3px;
+	height: 5px;
+	display: block;
+	float: left;
+	position: relative;
+	left: -4px;
+	top: 8px;
+	padding-left: 10px;
+	background-position: -560px -400px;
 }
 
 ul.lista {
-	margin: 0; padding: 0; list-style: none; text-indent: -13px; padding-left: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-indent: -13px;
+	padding-left: 8px;
 }
 
 #controlPanel div#panelContent div {
@@ -162,80 +283,157 @@ ul.lista {
 	padding: 15px 0 0 20px;
 }
 
-#controlpanel div#panel2content div#mapPanel {
-	margin: 0; padding: 0; height: 400px; width: 800px
+#controlPanel div#panel2Content div#mapPanel {
+	margin: 0;
+	padding: 0;
+	height: 400px;
+	width: 800px
 }
 
-#controlpanel div#panel2content div span.amsg {
-	display: block; cursor: auto; margin: 30px 30px 10px 10px; float: none; line-height: 13px;
+#controlPanel div#panel2Content div span.amsg {
+	display: block;
+	cursor: auto;
+	margin: 30px 30px 10px 10px;
+	float: none;
+	line-height: 13px;
 }
 
 #controlPanel div#panelContent h2 {
-	padding: 0 0 20px 0; color: #fff; margin: 0; font-weight: normal; font-size: 11px;
+	padding: 0 0 20px 0;
+	color: #fff;
+	margin: 0;
+	font-weight: normal;
+	font-size: 11px;
 }
 
 .boxWrapper {
-	width: 130px; height: 130px; position: absolute; z-index: 97;
+	width: 130px;
+	height: 130px;
+	position: absolute;
+	z-index: 97;
 }
 
 a.relatedImage {
-	display: block; width: 80px; height: 80px; text-align: center; float: left; overflow: hidden
+	display: block;
+	width: 80px;
+	height: 80px;
+	text-align: center;
+	float: left;
+	overflow: hidden
 }
 
 #aSpace {
-	width: 3000px; height: 3000px;
+	width: 3000px;
+	height: 3000px;
 }
 
 #docInfo {
-	position: absolute; width: 280px; z-index: 99999; color: #fff; font-size: 11px; line-height: 20px; font-weight: normal; margin-top: 10px; margin-right: 20px
+	position: absolute;
+	width: 280px;
+	z-index: 99999;
+	color: #fff;
+	font-size: 11px;
+	line-height: 20px;
+	font-weight: normal;
+	margin-top: 10px;
+	margin-right: 20px
 }
 
 #docInfo ul {
-	padding: 0; margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
 #docInfo ul li a {
-	display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #fff; font-size: 11px;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: #fff;
+	font-size: 11px;
 }
 
 #docInfo .topSection {
-	background-position: -264px -390px; height: 20px; line-height: 20px;
+	background-position: -264px -390px;
+	height: 20px;
+	line-height: 20px;
 }
 
 #docInfo .topSection span {
-	display: block; float: right; width: 12px; height: 12px; cursor: pointer;
+	display: block;
+	float: right;
+	width: 12px;
+	height: 12px;
+	cursor: pointer;
 }
 
 #docInfo .section {
-	background: #000; padding-left: 10px; padding-right: 10px; overflow-x: hidden;
+	background: #000;
+	padding-left: 10px;
+	padding-right: 10px;
+	overflow-x: hidden;
 }
 
 #docInfo .separ {
-	background-position: -265px -460px; height: 20px;
+	background-position: -265px -460px;
+	height: 20px;
 }
 
 #docInfo .separLast {
-	height: 11px; background: #c7c7c7; position: relative; top: -10px;
+	height: 11px;
+	background: #c7c7c7;
+	position: relative;
+	top: -10px;
 }
 
 #docInfo label {
-	font-size: 11px; line-height: 20px; font-weight: 800;
+	font-size: 11px;
+	line-height: 20px;
+	font-weight: 800;
 }
 
 .contents p {
-	display: block; font-size: 12px; margin: 5px 0 0 0; padding: 0 15px 0 0;
+	display: block;
+	font-size: 12px;
+	margin: 5px 0 0 0;
+	padding: 0 15px 0 0;
 }
 
 div.box {
-	background-position: 0 -390px; top: 0; left: 0; position: absolute; width: 130px; height: 130px; z-index: 99; text-align: center; font-size: 11px; line-height: 12px; position: absolute; cursor: move;
+	background-position: 0 -390px;
+	top: 0;
+	left: 0;
+	position: absolute;
+	width: 130px;
+	height: 130px;
+	z-index: 99;
+	text-align: center;
+	font-size: 11px;
+	line-height: 12px;
+	position: absolute;
+	cursor: move;
 }
 
 div.relatedBox {
-	background-position: -1052px -412px; cursor: pointer; position: absolute; width: 16px; height: 16px; border: 0; z-index: 101; text-align: center;
+	background-position: -1052px -412px;
+	cursor: pointer;
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	border: 0;
+	z-index: 101;
+	text-align: center;
 }
 
 div.pagePrev {
-	background-position: -1414px -410px; cursor: pointer; position: absolute; width: 16px; height: 16px; border: 0; z-index: 101; text-align: center;
+	background-position: -1414px -410px;
+	cursor: pointer;
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	border: 0;
+	z-index: 101;
+	text-align: center;
 }
 
 div.pagePrev:hover {
@@ -243,7 +441,14 @@ div.pagePrev:hover {
 }
 
 div.pageNext {
-	background-position: -1390px -412px; cursor: pointer; position: absolute; width: 16px; height: 16px; border: 0; z-index: 101; text-align: center;
+	background-position: -1390px -412px;
+	cursor: pointer;
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	border: 0;
+	z-index: 101;
+	text-align: center;
 }
 
 div.pageNext:hover {
@@ -251,35 +456,49 @@ div.pageNext:hover {
 }
 
 div#msg {
-	position: absolute; color: #393939; line-height: 20px; width: 330px; font-size: 11px
+	position: absolute;
+	color: #393939;
+	line-height: 20px;
+	width: 330px;
+	font-size: 11px
 }
 
 div#msg .endpoint {
-	padding: 0 0 0 10px; background: #fff; font-weight: bold;
+	padding: 0 0 0 10px;
+	background: #fff;
+	font-weight: bold;
 }
 
 div#msg .corner {
-	height: 10px; background-position: -1030px -500px;
+	height: 10px;
+	background-position: -1030px -500px;
 }
 
 div#msg .from {
-	padding: 6px 10px 0 10px; background: #fff
+	padding: 6px 10px 0 10px;
+	background: #fff
 }
 
 div#msg .from.upperline {
-	padding-bottom: 0; padding-top: 0;
+	padding-bottom: 0;
+	padding-top: 0;
 }
 
 div#msg .separline {
-	height: 21px; background-position: -1030px -520px;
+	height: 21px;
+	background-position: -1030px -520px;
 }
 
 div#msg .separ {
-	height: 21px; background-position: -1030px -550px; width: 330px;
+	height: 21px;
+	background-position: -1030px -550px;
+	width: 330px;
 }
 
 div#msg .separ.inverse {
-	height: 21px; background-position: -1030px -580px; width: 330px;
+	height: 21px;
+	background-position: -1030px -580px;
+	width: 330px;
 }
 
 .relatedBox.isSameAs {
@@ -298,15 +517,25 @@ div#msg .separ.inverse {
 }
 
 .showGroupedRelated div.relatedBox {
-	position: static; display: inline-block;
+	position: static;
+	display: inline-block;
 }
 
 .showGroupedRelated span.relatedBox {
-	float: right; font-size: 10px; line-height: 16px;
+	float: right;
+	font-size: 10px;
+	line-height: 16px;
 }
 
 .groupedRelatedBox {
-	background-position: -1052px -432px; cursor: pointer; position: absolute; width: 16px; height: 16px; z-index: 101; text-align: center; height: 16px;
+	background-position: -1052px -432px;
+	cursor: pointer;
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	z-index: 101;
+	text-align: center;
+	height: 16px;
 }
 
 .relatedBox.inverse {
@@ -318,31 +547,64 @@ div#msg .separ.inverse {
 }
 
 .showGroupedRelated {
-	width: 150px; position: absolute; display: none; background: #fff; border-top: 1px solid #ccc; border-left: 1px solid #ccc; padding: 5px; z-index: 101;
+	width: 150px;
+	position: absolute;
+	display: none;
+	background: #fff;
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	padding: 5px;
+	z-index: 101;
 }
 
 .actionBox {
-	cursor: pointer; position: absolute; width: 20px; height: 20px; border: 0; z-index: 100; text-align: center; font-size: 11px; line-height: 20px;
+	cursor: pointer;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border: 0;
+	z-index: 100;
+	text-align: center;
+	font-size: 11px;
+	line-height: 20px;
 }
 
 .actionBox.contents {
-	left: 97px; top: 17px;
+	left: 97px;
+	top: 17px;
 }
 
 .toolBox .innerActionBox {
-	cursor: pointer; display: block; width: 15px; height: 15px; margin-right: 1px; float: left;
+	cursor: pointer;
+	display: block;
+	width: 15px;
+	height: 15px;
+	margin-right: 1px;
+	float: left;
 }
 
 .actionBox.tools {
-	left: 77px; top: 3px;
+	left: 77px;
+	top: 3px;
 }
 
 .toolBox {
-	background-position: -135px -395px; height: 23px; width: 80px; position: absolute; z-index: 100; background-repeat-y: no-repeat;
+	background-position: -135px -395px;
+	height: 23px;
+	width: 80px;
+	position: absolute;
+	z-index: 100;
+	background-repeat-y: no-repeat;
 }
 
 .box a {
-	font-size: 11px; text-decoration: none; color: #fff; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+	font-size: 11px;
+	text-decoration: none;
+	color: #fff;
+	display: block;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .box a:hover {
@@ -350,44 +612,77 @@ div#msg .separ.inverse {
 }
 
 .boxTitle {
-	color: #fff; margin-left: 15px; line-height: 13px; width: 100px; overflow: hidden;
+	color: #fff;
+	margin-left: 15px;
+	line-height: 13px;
+	width: 100px;
+	overflow: hidden;
 }
 
 .boxTitle a span {
-	width: 10px; height: 10px; background-position: -7px -85px; display: block; float: left;
+	width: 10px;
+	height: 10px;
+	background-position: -7px -85px;
+	display: block;
+	float: left;
 }
 
 }
 #selectionBox input {
-	width: 300px; display: inline; border: 1px solid #ccc;
+	width: 300px;
+	display: inline;
+	border: 1px solid #ccc;
 }
 
 #selectionBox a {
-	font-size: 20px; text-decoration: none;
+	font-size: 20px;
+	text-decoration: none;
 }
 
 .queryConsole {
-	position: fixed; z-index: 999; width: 630px; left: 50%; top: 70px; margin-left: -315px
+	position: fixed;
+	z-index: 999;
+	width: 630px;
+	left: 50%;
+	top: 70px;
+	margin-left: -315px
 }
 
 .queryConsole h3 {
-	width: 630px; background-position: -10px -650px; height: 42px; margin: 0; padding: 0; font-size: 13px;
+	width: 630px;
+	background-position: -10px -650px;
+	height: 42px;
+	margin: 0;
+	padding: 0;
+	font-size: 13px;
 }
 
 .queryConsole h3 span {
-	float: left; padding: 12px 20px 0 20px
+	float: left;
+	padding: 12px 20px 0 20px
 }
 
 .queryConsole h3 a {
-	display: block; width: 29px; height: 40px; cursor: pointer; float: right; background-position: -611px -650px;
+	display: block;
+	width: 29px;
+	height: 40px;
+	cursor: pointer;
+	float: right;
+	background-position: -611px -650px;
 }
 
 .queryConsole div {
-	background-color: #fff; display: none; width: 598px; margin-left: 1px; position: relative; top: -1px;
+	background-color: #fff;
+	display: none;
+	width: 598px;
+	margin-left: 1px;
+	position: relative;
+	top: -1px;
 }
 
 .queryConsole span {
-	display: block; padding: 10px 20px 0 20px
+	display: block;
+	padding: 10px 20px 0 20px
 }
 
 .queryConsole div span {
@@ -395,11 +690,17 @@ div#msg .separ.inverse {
 }
 
 .queryConsole div span span.contentArea {
-	padding: 0; width: 500px;
+	padding: 0;
+	width: 500px;
 }
 
 .queryConsole div span span.linkArea {
-	padding: 0; float: right; width: 10px; height: 10px; background-position: -610px -600px; cursor: pointer;
+	padding: 0;
+	float: right;
+	width: 10px;
+	height: 10px;
+	background-position: -610px -600px;
+	cursor: pointer;
 }
 
 .queryConsole strong {
@@ -407,7 +708,12 @@ div#msg .separ.inverse {
 }
 
 .queryConsole h4 {
-	width: 600px; background-position: -680px -650px; height: 40px; margin: 0; padding: 0; cursor: pointer;
+	width: 600px;
+	background-position: -680px -650px;
+	height: 40px;
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
 }
 
 .queryConsole h4 span {
@@ -415,5 +721,6 @@ div#msg .separ.inverse {
 }
 
 #docInfo .slimScrollDiv {
-	color: #fff; border:0;
+	color: #fff;
+	border: 0;
 }
