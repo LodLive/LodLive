@@ -1,35 +1,44 @@
 /* app home page */
-input:focus,select:focus,textarea:focus,button:focus {
+input:focus, select:focus, textarea:focus, button:focus {
 	outline: none;
 }
 
 div#logo {
-	background-position: -785px -400px; height: 30px; width: 200px; clear: right; margin: 20px 20px 20px 0;
+	background-position: -785px -400px;
+	height: 30px;
+	width: 200px;
+	clear: right;
+	margin: 20px 20px 20px 0;
 }
 
 div#lang {
-position: absolute;
-left: 50%;
-margin-left: 394px;
-width: 80px;
-top: 25px;
-z-index: 999;
-color: #fff;
-font-size: 11px;
+	position: absolute;
+	left: 50%;
+	margin-left: 394px;
+	width: 80px;
+	top: 25px;
+	z-index: 999;
+	color: #fff;
+	font-size: 11px;
 }
 
 div#lang a {
-	text-decoration: none; color: #fff; font-size: 11px;
+	text-decoration: none;
+	color: #fff;
+	font-size: 11px;
 }
 
 div#startPanel {
-	width: 930px; float: left; position: absolute; left: 50%; margin-left: -470px
+	width: 930px;
+	float: left;
+	position: absolute;
+	left: 50%;
+	margin-left: -470px
 }
 
 .spriteHome {
 	background: url(../img/sprite-home.png) no-repeat
 }
-
 .spriteHomeEn {
 	background: url(../img/sprite-home-eng.png) no-repeat
 }
@@ -38,23 +47,45 @@ div#startPanel {
 }
 
 div.startBox {
-	width: 300px; float: left; border: 0; background-position: -10px -10px; color: #575757; height: 300px; margin-bottom: 10px; overflow: auto; margin-right: 10px;
+	width: 300px;
+	float: left;
+	border: 0;
+	background-position: -10px -10px;
+	color: #575757;
+	height: 300px;
+	margin-bottom: 10px;
+	overflow: auto;
+	margin-right: 10px;
 }
 
 div#boxes {
-	width: 920px; overflow: hidden; float: left; height: 610px
+	width: 920px;
+	overflow: hidden;
+	float: left;
+	height: 610px
 }
 
 div#firstLineBoxes {
-	float: left; height: 310px; width: 930px;
+	float: left;
+	height: 310px;
+	width: 930px;
 }
 
 div#boxesCont {
-	float: left; height: 305px;
+	float: left;
+	height: 305px;
 }
 
 #nextPage {
-	position: absolute; left: 50%; margin-left: 460px; cursor: pointer; z-index: 900; width: 20px; height: 40px; background-position: -660px -10px; top: 490px;
+	position: absolute;
+	left: 50%;
+	margin-left: 460px;
+	cursor: pointer;
+	z-index: 900;
+	width: 20px;
+	height: 40px;
+	background-position: -660px -10px;
+	top: 490px;
 }
 
 #nextPage:hover {
@@ -62,7 +93,23 @@ div#boxesCont {
 }
 
 #prevPage {
-	display: none; position: absolute; left: 50%; margin-left: -500px; cursor: pointer; z-index: 900; width: 20px; height: 40px; background-position: -630px -10px; left: 50%; margin-left: -500px; cursor: pointer; z-index: 900; width: 20px; height: 40px; background-position: -630px -10px; top: 490px;
+	display: none;
+	position: absolute;
+	left: 50%;
+	margin-left: -500px;
+	cursor: pointer;
+	z-index: 900;
+	width: 20px;
+	height: 40px;
+	background-position: -630px -10px;
+	left: 50%;
+	margin-left: -500px;
+	cursor: pointer;
+	z-index: 900;
+	width: 20px;
+	height: 40px;
+	background-position: -630px -10px;
+	top: 490px;
 }
 
 #prevPage:hover {
@@ -74,35 +121,68 @@ div#boxesCont {
 }
 
 .startBoxMainText {
-	margin-top: 10px; line-height: 20px; font-weight: bold; font-size: 13px; width: 295px; float: left; border: 0; color: #000; height: 175px; margin-bottom: 10px; margin-right: 10px; font-weight: bold; line-height: 20px;
+	margin-top: 10px;
+	line-height: 20px;
+	font-weight: bold;
+	font-size: 13px;
+	width: 295px;
+	float: left;
+	border: 0;
+	color: #000;
+	height: 175px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	font-weight: bold;
+	line-height: 20px;
 }
 
 #startPanel p {
-	padding: 0; margin: 0
+	padding: 0;
+	margin: 0
 }
 
 .startBoxMainText div {
-	overflow: hidden; height: 146px;
+	overflow: hidden;
+	height: 146px;
 }
 
 .startBoxMainTextPlain div {
-	overflow: hidden; height: 126px;
+	overflow: hidden;
+	height: 126px;
 }
 
-.startBoxMainText a,.startBoxMainTextPlain a {
-	font-weight: normal; color: #000;
+.startBoxMainText a, .startBoxMainTextPlain a {
+	font-weight: normal;
+	color: #000;
 }
 
 .startBoxMainTextPlain {
-	margin-top: 10px; line-height: 20px; font-size: 13px; width: 600px; float: left; border: 0; color: #000; height: 175px; margin-bottom: 10px; margin-right: 10px; margin-left: 5px;
+	margin-top: 10px;
+	line-height: 20px;
+	font-size: 13px;
+	width: 600px;
+	float: left;
+	border: 0;
+	color: #000;
+	height: 175px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	margin-left: 5px;
 }
 
 .startBox h1 {
-	margin: 11px 20px 21px 18px; overflow: hidden; font-size: 20px; font-weight: 300; line-height: 28px; display: block; height: 28px
+	margin: 11px 20px 21px 18px;
+	overflow: hidden;
+	font-size: 20px;
+	font-weight: 300;
+	line-height: 28px;
+	display: block;
+	height: 28px
 }
 
 .startBox form {
-	margin: 10px 0 0 20px; padding: 0
+	margin: 10px 0 0 20px;
+	padding: 0
 }
 
 .startBox h2 {
@@ -110,19 +190,45 @@ div#boxesCont {
 }
 
 .startBox .select {
-	width: 260px; display: block; border: 0; height: 20px; margin-top: 40px; background: #fff; cursor: pointer; overflow: hidden;
+	width: 260px;
+	display: block;
+	border: 0;
+	height: 20px;
+	margin-top: 40px;
+	background: #fff;
+	cursor: pointer;
+	overflow: hidden;
 }
 
 .selectionList {
-	background: #fff; width: 260px; color: #575757; border-top: 2px solid #e3e3e3; overflow: hidden; -moz-box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5); box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5);
+	background: #fff;
+	width: 260px;
+	color: #575757;
+	border-top: 2px solid #e3e3e3;
+	overflow: hidden;
+	-moz-box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5);
 }
 
 .slimScrollDiv {
-	background: #fff; width: 260px; color: #575757; border-top: 2px solid #e3e3e3; overflow: hidden; -moz-box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5); box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5);
+	background: #fff;
+	width: 260px;
+	color: #575757;
+	border-top: 2px solid #e3e3e3;
+	overflow: hidden;
+	-moz-box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 6px 6px -5px rgba(0, 0, 0, 0.5);
 }
 
 .selectionList span {
-	font-size: 11px; font-weight: normal; display: block; padding-left: 6px; cursor: pointer; line-height: 20px
+	font-size: 11px;
+	font-weight: normal;
+	display: block;
+	padding-left: 6px;
+	cursor: pointer;
+	line-height: 20px
 }
 
 .selectionList span:hover {
@@ -130,99 +236,198 @@ div#boxesCont {
 }
 
 .inviaForm {
-	position: relative; width: 50px; z-index: 99; cursor: pointer; height: 16px; left: 0; top: 140px;
+	position: relative;
+	width: 50px;
+	z-index: 99;
+	cursor: pointer;
+	height: 16px;
+	left: 0;
+	top: 140px;
 }
 
 .inviaForm2 {
-	position: relative; width: 50px; z-index: 99; cursor: pointer; height: 16px; left: 200px; top: -20px;
+	position: relative;
+	width: 50px;
+	z-index: 99;
+	cursor: pointer;
+	height: 16px;
+	left: 200px;
+	top: -20px;
 }
 
 .startBox .cerca {
-	width: 260px; display: block; border: 0; height: 80px; margin-top: 10px;
+	width: 260px;
+	display: block;
+	border: 0;
+	height: 80px;
+	margin-top: 10px;
 }
 
-.startBox .select span,.startBox .cerca span {
-	font-size: 11px; font-weight: normal; color: black; padding-top: 2px; display: block; padding-left: 6px; float: left; width: 233px; overflow: hidden;
+.startBox .select span, .startBox .cerca span {
+	font-size: 11px;
+	font-weight: normal;
+	color: black;
+	padding-top: 2px;
+	display: block;
+	padding-left: 6px;
+	float: left;
+	width: 233px;
+	overflow: hidden;
 }
 
 .cerca .slimScrollDiv  .selectEle span {
-	width: 248px; word-break: break-all; line-height: 15px; padding-bottom: 5px;
+	width: 248px;
+	word-break: break-all;
+	line-height: 15px;
+	padding-bottom: 5px;
 }
 
 .endpList .slimScrollDiv  .selectEle span {
-	width: 188px; word-break: break-all; line-height: 15px; padding-bottom: 5px;
+	width: 188px;
+	word-break: break-all;
+	line-height: 15px;
+	padding-bottom: 5px;
 }
 
-.cerca .slimScrollDiv .selectionList,.endpList .slimScrollDiv .selectionList {
+.cerca .slimScrollDiv .selectionList, .endpList .slimScrollDiv .selectionList {
 	border-top: 0;
 }
 
 .cerca .slimScrollDiv {
-	border-top: 2px solid #e3e3e3; z-index: 9999;
+	border-top: 2px solid #e3e3e3;
+	z-index: 9999;
 }
 
 .endpList .slimScrollDiv {
-	border-top: 2px solid #8b8b8b; z-index: 9999;
+	border-top: 2px solid #8b8b8b;
+	z-index: 9999;
 }
 
-.startBox .select span.arrow,.startBox .cerca span.arrow {
-	font-size: 11px; font-weight: normal; color: #000; float: right; background-position: -626px -57px; width: 10px; height: 10px; margin-top: 5px; margin-right: 2px;
+.startBox .select span.arrow, .startBox .cerca span.arrow {
+	font-size: 11px;
+	font-weight: normal;
+	color: #000;
+	float: right;
+	background-position: -626px -57px;
+	width: 10px;
+	height: 10px;
+	margin-top: 5px;
+	margin-right: 2px;
 }
 
 .startBox .input {
-	width: 260px; display: block; border: 0; height: 20px; line-height: 20px; margin-top: 10px; color: #575757; background-color: #bdbdbd; overflow: hidden;
+	width: 260px;
+	display: block;
+	border: 0;
+	height: 20px;
+	line-height: 20px;
+	margin-top: 10px;
+	color: #575757;
+	background-color: #bdbdbd;
+	overflow: hidden;
 }
 
 .startBox .input.textarea {
-	width: 260px; display: block; border: 0; height: 50px; line-height: 20px; margin-top: 10px; color: #575757; background-color: #fff; overflow: hidden;
+	width: 260px;
+	display: block;
+	border: 0;
+	height: 50px;
+	line-height: 20px;
+	margin-top: 10px;
+	color: #575757;
+	background-color: #fff;
+	overflow: hidden;
 }
 
 .startBox .input textarea {
-	padding-top: 0; padding-left: 5px; width: 258px; display: block; border: 0; height: 48px; color: #575757; background-color: #fff; font-size: 11px; font-weight: normal;
+	padding-top: 0;
+	padding-left: 5px;
+	width: 258px;
+	display: block;
+	border: 0;
+	height: 48px;
+	color: #575757;
+	background-color: #fff;
+	font-size: 11px;
+	font-weight: normal;
 }
 
 .startBox .input input {
-	padding-top: 0; padding-left: 5px; width: 251px; display: block; border: 0; height: 18px; color: #575757; background-color: #bdbdbd; font-size: 11px; font-weight: normal;
-}
-
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-	.startBox .input input {
-		padding-top: 4px;
-	}
+	padding-top: 0;
+	padding-left: 5px;
+	width: 251px;
+	display: block;
+	border: 0;
+	height: 18px;
+	color: #575757;
+	background-color: #bdbdbd;
+	font-size: 11px;
+	font-weight: normal;
 }
 
 .startBox .inputClass {
-	width: 200px; display: block; border: 0; height: 20px; line-height: 20px; margin-top: 40px; color: #575757; background-color: #bdbdbd;
+	width: 200px;
+	display: block;
+	border: 0;
+	height: 20px;
+	line-height: 20px;
+	margin-top: 40px;
+	color: #575757;
+	background-color: #bdbdbd;
 }
 
 .startBox .inputClass input {
-	padding-top: 0; padding-left: 5px; width: 191px; display: block; border: 0; height: 18px; color: #575757; background-color: #bdbdbd; font-size: 11px; font-weight: normal; padding-left: 5px;
-}
-
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-	.startBox .inputClass input {
-		padding-top: 4px;
-	}
+	padding-top: 0;
+	padding-left: 5px;
+	width: 191px;
+	display: block;
+	border: 0;
+	height: 18px;
+	color: #575757;
+	background-color: #bdbdbd;
+	font-size: 11px;
+	font-weight: normal; 
 }
 
 #footer {
-	float: left; border-top: 1px solid #b1b1b1; background: #dcdcdc; width: 100%; top: 890px; position: absolute; padding-top: 15px;
+	float: left;
+	border-top: 1px solid #b1b1b1;
+	background: #dcdcdc;
+	width: 100%;
+	top: 890px;
+	position: absolute;
+	padding-top: 15px;
 }
 
 #footer #footerContainer {
-	width: 930px; float: left; position: relative; left: 50%; margin-left: -470px; line-height: 20px; font-size: 11px; color: #575757;
+	width: 930px;
+	float: left;
+	position: relative;
+	left: 50%;
+	margin-left: -470px;
+	line-height: 20px;
+	font-size: 11px;
+	color: #575757;
 }
 
 #footer #footerContainer h2 {
-	color: #616693; text-transform: uppercase; font-size: 11px; font-weight: bold; padding: 0; margin: 0;
+	color: #616693;
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 0;
+	margin: 0;
 }
 
 #footer #footerContainer ul {
-	padding: 0; margin: 0; list-style: none;
+	padding: 0;
+	margin: 0;
+	list-style: none;
 }
 
 #footer #footerContainer a {
-	color: #575757; text-decoration: none;
+	color: #575757;
+	text-decoration: none;
 }
 
 #footer #footerContainer a:hover {
@@ -230,23 +435,46 @@ div#boxesCont {
 }
 
 #footer #footerContainer .browsers {
-	background-position: -630px -250px; width: 110px; height: 22px; margin-top: 2px;
+	background-position: -630px -250px;
+	width: 110px;
+	height: 22px;
+	margin-top: 2px;
 }
 
 #footer #footerContainer .footerBox {
-	width: 300px; float: left; border: 0; background-position: -10px -10px; color: #575757; margin-bottom: 10px; overflow: auto; margin-right: 10px;
+	width: 300px;
+	float: left;
+	border: 0;
+	background-position: -10px -10px;
+	color: #575757;
+	margin-bottom: 10px;
+	overflow: auto;
+	margin-right: 10px;
 }
 
 #footer #footerContainer .best {
-	border-top: 1px solid #b1b1b1; width: 920px; float: left; height: 80px; margin-top: 4px; padding-top: 5px;
+	border-top: 1px solid #b1b1b1;
+	width: 920px;
+	float: left;
+	height: 80px;
+	margin-top: 4px;
+	padding-top: 5px;
 }
 
 #footer #footerContainer .best .license {
-	background-position: -630px -280px; width: 120px; height: 22px; margin-top: 3px;
+	background-position: -630px -280px;
+	width: 120px;
+	height: 22px;
+	margin-top: 3px;
 }
 
 #footer #footerContainer .segnala a {
-	float: left; display: block; width: 16px; height: 16px; margin-right: 14px; margin-top: 4px;
+	float: left;
+	display: block;
+	width: 16px;
+	height: 16px;
+	margin-right: 14px;
+	margin-top: 4px;
 }
 
 #footer #footerContainer .segnala a.tw {
@@ -266,51 +494,101 @@ div#boxesCont {
 }
 
 .text {
-	z-index: 999; position: fixed; width: 510px; height: 350px; left: 50%; top: 50%; margin-left: -250px; margin-top: -170px; background-position: -10px -630px; cursor: pointer;
+	z-index: 999;
+	position: fixed;
+	width: 510px;
+	height: 350px;
+	left: 50%;
+	top: 50%;
+	margin-left: -250px;
+	margin-top: -170px;
+	background-position: -10px -630px;
+	cursor: pointer;
 }
 
 .text a {
-	color: #000; font-size: 11px; line-height: 20px; text-decoration: underline;
+	color: #000;
+	font-size: 11px;
+	line-height: 20px;
+	text-decoration: underline;
 }
 
 .text h3 {
-	line-height: 24px; font-size: 24px; font-weight: normal; padding: 20px 20px 0 20px; margin: 0;
+	line-height: 24px;
+	font-size: 24px;
+	font-weight: normal;
+	padding: 20px 20px 0 20px;
+	margin: 0;
 }
 
 .text div.padding {
-	color: #000; margin: 20px 30px 20px 20px; font-size: 11px; line-height: 20px;
+	color: #000;
+	margin: 20px 30px 20px 20px;
+	font-size: 11px;
+	line-height: 20px;
 }
 
 .myalert {
-	z-index: 999; position: absolute; width: 286px; height: 98px; left: 50%; top: 50%; margin-left: -150px; margin-top: -53px; background-position: -630px -80px; cursor: pointer; position: absolute;
+	z-index: 999;
+	position: absolute;
+	width: 286px;
+	height: 98px;
+	left: 50%;
+	top: 50%;
+	margin-left: -150px;
+	margin-top: -53px;
+	background-position: -630px -80px;
+	cursor: pointer;
+	position: absolute;
 }
 
 .myalert div {
-	color: #fff; margin-left: 84px; margin-top: 30px; margin-right: 20px;
+	color: #fff;
+	margin-left: 84px;
+	margin-top: 30px;
+	margin-right: 20px;
 }
 
 .info {
-	height: 15px; width: 8px; display: block; background-position: -630px -230px; margin-top: 7px;
+	height: 15px;
+	width: 8px;
+	display: block;
+	background-position: -630px -230px;
+	margin-top: 7px;
 }
 
 h1 span {
-	float: left; cursor: pointer;
+	float: left;
+	cursor: pointer;
 }
 
 div.startBox.infoHome {
-	z-index: 900; display: none; background: #fff; color: #575757; cursor: pointer;
+	z-index: 900;
+	display: none;
+	background: #fff;
+	color: #575757;
+	cursor: pointer;
 }
 
 div.startBox.endpList {
-	background-position: -940px -990px; color: #fff; display: block; cursor: auto;
+	background-position: -940px -990px;
+	color: #fff;
+	display: block;
+	cursor: auto;
 }
 
-#startpanel div.startBox.infoHome p {
-	margin: 0 20px 0 20px; font-size: 11px; line-height: 20px; padding-top: 14px;
+#startPanel div.startBox.infoHome p {
+	margin: 0 20px 0 20px;
+	font-size: 11px;
+	line-height: 20px;
+	padding-top: 14px;
 }
 
 #boxO {
-	background-position: -10px -990px; color: #fff; display: block; cursor: auto;
+	background-position: -10px -990px;
+	color: #fff;
+	display: block;
+	cursor: auto;
 }
 
 #boxO .selectionlist span {
@@ -321,19 +599,20 @@ div.startBox.endpList {
 	background-color: #dcaf7a;
 }
 
-#boxO div.input,#boxO div.input input,#boxO.startbox .inputclass input,#boxO.startbox .inputclass {
+#boxO div.input, #boxO div.input input, #boxO.startBox .inputClass input, #boxO.startBox .inputClass {
 	background-color: #dcaf7a;
 }
 
 #boxO .inputClass input {
-	width: 260px;
+	width: 251px;
 }
 
 #boxO .inputClass {
-	width: 260px; margin-top: 60px;
+	width: 260px;
+	margin-top: 60px;
 }
 
-#boxO .info,#boxV .info,#boxB .info {
+#boxO .info, #boxV .info, #boxB .info {
 	background-position: -640px -230px;
 }
 
@@ -341,28 +620,37 @@ div.startBox.endpList {
 	border-top: 2px solid #c47922;
 }
 
-#boxO.startbox .select span,#boxO.startbox .cerca span {
+#boxO.startBox .select span, #boxO.startBox .cerca span {
 	color: #975E1C;
 }
 
 #boxV {
-	background-position: -10px -1300px; color: #fff; display: block; cursor: auto;
+	background-position: -10px -1300px;
+	color: #fff;
+	display: block;
+	cursor: auto;
 }
 
 #boxB {
-	background-position: -10px -1610px; color: #fff; display: block; cursor: auto;
+	background-position: -10px -1610px;
+	color: #fff;
+	display: block;
+	cursor: auto;
 }
 
-#boxB.startbox .input textarea {
-	background-color: #fff; color: #50547c;
+#boxB.startBox .input textarea {
+	background-color: #fff;
+	color: #50547c;
 }
 
-#boxB.startbox .input {
-	margin-top: 40px; background-color: #fff;
+#boxB.startBox .input {
+	margin-top: 40px;
+	background-color: #fff;
 }
 
 .endpList .select {
-	margin-top: 260px; width: 200px;
+	margin-top: 260px;
+	width: 200px;
 }
 
 .endpList .selectionList {
