@@ -2968,9 +2968,9 @@ var debugOn = false;
 
 			canvas.drawText({// inserisco l'etichetta
 				fillStyle : "#606060",
-				x : (x2bis +  x1 - 60) / 2,
-				y : (y1 + y1 - (x1 > x2 ? 18 : -18)) / 2,
-				text : (x1 > x2 ? " «" : "") + label + (x1 > x2 ? "" : "» "),
+				x : (x2bis +  x1 + ((x1 + 60) > x2?-60:+60)) / 2,
+				y : (y1 + y1 - ((x1 + 60) > x2 ? 18 : -18)) / 2,
+				text : ((x1 + 60)  > x2 ? " «" : "") + label + ((x1 + 60)  > x2 ? "" : "» "),
 				align : "center",
 				baseline : "middle",
 				font : "normal 11px 'Open Sans',Verdana"
