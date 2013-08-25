@@ -1,25 +1,36 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" version="XHTML+RDFa 1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/MarkUp/SCHEMA/xhtml-rdfa-2.xsd" lang="it" xmlns="http://www.w3.org/1999/xhtml" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/">
 	<head profile="http://www.w3.org/1999/xhtml/vocab">
+
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta property="dcterms:created" content="2012-04-25T13:00:00" />
+
+		<title property="dc:title">LodLive - browsing the Web of Data</title>
+		<link rel="shortcut icon" href="favicon.png" />
+		<link rel="icon" type="image/png" href="favicon.png" />
+		<link rel="image_src" href="http://lodlive.it/img/logoLodLive.jpg" />
+		<meta property="og:image" content="http://lodlive.it/img/logoLodLive.jpg" />
+
 		<link property="dc:creator" href="http://purl.org/net/foaf:Person/diego-valerio-camarda" />
 		<link property="dc:creator" href="http://purl.org/net/foaf:Person/silvia-mazzini" />
 		<link property="dc:creator" href="http://purl.org/net/foaf:Person/alessandro-antonuccio" />
 		<link property="dc:subject" href="http://dbpedia.org/resource/Semantic_Web" />
 		<link property="dc:subject" href="http://dbpedia.org/page/Linked_Data" />
 		<link property="dc:subject" href="http://dbpedia.org/resource/SPARQL" />
+
 		<link property="cc:licence" href="http://www.opensource.org/licenses/mit-license.php" />
+
 		<meta property="og:title" content="LodLive - browsing the Web of Data" />
 		<meta property="og:description" content="LodLive &egrave; un progetto sperimentale nato per divulgare la filosofia dei linked open data e per creare uno strumento in grado di associare le potenzialità di un browser RDF all'efficacia della rappresentazione a grafo proponendosi come primo navigatore di risorse RDF basato unicamente su endpoint SPARQL." />
-		<meta property="og:image" content="http://lodlive.it/img/logoLodLive.jpg" />
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+
+		<meta property="dcterms:created" content="2012-04-25T13:00:00" />
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 		<script>
-			window.jQuery || document.write('<script src="js/jquery-1.7.1.min.js"><\/script>')
+			window.jQuery || document.write('<script src="js/jquery-2.0.3.min.js"><\/script>')
 		</script>
-		<link rel="image_src" href="http://lodlive.it/img/logoLodLive.jpg" />
-		<title property="dc:title">LodLive - browsing the Web of Data</title>
+
 		<script type="text/javascript">
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', 'UA-1940652-20']);
@@ -35,7 +46,7 @@
 				s.parentNode.insertBefore(ga, s);
 			})();
 		</script>
-		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
 		<script type="text/javascript">
 			WebFontConfig = {
 				google : {
@@ -51,16 +62,14 @@
 				s.parentNode.insertBefore(wf, s);
 			})();
 		</script>
-		<script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
-		<script type="text/javascript" src="js/jquery.fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-		<link rel="stylesheet" href="js/jquery.fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="all" />
-		<link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.8.18.custom.css" type="text/css" media="all" />
-		<!-- CSS principale dell'applicazione -->
+		<script type="text/javascript" src="js/jquery-ui-1.9.2.min.js"></script>
+
+		<link rel="stylesheet" href="js/jquery.fancybox/jquery.fancybox.css" type="text/css" media="all" />
 		<link rel="stylesheet" href="css/lodlive.core.css?01" type="text/css" media="all" />
-		<!-- CSS per gli stili dei box delle classi -->
 		<link rel="stylesheet" href="css/lodlive.profile.css?01" type="text/css" media="all" />
-		<!-- CSS per gli stili dell'home -->
 		<link rel="stylesheet" href="css/lodlive.app.css?01" type="text/css" media="all" />
+
+		<script type="text/javascript" src="js/jquery.fancybox/jquery.fancybox.pack.js"></script>
 		<script type="text/javascript" src="js/jquery.slimScroll.min.js"></script>
 		<script type="text/javascript" src="js/jquery.json-2.3.min.js"></script>
 		<script type="text/javascript" src="js/jquery.jsonp-2.4.0.min.js"></script>
@@ -76,9 +85,6 @@
 		<script type="text/javascript" src="js/lodlive.lang.js?01"></script>
 		<script type="text/javascript" src="js/lodlive.utils.js?01"></script>
 		<script type="text/javascript" src="js/lodlive.custom-lines.js?01"></script>
-
-		<link rel="shortcut icon" href="favicon.png" />
-		<link rel="icon" type="image/png" href="favicon.png" />
 		<script type="text/javascript" src="js/lodlive.app.js?01"></script>
 		<script type="text/javascript">
 			$.jStorage.set('selectedLanguage', 'en')
