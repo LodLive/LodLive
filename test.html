@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<title>lodlive - test</title><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+		<script>
+			window.jQuery || document.write('<script src="js/jquery-1.7.1.min.js"><\/script>')
+
+			$(function() {
+				$('div').each(function() {
+					var square = 120;
+					var hLimit = $(this).width();
+					var vLimit = $(this).height();
+					var vOffset = $(this).position()['top'];
+					var hOffset = $(this).position()['left'];
+					var positionsMatrix = [];
+					var h = 0, v = 0;
+					for (var i = 1; hLimit - square > h; i++) {
+						h = i * square;
+						for (var is = 1; vLimit - square > v; is++) {
+							v = is * square;
+							$(this).append('<div style="width:1px;height:1px;background:#000;position:absolute;top:' + (v + vOffset) + 'px;left:' + (h + hOffset) + 'px"></div>')
+							positionsMatrix.push({
+								'left' : h + hOffset,
+								'top' : v + vOffset
+							});
+						};
+						v = 0;
+					};
+					console.info(positionsMatrix)
+				});
+			});
+		</script>
+
+	</head>
+	<body>
+
+		<div style="width:5000px;height:5000px;border:1px solid red">
+
+		</div>
+
+	</body>
+</html>
