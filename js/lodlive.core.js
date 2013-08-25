@@ -2810,7 +2810,7 @@ var debugOn = false;
 			}
 			var innerCounter = 0;
 			$.each(lodLiveProfile.connection, function(key, value) {
-
+ 
 				if (innerCounter == counter) {
 					var skip = false;
 					var keySplit = key.split(",");

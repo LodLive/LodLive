@@ -58,7 +58,7 @@ $.jStorage.set('language', {
 		options : 'OPTIONS',
 		endpointNotConfigured : 'no endpoint configured for the resource',
 		endpointNotConfiguredSoInternal : 'no endpoint configured for the resource, generating temporary graph',
-		impostaUnaURI : 'inert an uri, make a query or choose one of the examples provided',
+		impostaUnaURI : 'insert an uri, make a query or choose one of the examples provided',
 		example : 'example',
 		noIe : 'Sorry but Internet Explorer is not totally supported.',
 		enpointNotAvailable : 'error: endpoint not available',
