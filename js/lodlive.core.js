@@ -761,12 +761,10 @@ var debugOn = false;
 			var context = this;
 			aDivList.each(function() {
 				if ($(this).attr("class").indexOf('ui-draggable') == -1) {
-
 					$(this).draggable({
-						// containment : 'parent',
-						zIndex : 100,
 						// handle:'.boxTitle',
 						stack : '.boxWrapper',
+						containment : "parent",
 						start : function() {
 							$(".toolBox").remove();
 							$('#line-' + $(this).attr("id")).clearCanvas();
@@ -2812,11 +2810,7 @@ var debugOn = false;
 			}
 			var innerCounter = 0;
 			$.each(lodLiveProfile.connection, function(key, value) {
-				console.info()
-				var SPARQLquery = value.endpoint + "?" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + escape(getSparqlConf('inverseSameAs', value, lodLiveProfile).replace(/\{URI\}/g, anUri));
-				if (value.proxy) {
-					SPARQLquery = value.proxy + '?endpoint=' + value.endpoint + "&" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + escape(getSparqlConf('inverseSameAs', value, lodLiveProfile).replace(/\{URI\}/g, anUri));
-				}
+
 				if (innerCounter == counter) {
 					var skip = false;
 					var keySplit = key.split(",");
@@ -2838,6 +2832,10 @@ var debugOn = false;
 							callback();
 						}
 						return false;
+					}
+					var SPARQLquery = value.endpoint + "?" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + escape(getSparqlConf('inverseSameAs', value, lodLiveProfile).replace(/\{URI\}/g, anUri));
+					if (value.proxy) {
+						SPARQLquery = value.proxy + '?endpoint=' + value.endpoint + "&" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + escape(getSparqlConf('inverseSameAs', value, lodLiveProfile).replace(/\{URI\}/g, anUri));
 					}
 					$.jsonp({
 						url : SPARQLquery,
@@ -2970,7 +2968,7 @@ var debugOn = false;
 
 			canvas.drawText({// inserisco l'etichetta
 				fillStyle : "#606060",
-				x : (x2bis + x1) / 2,
+				x : (x2bis +  x1 - 60) / 2,
 				y : (y1 + y1 - (x1 > x2 ? 18 : -18)) / 2,
 				text : (x1 > x2 ? " «" : "") + label + (x1 > x2 ? "" : "» "),
 				align : "center",
