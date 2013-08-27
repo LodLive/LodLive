@@ -2810,7 +2810,7 @@ var debugOn = false;
 			}
 			var innerCounter = 0;
 			$.each(lodLiveProfile.connection, function(key, value) {
- 
+
 				if (innerCounter == counter) {
 					var skip = false;
 					var keySplit = key.split(",");
@@ -2855,7 +2855,11 @@ var debugOn = false;
 							var conta = 0;
 							$.each(json, function(key, value) {
 								conta++;
-								eval('inverse.splice(1,0,{\'' + 'http://www.w3.org/2002/07/owl#sameAs' + '\':\'' + escape(value.object.value) + '\'})');
+								if (value.property && value.property.value) {
+									eval('inverse.splice(1,0,{\'' + value.property.value + '\':\'' + escape(value.object.value) + '\'})');
+								} else {
+									eval('inverse.splice(1,0,{\'' + 'http://www.w3.org/2002/07/owl#sameAs' + '\':\'' + escape(value.object.value) + '\'})');
+								}
 							});
 							if ($.jStorage.get('showInfoConsole')) {
 								context.lodlive('queryConsole', 'log', {
@@ -2968,9 +2972,9 @@ var debugOn = false;
 
 			canvas.drawText({// inserisco l'etichetta
 				fillStyle : "#606060",
-				x : (x2bis +  x1 + ((x1 + 60) > x2?-60:+60)) / 2,
+				x : (x2bis + x1 + ((x1 + 60) > x2 ? -60 : +60)) / 2,
 				y : (y1 + y1 - ((x1 + 60) > x2 ? 18 : -18)) / 2,
-				text : ((x1 + 60)  > x2 ? " «" : "") + label + ((x1 + 60)  > x2 ? "" : "» "),
+				text : ((x1 + 60) > x2 ? " «" : "") + label + ((x1 + 60) > x2 ? "" : "» "),
 				align : "center",
 				baseline : "middle",
 				font : "normal 11px 'Open Sans',Verdana"
