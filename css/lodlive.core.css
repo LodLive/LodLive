@@ -8,19 +8,16 @@ body {
 	font-family: 'Open Sans', verdana;
 	font-size: 10px;
 	background: #c7c7c7;
- 
 }
 
 .spriteLegenda {
 	background: url(../img/sprite-legenda.png);
 	background-repeat: no-repeat;
- 
 }
 
 .sprite {
 	background: url(../img/sprite-balls.png);
 	background-repeat: no-repeat;
- 
 }
 
 #lodlogo {
@@ -67,7 +64,7 @@ body {
 	display: block;
 	padding-left: 10px;
 }
- 
+
 #panelContent ul.optionsList li span {
 	display: block;
 	float: left;
@@ -596,7 +593,6 @@ div#msg .separ.inverse {
 	position: absolute;
 	z-index: 100;
 	background-repeat: no-repeat;
- 
 }
 
 .box a {
@@ -725,4 +721,9 @@ div#msg .separ.inverse {
 #docInfo .slimScrollDiv {
 	color: #fff;
 	border: 0;
+}
+.ellipsis_text {
+	max-height: 42px;
+	overflow: hidden;
+	display: block;
 }

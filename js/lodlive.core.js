@@ -1969,9 +1969,11 @@ var debugOn = false;
 				jResult.text(lang('noName'));
 			}
 			destBox.append(jResult);
-			jResult.ThreeDots({
-				max_rows : 3
-			});
+			if (jResult.children().html().indexOf(">") == -1) {
+				jResult.ThreeDots({
+					max_rows : 3
+				});
+			}
 			var resourceTitle = jResult.text();
 			// posiziono il titolo al centro del box
 			jResult.css({
@@ -2386,8 +2388,7 @@ var debugOn = false;
 				pager.parent().fadeOut('fast', null, function() {
 					$(this).parent().children('.' + pager.attr("data-page")).fadeIn('fast');
 				});
-			});
-			{
+			}); {
 				var obj = $("<div class=\"actionBox contents\" rel=\"contents\"  >&#160;</div>");
 				containerBox.append(obj);
 				obj.hover(function() {
