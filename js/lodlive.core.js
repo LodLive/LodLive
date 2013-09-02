@@ -26,7 +26,7 @@ var debugOn = false;
 		init : function(firstUri) {
 			var context = this;
 			context.append('<div id="lodlogo" class="sprite"></div>');
-
+			context.lodlive('generatePositionMatrix');
 			// inizializzo il contenitore delle variabili di ambiente
 			var storeIdsCleaner = $.jStorage.index();
 			for (var int = 0; int < storeIdsCleaner.length; int++) {
@@ -84,6 +84,28 @@ var debugOn = false;
 				// $(".tipsy").remove();
 			});
 
+		},
+		generatePositionMatrix : function() {
+			var context = this;
+			var square = 150;
+			var hLimit = context.width();
+			var vLimit = context.height();
+			var vOffset = context.position()['top'];
+			var hOffset = context.position()['left'];
+			var positionsMatrix = [];
+			var h = 0, v = 0;
+			for (var i = 1; hLimit - square > h; i++) {
+				h = i * square;
+				for (var is = 1; vLimit - square > v; is++) {
+					v = is * square;
+					positionsMatrix.push({
+						'left' : h + hOffset,
+						'top' : v + vOffset
+					});
+				};
+				v = 0;
+			};
+			console.info(positionsMatrix);
 		},
 		close : function() {
 			document.location = document.location.href.substring(0, document.location.href.indexOf("?"));
@@ -261,7 +283,7 @@ var debugOn = false;
 								$(this).addClass('slideOpen');
 								$(this).next('div').slideToggle();
 							}
-						})
+						});
 					}
 
 					if (toLog.text) {
@@ -1969,10 +1991,15 @@ var debugOn = false;
 				jResult.text(lang('noName'));
 			}
 			destBox.append(jResult);
-			if (jResult.children().html().indexOf(">") == -1) {
+			if (!jResult.children().html() || jResult.children().html().indexOf(">") == -1) {
 				jResult.ThreeDots({
 					max_rows : 3
 				});
+			}
+			var el = jResult.find('.threedots_ellipsis');
+			if(el.length>0){
+				el.detach();
+				jResult.children('span').append(el);
 			}
 			var resourceTitle = jResult.text();
 			// posiziono il titolo al centro del box
@@ -2388,7 +2415,8 @@ var debugOn = false;
 				pager.parent().fadeOut('fast', null, function() {
 					$(this).parent().children('.' + pager.attr("data-page")).fadeIn('fast');
 				});
-			}); {
+			});
+			{
 				var obj = $("<div class=\"actionBox contents\" rel=\"contents\"  >&#160;</div>");
 				containerBox.append(obj);
 				obj.hover(function() {
