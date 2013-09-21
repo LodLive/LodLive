@@ -4,7 +4,7 @@
 		isSameAsLine : function(label, x1, y1, x2, y2, canvas, toId) {
 			// eseguo i calcoli e scrivo la riga di connessione tra i cerchi
 			var lineangle = (Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI) + 180;
-			var x2bis = x1 - Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1))+60;
+			var x2bis = x1 - Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)) + 60;
 
 			canvas.rotateCanvas({
 				angle : lineangle,
@@ -14,7 +14,7 @@
 				strokeStyle : "#000",
 				strokeWidth : 1,
 				strokeCap : 'bevel',
-				x1 : x1-60,
+				x1 : x1 - 60,
 				y1 : y1,
 				x2 : x2bis,
 				y2 : y1
@@ -69,7 +69,7 @@
 				y2 : topy
 			});
 		}
-	}
+	};
 
 	$.fn.customLines = function(context, method) {
 		if (methods[method]) {
@@ -79,7 +79,7 @@
 		} else {
 			var args = Array.prototype.slice.call(arguments, 2);
 			args.unshift('standardLine');
-			context.lodlive.apply(null, args)
+			context.lodlive.apply(null, args);
 		}
 	};
 })(jQuery);

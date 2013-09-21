@@ -22,11 +22,12 @@ var debugOn = false;
 	});
 	var globalInfoPanelMap = {};
 	var globalInnerPageMap = {};
+	var context;
 	var methods = {
 		init : function(firstUri) {
-			var context = this;
+			context = this;
 			context.append('<div id="lodlogo" class="sprite"></div>');
-
+			//context.lodlive('generatePositionMatrix');
 			// inizializzo il contenitore delle variabili di ambiente
 			var storeIdsCleaner = $.jStorage.index();
 			for (var int = 0; int < storeIdsCleaner.length; int++) {
@@ -44,7 +45,7 @@ var debugOn = false;
 			// creo il primo box, lo aggiungo al documento e lo posiziono
 			// orizzontalmente nel centro
 			var firstBox = $($.jStorage.get('boxTemplate'));
-			context.lodlive('centerBox', firstBox);
+			methods.centerBox(firstBox);
 			context.append(firstBox);
 			firstBox.attr("id", MD5(firstUri));
 			firstBox.attr("rel", firstUri);
@@ -63,33 +64,55 @@ var debugOn = false;
 			// context.width($(document).width());
 
 			// attivo le funzioni per il drag
-			context.lodlive('renewDrag', context.children('.boxWrapper'));
+			methods.renewDrag(context.children('.boxWrapper'));
 
 			// carico il primo documento
-			context.lodlive('openDoc', firstUri, firstBox);
+			methods.openDoc(firstUri, firstBox);
 
-			context.lodlive('controlPanel', 'init');
-			// context.lodlive('controlPanel', 'move');
-			context.lodlive('msg', '', 'init');
-			// context.lodlive('msg', '', 'move');
+			methods.controlPanel('init');
+			// methods.controlPanel('move');
+			methods.msg('', 'init');
+			// methods.msg('', 'move');
 
 			$(window).bind('scroll', function() {
-				context.lodlive('docInfo', null, 'move');
-				context.lodlive('controlPanel', 'move');
+				methods.docInfo(null, 'move');
+				methods.controlPanel('move');
 			});
 			$(window).bind('resize', function() {
-				context.lodlive('docInfo', '', 'close');
+				methods.docInfo('', 'close');
 				$('#controlPanel').remove();
-				context.lodlive('controlPanel', 'init');
+				methods.controlPanel('init');
 				// $(".tipsy").remove();
 			});
 
+		},
+		generatePositionMatrix : function() {
+			
+			var square = 150;
+			var hLimit = context.width();
+			var vLimit = context.height();
+			var vOffset = context.position()['top'];
+			var hOffset = context.position()['left'];
+			var positionsMatrix = [];
+			var h = 0, v = 0;
+			for (var i = 1; hLimit - square > h; i++) {
+				h = i * square;
+				for (var is = 1; vLimit - square > v; is++) {
+					v = is * square;
+					positionsMatrix.push({
+						'left' : h + hOffset,
+						'top' : v + vOffset
+					});
+				};
+				v = 0;
+			};
+			//console.info(positionsMatrix);
 		},
 		close : function() {
 			document.location = document.location.href.substring(0, document.location.href.indexOf("?"));
 		},
 		composeQuery : function(resource, module, testURI) {
-			var context = this;
+			
 			if (debugOn) {
 				start = new Date().getTime();
 			}
@@ -121,7 +144,7 @@ var debugOn = false;
 			}
 
 			if (endpoint && $.jStorage.get('showInfoConsole')) {
-				context.lodlive('queryConsole', 'log', {
+				methods.queryConsole('log', {
 					title : endpoint,
 					text : res,
 					id : url,
@@ -146,7 +169,7 @@ var debugOn = false;
 			if (action == 'init') {
 				if (msgPanel.length == 0) {
 					msgPanel = $('<div id="msg"></div>');
-					this.append(msgPanel);
+					context.append(msgPanel);
 				}
 			} else if (action == 'move') {
 				msgPanel.hide();
@@ -157,9 +180,9 @@ var debugOn = false;
 				msgPanel.hide();
 			} else {
 				msgPanel.empty();
-				msg = msg.replace(/http:\/\/.+~~/g, '')
-				msg = msg.replace(/nodeID:\/\/.+~~/g, '')
-				msg = msg.replace(/_:\/\/.+~~/g, '')
+				msg = msg.replace(/http:\/\/.+~~/g, '');
+				msg = msg.replace(/nodeID:\/\/.+~~/g, '');
+				msg = msg.replace(/_:\/\/.+~~/g, '');
 				msg = breakLines(msg);
 				msg = msg.replace(/\|/g, '<br />');
 				var msgs = msg.split(" \n ");
@@ -204,7 +227,7 @@ var debugOn = false;
 			}
 		},
 		queryConsole : function(action, toLog) {
-			var context = this;
+			
 			var id = MD5(toLog.uriId);
 			var localId = MD5(toLog.id);
 			var infoMap = globalInfoPanelMap;
@@ -217,7 +240,7 @@ var debugOn = false;
 				if (toLog.resource) {
 					panel.append('<h3 class="sprite"><span>' + toLog.resource + '</span><a class="sprite">&#160;</a></h3>');
 					panel.children("h3").children("a").click(function() {
-						context.lodlive('queryConsole', 'close', {
+						methods.queryConsole('close', {
 							uriId : toLog.uriId
 						});
 					}).hover(function() {
@@ -261,7 +284,7 @@ var debugOn = false;
 								$(this).addClass('slideOpen');
 								$(this).next('div').slideToggle();
 							}
-						})
+						});
 					}
 
 					if (toLog.text) {
@@ -313,7 +336,7 @@ var debugOn = false;
 			}
 		},
 		controlPanel : function(action) {
-			var context = this;
+			
 			if (debugOn) {
 				start = new Date().getTime();
 			}
@@ -510,7 +533,7 @@ var debugOn = false;
 						} else {
 							mapPanel.show();
 						}
-						context.lodlive('updateMapPanel', panel);
+						methods.updateMapPanel(panel);
 					} else if ($(this).hasClass("images")) {
 						var imagePanel = $('#imagePanel');
 						if (imagePanel.length == 0) {
@@ -519,7 +542,7 @@ var debugOn = false;
 						} else {
 							imagePanel.show();
 						}
-						context.lodlive('updateImagePanel', panel);
+						methods.updateImagePanel(panel);
 					}
 				});
 
@@ -552,7 +575,7 @@ var debugOn = false;
 		},
 		updateMapPanel : function(panel) {
 			if ($.jStorage.get('doDrawMap', true)) {
-				var context = this;
+				
 				if ($("#mapPanel:visible", panel).length > 0) {
 					$('#mapPanel').gmap3({
 						action : 'clear'
@@ -586,13 +609,13 @@ var debugOn = false;
 					});
 
 				} else {
-					context.lodlive('highlight', panel.children('.maps'), 2, 200, '-565px -450px');
+					methods.highlight(panel.children('.maps'), 2, 200, '-565px -450px');
 				}
 			}
 		},
 		updateImagePanel : function(panel) {
 			if ($.jStorage.get('doCollectImages', true)) {
-				var context = this;
+				
 				var imagePanel = $('#imagePanel', panel).children("span");
 				if ($("#imagePanel:visible", panel).length > 0) {
 					var panelContent = $('#panel2Content', panel);
@@ -692,7 +715,7 @@ var debugOn = false;
 												});
 												controls.children('.imgControlCenter').click(function() {
 													$('.close2', panel).click();
-													context.lodlive('highlight', $('#' + $(this).parent().parent().attr("data-prop")).children('.box'), 8, 100, '0 0');
+													methods.highlight($('#' + $(this).parent().parent().attr("data-prop")).children('.box'), 8, 100, '0 0');
 													// -390px
 													return false;
 												});
@@ -732,12 +755,12 @@ var debugOn = false;
 					});
 
 				} else {
-					context.lodlive('highlight', panel.children('.images'), 2, 200, '-610px -450px');
+					methods.highlight(panel.children('.images'), 2, 200, '-610px -450px');
 				}
 			}
 		},
 		highlight : function(object, times, speed, backmove) {
-			var context = this;
+			
 			if (times > 0) {
 				times--;
 				var css = object.css('background-position');
@@ -749,7 +772,7 @@ var debugOn = false;
 						object.css({
 							'background-position' : css
 						});
-						context.lodlive('highlight', object, times, speed, backmove);
+						methods.highlight(object, times, speed, backmove);
 					});
 				});
 			}
@@ -758,7 +781,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			var context = this;
+			
 			aDivList.each(function() {
 				if ($(this).attr("class").indexOf('ui-draggable') == -1) {
 					$(this).draggable({
@@ -779,7 +802,7 @@ var debugOn = false;
 						drag : function(event, ui) {
 						},
 						stop : function(event, ui) {
-							context.lodlive('drawAllLines', $(this));
+							methods.drawAllLines($(this));
 						}
 					});
 				}
@@ -789,7 +812,7 @@ var debugOn = false;
 			}
 		},
 		centerBox : function(aBox) {
-			var context = this;
+			
 			if (debugOn) {
 				start = new Date().getTime();
 			}
@@ -819,7 +842,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			var context = this;
+			
 
 			$.each(globalInnerPageMap, function(key, element) {
 				if (element.children(".relatedBox:not([class*=exploded])").length > 0) {
@@ -851,7 +874,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			var context = this;
+			
 			var aId = ele.attr("relmd5");
 			var newObj = context.find('#' + aId);
 			var isInverse = ele.attr("class").indexOf("inverse") != -1;
@@ -923,7 +946,7 @@ var debugOn = false;
 				// originalCircus.position().left + obj.width() / 2,
 				// originalCircus.position().top + originalCircus.height() / 2,
 				// pos + 1);
-				var chordsListExpand = this.lodlive('circleChords', parts > 10 ? (pos % 2 > 0 ? originalCircus.width() * 3 : originalCircus.width() * 2) : originalCircus.width() * 5 / 2, parts, originalCircus.position().left + obj.width() / 2, originalCircus.position().top + originalCircus.height() / 2, null, pos);
+				var chordsListExpand = methods.circleChords(parts > 10 ? (pos % 2 > 0 ? originalCircus.width() * 3 : originalCircus.width() * 2) : originalCircus.width() * 5 / 2, parts, originalCircus.position().left + obj.width() / 2, originalCircus.position().top + originalCircus.height() / 2, null, pos);
 				context.append(newObj);
 				/*
 				 * newObj.css({ "left" : originalCircus.position().left +
@@ -943,7 +966,7 @@ var debugOn = false;
 				 * newObj.height() / 2), "top" : (chordsListExpand[pos][1] -
 				 * newObj.width() / 2), "opacity" : 1 }, 400, '', function() {
 				 */
-				context.lodlive('renewDrag', context.children('.boxWrapper'));
+				methods.renewDrag(context.children('.boxWrapper'));
 				if (debugOn) {
 					console.debug((new Date().getTime() - start) + '	addNewDoc 07 ');
 				}
@@ -952,16 +975,16 @@ var debugOn = false;
 						console.debug((new Date().getTime() - start) + '	addNewDoc 08 ');
 					}
 					if ($.jStorage.get('doInverse')) {
-						context.lodlive('openDoc', $(ele).attr("rel"), newObj, fromInverse);
+						methods.openDoc($(ele).attr("rel"), newObj, fromInverse);
 					} else {
-						context.lodlive('openDoc', $(ele).attr("rel"), newObj);
+						methods.openDoc($(ele).attr("rel"), newObj);
 					}
-					context.lodlive('drawaLine', obj, newObj, propertyName);
+					methods.drawaLine(obj, newObj, propertyName);
 				} else {
 					if (debugOn) {
 						console.debug((new Date().getTime() - start) + '	addNewDoc 09 ');
 					}
-					context.lodlive('openDoc', $(ele).attr("rel"), newObj, fromInverse);
+					methods.openDoc($(ele).attr("rel"), newObj, fromInverse);
 				}
 				// });
 			} else {
@@ -969,8 +992,8 @@ var debugOn = false;
 					if (debugOn) {
 						console.debug((new Date().getTime() - start) + '	addNewDoc 10 ');
 					}
-					context.lodlive('renewDrag', context.children('.boxWrapper'));
-					context.lodlive('drawaLine', obj, newObj, propertyName);
+					methods.renewDrag(context.children('.boxWrapper'));
+					methods.drawaLine(obj, newObj, propertyName);
 				} else {
 					if (debugOn) {
 						console.debug((new Date().getTime() - start) + '	addNewDoc 11 ');
@@ -990,7 +1013,6 @@ var debugOn = false;
 			return false;
 		},
 		removeDoc : function(obj, callback) {
-			context = this;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
@@ -998,7 +1020,7 @@ var debugOn = false;
 			// $(".tipsy").remove();
 
 			var id = obj.attr("id");
-			context.lodlive('queryConsole', 'remove', {
+			methods.queryConsole('remove', {
 				uriId : obj.attr('rel')
 			});
 			$("#line-" + id).clearCanvas();
@@ -1008,14 +1030,14 @@ var debugOn = false;
 					$('#line-' + generatedRev[a]).clearCanvas();
 				}
 			}
-			this.lodlive('docInfo', '', 'close');
+			methods.docInfo('', 'close');
 
 			if ($.jStorage.get('doCollectImages', true)) {
 				var imagesMap = $.jStorage.get("imagesMap", {});
 				if (imagesMap[id]) {
 					delete imagesMap[id];
 					$.jStorage.set('imagesMap', imagesMap);
-					context.lodlive('updateImagePanel', $('#controlPanel'));
+					methods.updateImagePanel($('#controlPanel'));
 					$('#controlPanel').find('a[class*=img-' + id + ']').remove();
 				}
 			}
@@ -1025,7 +1047,7 @@ var debugOn = false;
 				if (mapsMap[id]) {
 					delete mapsMap[id];
 					$.jStorage.set('mapsMap', mapsMap);
-					context.lodlive('updateMapPanel', $('#controlPanel'));
+					methods.updateMapPanel($('#controlPanel'));
 					// $('#controlPanel').find('a[class*=img-' + id +
 					// ']').remove();
 				}
@@ -1086,7 +1108,7 @@ var debugOn = false;
 						generated = $.jStorage.get('storeIds-generatedBy-' + generatedRev[a]);
 						if (generated) {
 							for (var a2 = 0; a2 < generated.length; a2++) {
-								context.lodlive('drawaLine', $('#' + generatedRev[a]), $("#" + generated[a2]));
+								methods.drawaLine($('#' + generatedRev[a]), $("#" + generated[a2]));
 							}
 						}
 					}
@@ -1104,7 +1126,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			var context = this;
+			
 			// per ogni nuova risorsa collegata al documento corrente imposto le
 			// azioni "onclick"
 
@@ -1112,14 +1134,14 @@ var debugOn = false;
 				$(this).attr("relmd5", MD5($(this).attr("rel")));
 				$(this).click(function() {
 					$(this).addClass("exploded");
-					context.lodlive('addNewDoc', obj, $(this));
-					// context.lodlive('docInfo', '', 'close');
+					methods.addNewDoc(obj, $(this));
+					// methods.docInfo('', 'close');
 					return false;
 				});
 				$(this).hover(function() {
-					context.lodlive('msg', $(this).attr('data-title'), 'show', null, null, $(this).hasClass("inverse"));
+					methods.msg($(this).attr('data-title'), 'show', null, null, $(this).hasClass("inverse"));
 				}, function() {
-					context.lodlive('msg', null, 'hide');
+					methods.msg(null, 'hide');
 				});
 			});
 
@@ -1127,7 +1149,7 @@ var debugOn = false;
 				$(this).click(function() {
 					if ($(this).data('show')) {
 						$(this).data('show', false);
-						context.lodlive('docInfo', '', 'close');
+						methods.docInfo('', 'close');
 						$(this).removeClass('lastClick');
 						obj.find("." + $(this).attr("rel")).fadeOut('fast');
 						$(this).fadeTo('fast', 1);
@@ -1135,7 +1157,7 @@ var debugOn = false;
 					} else {
 						$(this).data('show', true);
 						obj.append(globalInnerPageMap[obj.attr("id")]);
-						context.lodlive('docInfo', '', 'close');
+						methods.docInfo('', 'close');
 						obj.find('.lastClick').removeClass('lastClick').click();
 						if (obj.children('.innerPage').length == 0) {
 							obj.append(globalInnerPageMap[obj.attr("id")]);
@@ -1147,9 +1169,9 @@ var debugOn = false;
 				})
 
 				$(this).hover(function() {
-					context.lodlive('msg', $(this).attr('data-title'), 'show', null, null, $(this).hasClass("inverse"));
+					methods.msg($(this).attr('data-title'), 'show', null, null, $(this).hasClass("inverse"));
 				}, function() {
-					context.lodlive('msg', null, 'hide');
+					methods.msg(null, 'hide');
 				});
 			});
 
@@ -1157,7 +1179,7 @@ var debugOn = false;
 			obj.children('.innerPage').detach();
 			// aggiungo le azioni dei tools
 			obj.find(".actionBox[rel=contents]").click(function() {
-				context.lodlive('docInfo', obj, 'open');
+				methods.docInfo(obj, 'open');
 			});
 			obj.find(".actionBox[rel=tools]").click(function() {
 				if ($(".toolBox:visible").length == 0) {
@@ -1173,7 +1195,7 @@ var debugOn = false;
 						$(this).click(function() {
 							tools.remove();
 							// $('.tipsy').remove();
-							context.lodlive('docInfo', '', 'close');
+							methods.docInfo('', 'close');
 							var idx = 0;
 							var elements = obj.find("div.relatedBox:visible");
 							elements.doTimeout(250, function() {
@@ -1197,7 +1219,7 @@ var debugOn = false;
 					tools.find(".innerActionBox[rel=infoQ]").each(function() {
 						$(this).click(function() {
 							tools.remove();
-							context.lodlive('queryConsole', 'show', {
+							methods.queryConsole('show', {
 								uriId : obj.attr('rel')
 							});
 						});
@@ -1214,9 +1236,9 @@ var debugOn = false;
 					tools.find(".innerActionBox[rel=remove]").each(function() {
 						$(this).click(function() {
 							// $('.tipsy').remove();
-							context.lodlive('removeDoc', obj);
+							methods.removeDoc(obj);
 							tools.remove();
-							context.lodlive('docInfo', '', 'close');
+							methods.docInfo('', 'close');
 						});
 						$(this).hover(function() {
 							tools.setBackgroundPosition({
@@ -1232,7 +1254,7 @@ var debugOn = false;
 						$(this).click(function() {
 							tools.remove();
 							// $('.tipsy').remove();
-							context.lodlive('docInfo', '', 'close');
+							methods.docInfo('', 'close');
 							window.open(obj.attr("rel"));
 						});
 						$(this).hover(function() {
@@ -1278,7 +1300,7 @@ var debugOn = false;
 			}
 		},
 		parseRawResourceDoc : function(destBox, URI) {
-			var context = this;
+			
 			if (debugOn) {
 				start = new Date().getTime();
 			}
@@ -1290,7 +1312,7 @@ var debugOn = false;
 				var res = getSparqlConf('document', lodLiveProfile['default'], lodLiveProfile).replace(/\{URI\}/ig, URI);
 				var url = lodLiveProfile['default'].endpoint + "?uri=" + encodeURIComponent(URI) + "&query=" + encodeURIComponent(res);
 				if ($.jStorage.get('showInfoConsole')) {
-					context.lodlive('queryConsole', 'log', {
+					methods.queryConsole('log', {
 						title : lang('endpointNotConfiguredSoInternal'),
 						text : res,
 						uriId : URI
@@ -1325,14 +1347,14 @@ var debugOn = false;
 							console.debug(URI + '	  ');
 							console.debug(values);
 						}
-						context.lodlive('formatDoc', destBox, values, uris, bnodes, URI);
+						methods.formatDoc(destBox, values, uris, bnodes, URI);
 					},
 					error : function(e, b, v) {
 						destBox.html('');
 						values = [{
 							'http://system/msg' : 'risorsa non trovata: ' + destBox.attr('rel')
 						}];
-						context.lodlive('formatDoc', destBox, values, uris, bnodes, URI);
+						methods.formatDoc(destBox, values, uris, bnodes, URI);
 					}
 				});
 			}
@@ -1344,7 +1366,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			var context = this;
+			
 			if (action == 'open') {
 				var URI = obj.attr('rel');
 				if ($('#docInfo').length > 0) {
@@ -1358,12 +1380,12 @@ var debugOn = false;
 				// predispongo il div contenente il documento
 				var destBox = $('<div id="docInfo" rel="info-' + URI + '"></div>');
 				$('body').append(destBox);
-				var SPARQLquery = context.lodlive('composeQuery', URI, 'document');
+				var SPARQLquery = methods.composeQuery(URI, 'document');
 				var uris = [];
 				var bnodes = [];
 				var values = [];
 				if (SPARQLquery.indexOf("http://system/dummy") == 0) {
-					context.lodlive('parseRawResourceDoc', destBox, URI);
+					methods.parseRawResourceDoc(destBox, URI);
 				} else {
 					$.jsonp({
 						url : SPARQLquery,
@@ -1389,14 +1411,14 @@ var debugOn = false;
 								}
 							});
 							destBox.html('');
-							context.lodlive('formatDoc', destBox, values, uris, bnodes, URI);
+							methods.formatDoc(destBox, values, uris, bnodes, URI);
 						},
 						error : function(e, b, v) {
 							destBox.html('');
 							values = [{
 								'http://system/msg' : 'risorsa non trovata: ' + destBox.attr('rel')
 							}];
-							context.lodlive('formatDoc', destBox, values, uris, bnodes, URI);
+							methods.formatDoc(destBox, values, uris, bnodes, URI);
 						}
 					});
 				}
@@ -1422,7 +1444,7 @@ var debugOn = false;
 			}
 		},
 		processDraw : function(x1, y1, x2, y2, canvas, toId) {
-			var context = this;
+			
 			try {
 				if (debugOn) {
 					start = new Date().getTime();
@@ -1466,7 +1488,7 @@ var debugOn = false;
 			}
 		},
 		drawAllLines : function(obj) {
-			var context = this;
+			
 			var generated = $.jStorage.get('storeIds-generatedBy-' + obj.attr("id"));
 			var generatedRev = $.jStorage.get('storeIds-generatedByRev-' + obj.attr("id"));
 			// elimino la riga se già presente (in caso di
@@ -1475,7 +1497,7 @@ var debugOn = false;
 			$('#line-' + obj.attr("id")).clearCanvas();
 			if (generated) {
 				for (var a = 0; a < generated.length; a++) {
-					context.lodlive('drawaLine', obj, $("#" + generated[a]));
+					methods.drawaLine(obj, $("#" + generated[a]));
 				}
 			}
 			if (generatedRev) {
@@ -1484,7 +1506,7 @@ var debugOn = false;
 					$('#line-' + generatedRev[a]).clearCanvas();
 					if (generated) {
 						for (var a2 = 0; a2 < generated.length; a2++) {
-							context.lodlive('drawaLine', $('#' + generatedRev[a]), $("#" + generated[a2]));
+							methods.drawaLine($('#' + generatedRev[a]), $("#" + generated[a2]));
 						}
 					}
 				}
@@ -1495,7 +1517,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			var context = this;
+			
 			var pos1 = from.position();
 			var pos2 = to.position();
 			var aCanvas = $("#line-" + from.attr("id"));
@@ -1506,7 +1528,7 @@ var debugOn = false;
 				if (propertyName) {
 					aCanvas.attr("data-propertyName-" + to.attr("id"), propertyName);
 				}
-				context.lodlive('processDraw', pos1.left + from.width() / 2, pos1.top + from.height() / 2, pos2.left + to.width() / 2, pos2.top + to.height() / 2, aCanvas, to.attr("id"));
+				methods.processDraw(pos1.left + from.width() / 2, pos1.top + from.height() / 2, pos2.left + to.width() / 2, pos2.top + to.height() / 2, aCanvas, to.attr("id"));
 			} else {
 				aCanvas = $("<canvas data-propertyName-" + to.attr("id") + "=\"" + propertyName + "\" height=\"" + context.height() + "\" width=\"" + context.width() + "\" id=\"line-" + from.attr("id") + "\"></canvas>");
 				context.append(aCanvas);
@@ -1516,7 +1538,7 @@ var debugOn = false;
 					'top' : 0,
 					'left' : 0
 				});
-				context.lodlive('processDraw', pos1.left + from.width() / 2, pos1.top + from.height() / 2, pos2.left + to.width() / 2, pos2.top + to.height() / 2, aCanvas, to.attr("id"));
+				methods.processDraw(pos1.left + from.width() / 2, pos1.top + from.height() / 2, pos2.left + to.width() / 2, pos2.top + to.height() / 2, aCanvas, to.attr("id"));
 			}
 
 			if (debugOn) {
@@ -1529,15 +1551,15 @@ var debugOn = false;
 				console.debug("formatDoc " + 0);
 				start = new Date().getTime();
 			}
-			var context = this;
+			
 			// recupero il doctype per caricare le configurazioni specifiche
-			var docType = this.lodlive('getJsonValue', uris, 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', 'default');
+			var docType = methods.getJsonValue(uris, 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', 'default');
 			// carico le configurazioni relative allo stile
-			destBox.addClass(this.lodlive("getProperty", "document", "className", docType));
+			destBox.addClass(methods.getProperty("document", "className", docType));
 			// ed ai path degli oggetti di tipo immagine
-			var images = this.lodlive("getProperty", "images", "properties", docType);
+			var images = methods.getProperty("images", "properties", docType);
 			// ed ai path dei link esterni
-			var weblinks = this.lodlive("getProperty", "weblinks", "properties", docType);
+			var weblinks = methods.getProperty("weblinks", "properties", docType);
 
 			// se la proprieta' e' stata scritta come stringa la trasformo in un
 			// array
@@ -1618,7 +1640,7 @@ var debugOn = false;
 			jResult.append(topSection);
 			topSection.find('span').each(function() {
 				$(this).click(function() {
-					context.lodlive('docInfo', '', 'close');
+					methods.docInfo('', 'close');
 				});
 				$(this).hover(function() {
 					topSection.setBackgroundPosition({
@@ -1637,9 +1659,9 @@ var debugOn = false;
 				var jSection = $("<div class=\"section\"><label data-title=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\">type</label><div></div></div>");
 				jSection.find('label').each(function() {
 					$(this).hover(function() {
-						context.lodlive('msg', $(this).attr('data-title'), 'show');
+						methods.msg($(this).attr('data-title'), 'show');
 					}, function() {
-						context.lodlive('msg', null, 'hide');
+						methods.msg(null, 'hide');
 					});
 				});
 				for (var int = 0; int < types.length; int++) {
@@ -1670,9 +1692,9 @@ var debugOn = false;
 				var jWebLinkResult = $(webLinkResult);
 				jWebLinkResult.find('a').each(function() {
 					$(this).hover(function() {
-						context.lodlive('msg', $(this).attr('data-title'), 'show');
+						methods.msg($(this).attr('data-title'), 'show');
 					}, function() {
-						context.lodlive('msg', null, 'hide');
+						methods.msg(null, 'hide');
 					});
 				});
 				jContents.append(jWebLinkResult);
@@ -1697,9 +1719,9 @@ var debugOn = false;
 						var jSection = $("<div class=\"section\"><label data-title=\"" + akey + "\">" + shortKey + "</label><div>" + unescape(value[akey]) + "</div></div><div class=\"separ sprite\"></div>");
 						jSection.find('label').each(function() {
 							$(this).hover(function() {
-								context.lodlive('msg', $(this).attr('data-title'), 'show');
+								methods.msg($(this).attr('data-title'), 'show');
 							}, function() {
-								context.lodlive('msg', null, 'hide');
+								methods.msg(null, 'hide');
 							});
 						});
 						jContents.append(jSection);
@@ -1725,12 +1747,12 @@ var debugOn = false;
 						var jBnode = $("<div class=\"section\"><label data-title=\"" + akey + "\">" + shortKey + "</label><span class=\"bnode\"></span></div><div class=\"separ sprite\"></div>");
 						jBnode.find('label').each(function() {
 							$(this).hover(function() {
-								context.lodlive('msg', $(this).attr('data-title'), 'show');
+								methods.msg($(this).attr('data-title'), 'show');
 							}, function() {
-								context.lodlive('msg', null, 'hide');
+								methods.msg(null, 'hide');
 							});
 						});
-						context.lodlive('resolveBnodes', unescape(value[akey]), URI, jBnode, jContents);
+						methods.resolveBnodes(unescape(value[akey]), URI, jBnode, jContents);
 
 					}
 				});
@@ -1740,9 +1762,9 @@ var debugOn = false;
 				var jSection = $("<div class=\"section\"><label data-title=\"" + lang('resourceMissingDoc') + "\"></label><div>" + lang('resourceMissingDoc') + "</div></div><div class=\"separ sprite\"></div>");
 				jSection.find('label').each(function() {
 					$(this).hover(function() {
-						context.lodlive('msg', $(this).attr('data-title'), 'show');
+						methods.msg($(this).attr('data-title'), 'show');
 					}, function() {
-						context.lodlive('msg', null, 'hide');
+						methods.msg(null, 'hide');
 					});
 				});
 				jContents.append(jSection);
@@ -1799,8 +1821,8 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			var context = this;
-			var SPARQLquery = context.lodlive('composeQuery', val, 'bnode', URI);
+			
+			var SPARQLquery = methods.composeQuery(val, 'bnode', URI);
 
 			$.jsonp({
 				url : SPARQLquery,
@@ -1828,13 +1850,13 @@ var debugOn = false;
 							var jBnode = $("<span><label data-title=\"" + value.property.value + "\"> / " + shortKey + "</label><span class=\"bnode\"></span></span>");
 							jBnode.find('label').each(function() {
 								$(this).hover(function() {
-									context.lodlive('msg', $(this).attr('data-title'), 'show');
+									methods.msg($(this).attr('data-title'), 'show');
 								}, function() {
-									context.lodlive('msg', null, 'hide');
+									methods.msg(null, 'hide');
 								});
 							});
 							destBox.find('span[class=bnode]').attr("class", "").append(jBnode);
-							context.lodlive('resolveBnodes', value.object.value, URI, destBox, jContents);
+							methods.resolveBnodes(value.object.value, URI, destBox, jContents);
 						} else {
 							destBox.find('span[class=bnode]').append('<div><em title="' + value.property.value + '">' + shortKey + "</em>: " + value.object.value + '</div>');
 							// destBox.find('span[class=bnode]').attr("class",
@@ -1863,7 +1885,7 @@ var debugOn = false;
 			return val;
 		},
 		format : function(destBox, values, uris, inverses) {
-			var context = this;
+			
 
 			if (debugOn) {
 				start = new Date().getTime();
@@ -1872,12 +1894,12 @@ var debugOn = false;
 			var thisUri = containerBox.attr('rel');
 
 			// recupero il doctype per caricare le configurazioni specifiche
-			var docType = this.lodlive('getJsonValue', uris, 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', 'default');
+			var docType = methods.getJsonValue(uris, 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', 'default');
 			if (thisUri.indexOf("~~") != -1) {
 				docType = 'bnode';
 			}
 			// carico le configurazioni relative allo stile
-			var aClass = this.lodlive("getProperty", "document", "className", docType);
+			var aClass = methods.getProperty("document", "className", docType);
 			if (docType == 'bnode') {
 				aClass = 'bnode';
 			}
@@ -1901,17 +1923,17 @@ var debugOn = false;
 			}
 			containerBox.addClass(aClass);
 			// ed ai path da mostrare nel titolo del box
-			var titles = this.lodlive("getProperty", "document", "titleProperties", docType);
+			var titles = methods.getProperty("document", "titleProperties", docType);
 			// ed ai path degli oggetti di tipo immagine
-			var images = this.lodlive("getProperty", "images", "properties", docType);
+			var images = methods.getProperty("images", "properties", docType);
 			// ed ai path dei link esterni
-			var weblinks = this.lodlive("getProperty", "weblinks", "properties", docType);
+			var weblinks = methods.getProperty("weblinks", "properties", docType);
 			// e le latitudini
-			var lats = this.lodlive("getProperty", "maps", "lats", docType);
+			var lats = methods.getProperty("maps", "lats", docType);
 			// e le longitudini
-			var longs = this.lodlive("getProperty", "maps", "longs", docType);
+			var longs = methods.getProperty("maps", "longs", docType);
 			// e punti
-			var points = this.lodlive("getProperty", "maps", "points", docType);
+			var points = methods.getProperty("maps", "points", docType);
 
 			// se la proprieta' e' stata scritta come stringa la trasformo in un
 			// array
@@ -1940,7 +1962,7 @@ var debugOn = false;
 			// aggiungo al box il titolo
 			var result = "<div class=\"boxTitle\"><span class=\"ellipsis_text\">";
 			for (var a = 0; a < titles.length; a++) {
-				var resultArray = this.lodlive('getJsonValue', values, titles[a], titles[a].indexOf('http') == 0 ? '' : titles[a]);
+				var resultArray = methods.getJsonValue(values, titles[a], titles[a].indexOf('http') == 0 ? '' : titles[a]);
 				if (titles[a].indexOf('http') != 0) {
 					if (result.indexOf($.trim(unescape(titles[a])) + " \n") == -1) {
 						result += $.trim(unescape(titles[a])) + " \n";
@@ -1969,10 +1991,15 @@ var debugOn = false;
 				jResult.text(lang('noName'));
 			}
 			destBox.append(jResult);
-			if (jResult.children().html().indexOf(">") == -1) {
+			if (!jResult.children().html() || jResult.children().html().indexOf(">") == -1) {
 				jResult.ThreeDots({
 					max_rows : 3
 				});
+			}
+			var el = jResult.find('.threedots_ellipsis');
+			if(el.length>0){
+				el.detach();
+				jResult.children('span').append(el);
 			}
 			var resourceTitle = jResult.text();
 			// posiziono il titolo al centro del box
@@ -1982,9 +2009,9 @@ var debugOn = false;
 			});
 
 			destBox.hover(function() {
-				context.lodlive('msg', jResult.attr("threedots") == '' ? jResult.text() : jResult.attr("threedots") + " \n " + thisUri, 'show', 'fullInfo', containerBox.attr("data-endpoint"));
+				methods.msg(jResult.attr("threedots") == '' ? jResult.text() : jResult.attr("threedots") + " \n " + thisUri, 'show', 'fullInfo', containerBox.attr("data-endpoint"));
 			}, function() {
-				context.lodlive('msg', null, 'hide');
+				methods.msg(null, 'hide');
 			});
 
 			// calcolo le uri e le url dei documenti correlati
@@ -2073,7 +2100,7 @@ var debugOn = false;
 			}
 			if ($.jStorage.get('doDrawMap', true)) {
 				for (var a = 0; a < points.length; a++) {
-					var resultArray = context.lodlive('getJsonValue', values, points[a], points[a]);
+					var resultArray = methods.getJsonValue(values, points[a], points[a]);
 					for (var af = 0; af < resultArray.length; af++) {
 						if (resultArray[af].indexOf(" ") != -1) {
 							eval('connectedLongs.push(\'' + unescape(resultArray[af].split(" ")[1]) + '\')');
@@ -2085,13 +2112,13 @@ var debugOn = false;
 					}
 				}
 				for (var a = 0; a < longs.length; a++) {
-					var resultArray = context.lodlive('getJsonValue', values, longs[a], longs[a]);
+					var resultArray = methods.getJsonValue(values, longs[a], longs[a]);
 					for (var af = 0; af < resultArray.length; af++) {
 						eval('connectedLongs.push(\'' + unescape(resultArray[af]) + '\')');
 					}
 				}
 				for (var a = 0; a < lats.length; a++) {
-					var resultArray = context.lodlive('getJsonValue', values, lats[a], lats[a]);
+					var resultArray = methods.getJsonValue(values, lats[a], lats[a]);
 					for (var af = 0; af < resultArray.length; af++) {
 						eval('connectedLats.push(\'' + unescape(resultArray[af]) + '\')');
 					}
@@ -2105,7 +2132,7 @@ var debugOn = false;
 						title : thisUri + "\n" + escape(resourceTitle)
 					};
 					$.jStorage.set('mapsMap', mapsMap);
-					context.lodlive('updateMapPanel', $('#controlPanel'));
+					methods.updateMapPanel($('#controlPanel'));
 				}
 			}
 			if ($.jStorage.get('doCollectImages', true)) {
@@ -2113,7 +2140,7 @@ var debugOn = false;
 					var imagesMap = $.jStorage.get("imagesMap", {});
 					imagesMap[containerBox.attr("id")] = connectedImages;
 					$.jStorage.set('imagesMap', imagesMap);
-					context.lodlive('updateImagePanel', $('#controlPanel'));
+					methods.updateImagePanel($('#controlPanel'));
 				}
 			}
 			var totRelated = connectedDocs.length + invertedDocs.length;
@@ -2164,8 +2191,8 @@ var debugOn = false;
 			// 2, destBox.position().top + destBox.height() / 2, totRelated +
 			// 4);
 
-			var chordsList = this.lodlive('circleChords', 75, 24, destBox.position().left + 65, destBox.position().top + 65);
-			var chordsListGrouped = this.lodlive('circleChords', 95, 36, destBox.position().left + 65, destBox.position().top + 65);
+			var chordsList = methods.circleChords(75, 24, destBox.position().left + 65, destBox.position().top + 65);
+			var chordsListGrouped = methods.circleChords(95, 36, destBox.position().left + 65, destBox.position().top + 65);
 			// aggiungo al box i link ai documenti correlati
 			var a = 1;
 			var inserted = {};
@@ -2388,7 +2415,8 @@ var debugOn = false;
 				pager.parent().fadeOut('fast', null, function() {
 					$(this).parent().children('.' + pager.attr("data-page")).fadeIn('fast');
 				});
-			}); {
+			});
+			{
 				var obj = $("<div class=\"actionBox contents\" rel=\"contents\"  >&#160;</div>");
 				containerBox.append(obj);
 				obj.hover(function() {
@@ -2492,7 +2520,7 @@ var debugOn = false;
 			}
 		},
 		parseRawResource : function(destBox, resource, fromInverse) {
-			var context = this;
+			
 			var values = [];
 			var uris = [];
 			if (lodLiveProfile['default']) {
@@ -2500,7 +2528,7 @@ var debugOn = false;
 				var res = getSparqlConf('documentUri', lodLiveProfile['default'], lodLiveProfile).replace(/\{URI\}/ig, resource);
 				var url = lodLiveProfile['default'].endpoint + "?uri=" + encodeURIComponent(resource) + "&query=" + encodeURIComponent(res);
 				if ($.jStorage.get('showInfoConsole')) {
-					context.lodlive('queryConsole', 'log', {
+					methods.queryConsole('log', {
 						title : lang('endpointNotConfiguredSoInternal'),
 						text : res,
 						uriId : resource
@@ -2529,15 +2557,15 @@ var debugOn = false;
 						}
 
 						destBox.children('.box').html('');
-						context.lodlive('format', destBox.children('.box'), values, uris);
-						context.lodlive('addClick', destBox, fromInverse ? function() {
+						methods.format(destBox.children('.box'), values, uris);
+						methods.addClick(destBox, fromInverse ? function() {
 							try {
 								$(fromInverse).click();
 							} catch (e) {
 							}
 						} : null);
 						if ($.jStorage.get('doAutoExpand')) {
-							context.lodlive('autoExpand', destBox);
+							methods.autoExpand(destBox);
 						}
 					},
 					error : function(e, j, k) {
@@ -2547,15 +2575,15 @@ var debugOn = false;
 						if (fromInverse) {
 							eval('uris.push({\'' + fromInverse.replace(/div\[data-property="([^"]*)"\].*/, '$1') + '\':\'' + fromInverse.replace(/.*\[rel="([^"]*)"\].*/, '$1') + '\'})');
 						}
-						context.lodlive('format', destBox.children('.box'), values, uris, inverses);
-						context.lodlive('addClick', destBox, fromInverse ? function() {
+						methods.format(destBox.children('.box'), values, uris, inverses);
+						methods.addClick(destBox, fromInverse ? function() {
 							try {
 								$(fromInverse).click();
 							} catch (e) {
 							}
 						} : null);
 						if ($.jStorage.get('doAutoExpand')) {
-							context.lodlive('autoExpand', destBox);
+							methods.autoExpand(destBox);
 						}
 					}
 				});
@@ -2566,15 +2594,15 @@ var debugOn = false;
 				if (fromInverse) {
 					eval('uris.push({\'' + fromInverse.replace(/div\[data-property="([^"]*)"\].*/, '$1') + '\':\'' + fromInverse.replace(/.*\[rel="([^"]*)"\].*/, '$1') + '\'})');
 				}
-				context.lodlive('format', destBox.children('.box'), values, uris, inverses);
-				context.lodlive('addClick', destBox, fromInverse ? function() {
+				methods.format(destBox.children('.box'), values, uris, inverses);
+				methods.addClick(destBox, fromInverse ? function() {
 					try {
 						$(fromInverse).click();
 					} catch (e) {
 					}
 				} : null);
 				if ($.jStorage.get('doAutoExpand')) {
-					context.lodlive('autoExpand', destBox);
+					methods.autoExpand(destBox);
 				}
 			}
 		},
@@ -2583,19 +2611,19 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			var context = this;
+			
 			if ($.jStorage.get('showInfoConsole')) {
-				context.lodlive('queryConsole', 'init', {
+				methods.queryConsole('init', {
 					uriId : anUri
 				});
-				context.lodlive('queryConsole', 'log', {
+				methods.queryConsole('log', {
 					uriId : anUri,
 					resource : anUri
 				});
 			}
-			SPARQLquery = context.lodlive('composeQuery', anUri, 'documentUri');
+			SPARQLquery = methods.composeQuery(anUri, 'documentUri');
 			if ($.jStorage.get('doStats')) {
-				this.lodlive('doStats', anUri);
+				methods.doStats(anUri);
 			}
 			var uris = [];
 			var values = [];
@@ -2607,7 +2635,7 @@ var debugOn = false;
 				destBox.attr("data-endpoint", SPARQLquery.substring(0, SPARQLquery.indexOf("?")));
 			}
 			if (SPARQLquery.indexOf("http://system/dummy") == 0) {
-				context.lodlive('parseRawResource', destBox, anUri, fromInverse);
+				methods.parseRawResource(destBox, anUri, fromInverse);
 			} else {
 				$.jsonp({
 					url : SPARQLquery,
@@ -2638,7 +2666,7 @@ var debugOn = false;
 
 						});
 						if ($.jStorage.get('showInfoConsole')) {
-							context.lodlive('queryConsole', 'log', {
+							methods.queryConsole('log', {
 								founded : conta,
 								id : SPARQLquery,
 								uriId : anUri
@@ -2649,7 +2677,7 @@ var debugOn = false;
 						}
 						destBox.children('.box').html('');
 						if ($.jStorage.get('doInverse')) {
-							SPARQLquery = context.lodlive('composeQuery', anUri, 'inverse');
+							SPARQLquery = methods.composeQuery(anUri, 'inverse');
 							var inverses = [];
 							$.jsonp({
 								url : SPARQLquery,
@@ -2671,7 +2699,7 @@ var debugOn = false;
 										// aSpan.text(conta + '/' + tot);
 									});
 									if ($.jStorage.get('showInfoConsole')) {
-										context.lodlive('queryConsole', 'log', {
+										methods.queryConsole('log', {
 											founded : conta,
 											id : SPARQLquery,
 											uriId : anUri
@@ -2682,15 +2710,15 @@ var debugOn = false;
 									}
 									var callback = function() {
 										destBox.children('.box').html('');
-										context.lodlive('format', destBox.children('.box'), values, uris, inverses);
-										context.lodlive('addClick', destBox, fromInverse ? function() {
+										methods.format(destBox.children('.box'), values, uris, inverses);
+										methods.addClick(destBox, fromInverse ? function() {
 											try {
 												$(fromInverse).click();
 											} catch (e) {
 											}
 										} : null);
 										if ($.jStorage.get('doAutoExpand')) {
-											context.lodlive('autoExpand', destBox);
+											methods.autoExpand(destBox);
 										}
 									};
 									if ($.jStorage.get('doAutoSameas')) {
@@ -2699,7 +2727,7 @@ var debugOn = false;
 										$.each(lodLiveProfile.connection, function(key, value) {
 											tot++;
 										});
-										context.lodlive('findInverseSameAs', anUri, counter, inverses, callback, tot);
+										methods.findInverseSameAs(anUri, counter, inverses, callback, tot);
 									} else {
 										callback();
 									}
@@ -2707,40 +2735,40 @@ var debugOn = false;
 								},
 								error : function(e, b, v) {
 									destBox.children('.box').html('');
-									context.lodlive('format', destBox.children('.box'), values, uris);
+									methods.format(destBox.children('.box'), values, uris);
 									if ($.jStorage.get('showInfoConsole')) {
-										context.lodlive('queryConsole', 'log', {
+										methods.queryConsole('log', {
 											error : 'error',
 											id : SPARQLquery,
 											uriId : anUri
 										});
 									}
-									context.lodlive('addClick', destBox, fromInverse ? function() {
+									methods.addClick(destBox, fromInverse ? function() {
 										try {
 											$(fromInverse).click();
 										} catch (e) {
 										}
 									} : null);
 									if ($.jStorage.get('doAutoExpand')) {
-										context.lodlive('autoExpand', destBox);
+										methods.autoExpand(destBox);
 									}
 								}
 							});
 						} else {
-							context.lodlive('format', destBox.children('.box'), values, uris);
-							context.lodlive('addClick', destBox, fromInverse ? function() {
+							methods.format(destBox.children('.box'), values, uris);
+							methods.addClick(destBox, fromInverse ? function() {
 								try {
 									$(fromInverse).click();
 								} catch (e) {
 								}
 							} : null);
 							if ($.jStorage.get('doAutoExpand')) {
-								context.lodlive('autoExpand', destBox);
+								methods.autoExpand(destBox);
 							}
 						}
 					},
 					error : function(e, b, v) {
-						context.lodlive('errorBox', destBox);
+						methods.errorBox(destBox);
 					}
 				});
 			}
@@ -2749,7 +2777,7 @@ var debugOn = false;
 			}
 		},
 		errorBox : function(destBox) {
-			var context = this;
+			
 			destBox.children('.box').addClass("errorBox");
 			destBox.children('.box').html('');
 			var jResult = $("<div class=\"boxTitle\"><span>" + lang('enpointNotAvailable') + "</span></div>");
@@ -2759,13 +2787,13 @@ var debugOn = false;
 			});
 			var obj = $("<div class=\"actionBox tools\">&#160;</div>");
 			obj.click(function() {
-				context.lodlive('removeDoc', destBox);
+				methods.removeDoc(destBox);
 			});
 			destBox.append(obj);
 			destBox.children('.box').hover(function() {
-				context.lodlive('msg', lang('enpointNotAvailableOrSLow'), 'show', 'fullInfo', destBox.attr("data-endpoint"));
+				methods.msg(lang('enpointNotAvailableOrSLow'), 'show', 'fullInfo', destBox.attr("data-endpoint"));
 			}, function() {
-				context.lodlive('msg', null, 'hide');
+				methods.msg(null, 'hide');
 			});
 
 		},
@@ -2773,8 +2801,8 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			var context = this;
-			SPARQLquery = context.lodlive('composeQuery', SPARQLquery, 'allClasses');
+			
+			SPARQLquery = methods.composeQuery(SPARQLquery, 'allClasses');
 			var classes = [];
 			$.jsonp({
 				url : SPARQLquery,
@@ -2805,7 +2833,7 @@ var debugOn = false;
 			}
 		},
 		findInverseSameAs : function(anUri, counter, inverse, callback, tot) {
-			var context = this;
+			
 			if (debugOn) {
 				start = new Date().getTime();
 			}
@@ -2828,7 +2856,7 @@ var debugOn = false;
 					if (skip) {
 						counter++;
 						if (counter < tot) {
-							context.lodlive('findInverseSameAs', anUri, counter, inverse, callback, tot);
+							methods.findInverseSameAs(anUri, counter, inverse, callback, tot);
 						} else {
 							callback();
 						}
@@ -2843,7 +2871,7 @@ var debugOn = false;
 						timeout : 3000,
 						beforeSend : function() {
 							if ($.jStorage.get('showInfoConsole')) {
-								context.lodlive('queryConsole', 'log', {
+								methods.queryConsole('log', {
 									title : value.endpoint,
 									text : getSparqlConf('inverseSameAs', value, lodLiveProfile).replace(/\{URI\}/g, anUri),
 									id : SPARQLquery,
@@ -2863,7 +2891,7 @@ var debugOn = false;
 								}
 							});
 							if ($.jStorage.get('showInfoConsole')) {
-								context.lodlive('queryConsole', 'log', {
+								methods.queryConsole('log', {
 									founded : conta,
 									id : SPARQLquery,
 									uriId : anUri
@@ -2871,14 +2899,14 @@ var debugOn = false;
 							}
 							counter++;
 							if (counter < tot) {
-								context.lodlive('findInverseSameAs', anUri, counter, inverse, callback, tot);
+								methods.findInverseSameAs(anUri, counter, inverse, callback, tot);
 							} else {
 								callback();
 							}
 						},
 						error : function(e, b, v) {
 							if ($.jStorage.get('showInfoConsole')) {
-								context.lodlive('queryConsole', 'log', {
+								methods.queryConsole('log', {
 									error : 'error',
 									id : SPARQLquery,
 									uriId : anUri
@@ -2886,7 +2914,7 @@ var debugOn = false;
 							}
 							counter++;
 							if (counter < tot) {
-								context.lodlive('findInverseSameAs', anUri, counter, inverse, callback, tot);
+								methods.findInverseSameAs(anUri, counter, inverse, callback, tot);
 							} else {
 								callback();
 							}
