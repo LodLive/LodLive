@@ -87,7 +87,6 @@ var debugOn = false;
 
 		},
 		generatePositionMatrix : function() {
-			
 			var square = 150;
 			var hLimit = context.width();
 			var vLimit = context.height();
@@ -112,7 +111,7 @@ var debugOn = false;
 			document.location = document.location.href.substring(0, document.location.href.indexOf("?"));
 		},
 		composeQuery : function(resource, module, testURI) {
-			
+
 			if (debugOn) {
 				start = new Date().getTime();
 			}
@@ -227,7 +226,7 @@ var debugOn = false;
 			}
 		},
 		queryConsole : function(action, toLog) {
-			
+
 			var id = MD5(toLog.uriId);
 			var localId = MD5(toLog.id);
 			var infoMap = globalInfoPanelMap;
@@ -336,7 +335,7 @@ var debugOn = false;
 			}
 		},
 		controlPanel : function(action) {
-			
+
 			if (debugOn) {
 				start = new Date().getTime();
 			}
@@ -575,7 +574,7 @@ var debugOn = false;
 		},
 		updateMapPanel : function(panel) {
 			if ($.jStorage.get('doDrawMap', true)) {
-				
+
 				if ($("#mapPanel:visible", panel).length > 0) {
 					$('#mapPanel').gmap3({
 						action : 'clear'
@@ -615,7 +614,7 @@ var debugOn = false;
 		},
 		updateImagePanel : function(panel) {
 			if ($.jStorage.get('doCollectImages', true)) {
-				
+
 				var imagePanel = $('#imagePanel', panel).children("span");
 				if ($("#imagePanel:visible", panel).length > 0) {
 					var panelContent = $('#panel2Content', panel);
@@ -760,7 +759,7 @@ var debugOn = false;
 			}
 		},
 		highlight : function(object, times, speed, backmove) {
-			
+
 			if (times > 0) {
 				times--;
 				var css = object.css('background-position');
@@ -781,7 +780,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			
+
 			aDivList.each(function() {
 				if ($(this).attr("class").indexOf('ui-draggable') == -1) {
 					$(this).draggable({
@@ -812,7 +811,7 @@ var debugOn = false;
 			}
 		},
 		centerBox : function(aBox) {
-			
+
 			if (debugOn) {
 				start = new Date().getTime();
 			}
@@ -842,7 +841,6 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			
 
 			$.each(globalInnerPageMap, function(key, element) {
 				if (element.children(".relatedBox:not([class*=exploded])").length > 0) {
@@ -874,7 +872,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			
+
 			var aId = ele.attr("relmd5");
 			var newObj = context.find('#' + aId);
 			var isInverse = ele.attr("class").indexOf("inverse") != -1;
@@ -1126,7 +1124,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			
+
 			// per ogni nuova risorsa collegata al documento corrente imposto le
 			// azioni "onclick"
 
@@ -1300,7 +1298,7 @@ var debugOn = false;
 			}
 		},
 		parseRawResourceDoc : function(destBox, URI) {
-			
+
 			if (debugOn) {
 				start = new Date().getTime();
 			}
@@ -1366,7 +1364,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			
+
 			if (action == 'open') {
 				var URI = obj.attr('rel');
 				if ($('#docInfo').length > 0) {
@@ -1444,7 +1442,7 @@ var debugOn = false;
 			}
 		},
 		processDraw : function(x1, y1, x2, y2, canvas, toId) {
-			
+
 			try {
 				if (debugOn) {
 					start = new Date().getTime();
@@ -1488,7 +1486,7 @@ var debugOn = false;
 			}
 		},
 		drawAllLines : function(obj) {
-			
+
 			var generated = $.jStorage.get('storeIds-generatedBy-' + obj.attr("id"));
 			var generatedRev = $.jStorage.get('storeIds-generatedByRev-' + obj.attr("id"));
 			// elimino la riga se già presente (in caso di
@@ -1517,7 +1515,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			
+
 			var pos1 = from.position();
 			var pos2 = to.position();
 			var aCanvas = $("#line-" + from.attr("id"));
@@ -1551,7 +1549,7 @@ var debugOn = false;
 				console.debug("formatDoc " + 0);
 				start = new Date().getTime();
 			}
-			
+
 			// recupero il doctype per caricare le configurazioni specifiche
 			var docType = methods.getJsonValue(uris, 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', 'default');
 			// carico le configurazioni relative allo stile
@@ -1821,7 +1819,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			
+
 			var SPARQLquery = methods.composeQuery(val, 'bnode', URI);
 
 			$.jsonp({
@@ -1885,7 +1883,6 @@ var debugOn = false;
 			return val;
 		},
 		format : function(destBox, values, uris, inverses) {
-			
 
 			if (debugOn) {
 				start = new Date().getTime();
@@ -1997,7 +1994,7 @@ var debugOn = false;
 				});
 			}
 			var el = jResult.find('.threedots_ellipsis');
-			if(el.length>0){
+			if (el.length > 0) {
 				el.detach();
 				jResult.children('span').append(el);
 			}
@@ -2415,8 +2412,7 @@ var debugOn = false;
 				pager.parent().fadeOut('fast', null, function() {
 					$(this).parent().children('.' + pager.attr("data-page")).fadeIn('fast');
 				});
-			});
-			{
+			}); {
 				var obj = $("<div class=\"actionBox contents\" rel=\"contents\"  >&#160;</div>");
 				containerBox.append(obj);
 				obj.hover(function() {
@@ -2520,7 +2516,7 @@ var debugOn = false;
 			}
 		},
 		parseRawResource : function(destBox, resource, fromInverse) {
-			
+
 			var values = [];
 			var uris = [];
 			if (lodLiveProfile['default']) {
@@ -2611,7 +2607,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			
+
 			if ($.jStorage.get('showInfoConsole')) {
 				methods.queryConsole('init', {
 					uriId : anUri
@@ -2777,7 +2773,7 @@ var debugOn = false;
 			}
 		},
 		errorBox : function(destBox) {
-			
+
 			destBox.children('.box').addClass("errorBox");
 			destBox.children('.box').html('');
 			var jResult = $("<div class=\"boxTitle\"><span>" + lang('enpointNotAvailable') + "</span></div>");
@@ -2801,7 +2797,7 @@ var debugOn = false;
 			if (debugOn) {
 				start = new Date().getTime();
 			}
-			
+
 			SPARQLquery = methods.composeQuery(SPARQLquery, 'allClasses');
 			var classes = [];
 			$.jsonp({
@@ -2833,7 +2829,7 @@ var debugOn = false;
 			}
 		},
 		findInverseSameAs : function(anUri, counter, inverse, callback, tot) {
-			
+
 			if (debugOn) {
 				start = new Date().getTime();
 			}
