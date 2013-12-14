@@ -16,8 +16,16 @@ body {
 }
 
 .sprite {
-	background: url(../img/sprite-balls.png);
+	background-image: url(../img/sprite-balls.png);
 	background-repeat: no-repeat;
+	background-size:  2210px 800px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) , only screen and (min-resolution: 144dppx) {
+	.sprite {
+		background-image: url(../img/sprite-balls@2x.png);
+		background-repeat: no-repeat;
+	}
 }
 
 #lodlogo {
@@ -724,7 +732,7 @@ div#msg .separ.inverse {
 }
 
 /*.ellipsis_text {
-	max-height: 42px;
-	overflow: hidden;
-	display: block;
-}*/
+ max-height: 42px;
+ overflow: hidden;
+ display: block;
+ }*/
