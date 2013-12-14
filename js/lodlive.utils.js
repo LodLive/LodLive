@@ -2,6 +2,11 @@
 // settare la posizione dei background
 $.fn.setBackgroundPosition = function(pos) {
 	var backPos = $.trim(this.css('background-position'));
+	var hasString = backPos.indexOf('left') == -1 ? false : true;
+	//added fix for chrome 25
+	backPos = backPos.replace(/top/gi, '').replace(/left/gi, '');
+	backPos = $.trim(backPos.replace(/  /g, ' '));
+
 	try {
 		var backPosArray = backPos.split(" ");
 		if (pos.x || pos.x == 0) {
@@ -10,7 +15,11 @@ $.fn.setBackgroundPosition = function(pos) {
 		if (pos.y || pos.y == 0) {
 			backPosArray[1] = pos.y + 'px';
 		}
-		backPos = backPosArray[0] + " " + backPosArray[1];
+		if (hasString) {
+			backPos = "left " + backPosArray[0] + " top " + backPosArray[1];
+		} else {
+			backPos = backPosArray[0] + " " + backPosArray[1];
+		}
 	} catch (e) {
 		alert(e);
 	}
@@ -24,9 +33,9 @@ var MD5 = function(string) {
 	if (!string) {
 		return "";
 	}
-	string = string.replace(/http:\/\/.+~~/g, '')
-	string = string.replace(/nodeID:\/\/.+~~/g, '')
-	string = string.replace(/_:\/\/.+~~/g, '')
+	string = string.replace(/http:\/\/.+~~/g, '');
+	string = string.replace(/nodeID:\/\/.+~~/g, '');
+	string = string.replace(/_:\/\/.+~~/g, '');
 	function RotateLeft(lValue, iShiftBits) {
 		return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
 	}
@@ -266,6 +275,7 @@ function breakLines(msg) {
 	msg = msg.replace(/%/g, '%<span style="font-size:1px"> </span>');
 	return msg;
 }
-function getSparqlConf(what,where,lodLiveProfile){
-	return where.sparql && where.sparql[what]?where.sparql[what]:lodLiveProfile['default'].sparql[what]
+
+function getSparqlConf(what, where, lodLiveProfile) {
+	return where.sparql && where.sparql[what] ? where.sparql[what] : lodLiveProfile['default'].sparql[what]
 }
