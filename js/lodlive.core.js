@@ -2412,7 +2412,8 @@ var debugOn = false;
 				pager.parent().fadeOut('fast', null, function() {
 					$(this).parent().children('.' + pager.attr("data-page")).fadeIn('fast');
 				});
-			}); {
+			});
+			{
 				var obj = $("<div class=\"actionBox contents\" rel=\"contents\"  >&#160;</div>");
 				containerBox.append(obj);
 				obj.hover(function() {
@@ -2972,9 +2973,9 @@ var debugOn = false;
 			// eseguo i calcoli e scrivo la riga di connessione tra i cerchi
 			var lineangle = (Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI) + 180;
 			var x2bis = x1 - Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)) + 60;
-
+			canvas.detectPixelRatio();
 			canvas.rotateCanvas({
-				angle : lineangle,
+				rotate : lineangle,
 				x : x1,
 				y : y1
 			}).drawLine({
@@ -2989,20 +2990,22 @@ var debugOn = false;
 
 			if (lineangle > 90 && lineangle < 270) {
 				canvas.rotateCanvas({
-					angle : 180,
+					rotate : 180,
 					x : (x2bis + x1) / 2,
 					y : (y1 + y1) / 2
 				});
 			}
-
+			label = $.trim(label).replace(/\n/g,', ');
 			canvas.drawText({// inserisco l'etichetta
 				fillStyle : "#606060",
+				strokeStyle : "#606060",
 				x : (x2bis + x1 + ((x1 + 60) > x2 ? -60 : +60)) / 2,
 				y : (y1 + y1 - ((x1 + 60) > x2 ? 18 : -18)) / 2,
-				text : ((x1 + 60) > x2 ? " «" : "") + label + ((x1 + 60) > x2 ? "" : "» "),
+				text : ((x1 + 60) > x2 ? " « " : "") + label + ((x1 + 60) > x2 ? "" : " » "),
 				align : "center",
-				baseline : "middle",
-				font : "normal 11px 'Open Sans',Verdana"
+				strokeWidth: 0.01,
+				fontSize : 11,
+				fontFamily : "'Open Sans',Verdana"
 			}).restoreCanvas().restoreCanvas();
 
 			// ed inserisco la freccia per determinarne il verso della

@@ -11,20 +11,24 @@ body {
 }
 
 .spriteLegenda {
-	background: url(../img/sprite-legenda.png);
+	background-image: url(../img/sprite-legenda.png);
 	background-repeat: no-repeat;
+	background-size: 20px 400px;
 }
 
 .sprite {
 	background-image: url(../img/sprite-balls.png);
 	background-repeat: no-repeat;
-	background-size:  2210px 800px;
+	background-size: 2210px 800px;
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5) , only screen and (min-resolution: 144dppx) {
 	.sprite {
 		background-image: url(../img/sprite-balls@2x.png);
-		background-repeat: no-repeat;
+	}
+
+	.spriteLegenda {
+		background-image: url(../img/sprite-legenda@2x.png);
 	}
 }
 
@@ -343,8 +347,7 @@ a.relatedImage {
 	font-weight: normal;
 	margin-top: 10px;
 	margin-right: 20px
-}
-
+} 
 #docInfo ul {
 	padding: 0;
 	margin: 0;
@@ -729,6 +732,7 @@ div#msg .separ.inverse {
 #docInfo .slimScrollDiv {
 	color: #fff;
 	border: 0;
+	background-color:#c7c7c7; 
 }
 
 /*.ellipsis_text {
