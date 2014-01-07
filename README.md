@@ -20,3 +20,7 @@ LodLive è il primo navigatore di risorse RDF basato unicamente su endpoint SPAR
 LodLive vuole dimostrare che le risorse pubblicate secondo gli standard del W3C per il semantic web possono essere facilmente accessibili e comprensibili con strumenti adeguati. 
 
 LodLive è in grado di connettere le risorse presenti negli endpoint configurati al suo interno, consentendo all'utente di passare da un endpoint all'altro sfruttando le capacità di interconnessione insite nei LOD.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dvcama/lodlive/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
