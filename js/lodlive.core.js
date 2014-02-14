@@ -27,7 +27,6 @@ var debugOn = false;
 		init : function(firstUri) {
 			context = this;
 			context.append('<div id="lodlogo" class="sprite"></div>');
-			//context.lodlive('generatePositionMatrix');
 			// inizializzo il contenitore delle variabili di ambiente
 			var storeIdsCleaner = $.jStorage.index();
 			for (var int = 0; int < storeIdsCleaner.length; int++) {
@@ -85,27 +84,6 @@ var debugOn = false;
 				// $(".tipsy").remove();
 			});
 
-		},
-		generatePositionMatrix : function() {
-			var square = 150;
-			var hLimit = context.width();
-			var vLimit = context.height();
-			var vOffset = context.position()['top'];
-			var hOffset = context.position()['left'];
-			var positionsMatrix = [];
-			var h = 0, v = 0;
-			for (var i = 1; hLimit - square > h; i++) {
-				h = i * square;
-				for (var is = 1; vLimit - square > v; is++) {
-					v = is * square;
-					positionsMatrix.push({
-						'left' : h + hOffset,
-						'top' : v + vOffset
-					});
-				};
-				v = 0;
-			};
-			//console.info(positionsMatrix);
 		},
 		close : function() {
 			document.location = document.location.href.substring(0, document.location.href.indexOf("?"));
@@ -1164,7 +1142,7 @@ var debugOn = false;
 						obj.find("." + $(this).attr("rel") + ":not([class*=exploded])").fadeIn('fast');
 						$(this).fadeTo('fast', 0.3);
 					}
-				})
+				});
 
 				$(this).hover(function() {
 					methods.msg($(this).attr('data-title'), 'show', null, null, $(this).hasClass("inverse"));
@@ -1558,6 +1536,9 @@ var debugOn = false;
 			var images = methods.getProperty("images", "properties", docType);
 			// ed ai path dei link esterni
 			var weblinks = methods.getProperty("weblinks", "properties", docType);
+			// ed eventuali configurazioni delle proprietà da mostrare
+			// TODO: fare in modo che sia sempre possibile mettere il dominio come fallback
+			var propertiesMapper = methods.getProperty("document", "propertiesMapper", URI.replace(/(http:\/\/[^\/]+\/).+/, "$1"));
 
 			// se la proprieta' e' stata scritta come stringa la trasformo in un
 			// array
@@ -1586,6 +1567,7 @@ var debugOn = false;
 			var connectedImages = [];
 			var connectedWeblinks = [];
 			var types = [];
+
 			$.each(uris, function(key, value) {
 				for (var akey in value) {
 					// escludo la definizione della classe, le proprieta'
@@ -1601,6 +1583,7 @@ var debugOn = false;
 					}
 				}
 			});
+
 			if (debugOn) {
 				console.debug("formatDoc " + 2);
 			}
@@ -1701,33 +1684,64 @@ var debugOn = false;
 			if (debugOn) {
 				console.debug("formatDoc " + 7);
 			}
-			$.each(contents, function(key, value) {
-				for (var akey in value) {
-					var shortKey = akey;
-					// calcolo una forma breve per la visualizzazione
-					// dell'etichetta della proprieta'
-					while (shortKey.indexOf('/') > -1) {
-						shortKey = shortKey.substring(shortKey.indexOf('/') + 1);
-					}
-					while (shortKey.indexOf('#') > -1) {
-						shortKey = shortKey.substring(shortKey.indexOf('#') + 1);
-					}
-					try {
 
-						var jSection = $("<div class=\"section\"><label data-title=\"" + akey + "\">" + shortKey + "</label><div>" + unescape(value[akey]) + "</div></div><div class=\"separ sprite\"></div>");
-						jSection.find('label').each(function() {
-							$(this).hover(function() {
-								methods.msg($(this).attr('data-title'), 'show');
-							}, function() {
-								methods.msg(null, 'hide');
+			if (propertiesMapper) {
+				$.each(propertiesMapper, function(filter, label) {
+					//show all properties
+					$.each(contents, function(key, value) {
+						for (var akey in value) {
+							if (filter == akey) {
+								var shortKey = label;
+								try {
+									var jSection = $("<div class=\"section\"><label data-title=\"" + akey + "\">" + shortKey + "</label><div>" + unescape(value[akey]) + "</div></div><div class=\"separ sprite\"></div>");
+									jSection.find('label').each(function() {
+										$(this).hover(function() {
+											methods.msg($(this).attr('data-title'), 'show');
+										}, function() {
+											methods.msg(null, 'hide');
+										});
+									});
+									jContents.append(jSection);
+								} catch (e) {
+									// /console.debug(value[akey] + " --- " + shortKey);
+								}
+								return true;
+							}
+						}
+					});
+				});
+
+			} else {
+				//show all properties
+				$.each(contents, function(key, value) {
+					for (var akey in value) {
+						var shortKey = akey;
+						// calcolo una forma breve per la visualizzazione
+						// dell'etichetta della proprieta'
+						while (shortKey.indexOf('/') > -1) {
+							shortKey = shortKey.substring(shortKey.indexOf('/') + 1);
+						}
+						while (shortKey.indexOf('#') > -1) {
+							shortKey = shortKey.substring(shortKey.indexOf('#') + 1);
+						}
+						try {
+
+							var jSection = $("<div class=\"section\"><label data-title=\"" + akey + "\">" + shortKey + "</label><div>" + unescape(value[akey]) + "</div></div><div class=\"separ sprite\"></div>");
+							jSection.find('label').each(function() {
+								$(this).hover(function() {
+									methods.msg($(this).attr('data-title'), 'show');
+								}, function() {
+									methods.msg(null, 'hide');
+								});
 							});
-						});
-						jContents.append(jSection);
-					} catch (e) {
-						// /console.debug(value[akey] + " --- " + shortKey);
+							jContents.append(jSection);
+						} catch (e) {
+							// /console.debug(value[akey] + " --- " + shortKey);
+						}
 					}
-				}
-			});
+				});
+			}
+
 			if (bnodes.length > 0) {
 				// processo i blanknode
 				$.each(bnodes, function(key, value) {
@@ -2412,8 +2426,7 @@ var debugOn = false;
 				pager.parent().fadeOut('fast', null, function() {
 					$(this).parent().children('.' + pager.attr("data-page")).fadeIn('fast');
 				});
-			});
-			{
+			}); {
 				var obj = $("<div class=\"actionBox contents\" rel=\"contents\"  >&#160;</div>");
 				containerBox.append(obj);
 				obj.hover(function() {
@@ -2495,13 +2508,22 @@ var debugOn = false;
 			}
 			if ( typeof context == typeof '') {
 				if (lodLiveProfile[context] && lodLiveProfile[context][area]) {
-					return lodLiveProfile[context][area][prop] ? lodLiveProfile[context][area][prop] : lodLiveProfile['default'][area][prop];
+					if (prop) {
+						return lodLiveProfile[context][area][prop] ? lodLiveProfile[context][area][prop] : lodLiveProfile['default'][area][prop];
+					} else {
+						return lodLiveProfile[context][area] ? lodLiveProfile[context][area] : lodLiveProfile['default'][area];
+					}
+
 				}
 			} else {
 
 				for (var a = 0; a < context.length; a++) {
 					if (lodLiveProfile[context[a]] && lodLiveProfile[context[a]][area]) {
-						return lodLiveProfile[context[a]][area][prop] ? lodLiveProfile[context[a]][area][prop] : lodLiveProfile['default'][area][prop];
+						if (prop) {
+							return lodLiveProfile[context[a]][area][prop] ? lodLiveProfile[context[a]][area][prop] : lodLiveProfile['default'][area][prop];
+						} else {
+							return lodLiveProfile[context[a]][area] ? lodLiveProfile[context[a]][area] : lodLiveProfile['default'][area];
+						}
 
 					}
 				}
@@ -2511,7 +2533,11 @@ var debugOn = false;
 				console.debug((new Date().getTime() - start) + '	getProperty');
 			}
 			if (lodLiveProfile['default'][area]) {
-				return lodLiveProfile['default'][area][prop];
+				if (prop) {
+					return lodLiveProfile['default'][area][prop];
+				} else {
+					return lodLiveProfile['default'][area];
+				}
 			} else {
 				return '';
 			}
@@ -2995,7 +3021,7 @@ var debugOn = false;
 					y : (y1 + y1) / 2
 				});
 			}
-			label = $.trim(label).replace(/\n/g,', ');
+			label = $.trim(label).replace(/\n/g, ', ');
 			canvas.drawText({// inserisco l'etichetta
 				fillStyle : "#606060",
 				strokeStyle : "#606060",
@@ -3003,7 +3029,7 @@ var debugOn = false;
 				y : (y1 + y1 - ((x1 + 60) > x2 ? 18 : -18)) / 2,
 				text : ((x1 + 60) > x2 ? " « " : "") + label + ((x1 + 60) > x2 ? "" : " » "),
 				align : "center",
-				strokeWidth: 0.01,
+				strokeWidth : 0.01,
 				fontSize : 11,
 				fontFamily : "'Open Sans',Verdana"
 			}).restoreCanvas().restoreCanvas();
