@@ -558,6 +558,24 @@ $.jStorage.set('profile', {
 		}
 
 	},
+	
+	/*
+	*
+	* you can specify the properties you want to show in the black doc info box
+	* you can also specify a custom label
+	*
+	*/
+	//	'http://domain.of.my.resources/' : {
+	//		document : {
+	//			propertiesMapper : {
+	//				"http://xmlns.com/foaf/0.1/gender" : "gender",
+	//				"http://xmlns.com/foaf/0.1/firstName" : "first name",
+	//				"http://xmlns.com/foaf/0.1/familyName" : "family name"
+	//			}
+	//		},
+	//	},
+	
+	
 	arrows : {
 		'http://www.w3.org/2002/07/owl#sameAs' : 'isSameAs',
 		'http://purl.org/dc/terms/isPartOf' : 'isPartOf',
