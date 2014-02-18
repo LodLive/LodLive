@@ -102,7 +102,6 @@ var debugOn = false;
 				for (var a = 0; a < keySplit.length; a++) {
 					if (( testURI ? testURI : resource).indexOf(keySplit[a]) == 0) {
 						res = getSparqlConf(module, value, lodLiveProfile).replace(/\{URI\}/ig, resource.replace(/^.*~~/, ''));
-
 						if (value.proxy) {
 							url = value.proxy + '?endpoint=' + value.endpoint + "&" + (value.endpointType ? $.jStorage.get('endpoints')[value.endpointType] : $.jStorage.get('endpoints')['all']) + "&query=" + encodeURIComponent(res);
 						} else {
@@ -113,6 +112,7 @@ var debugOn = false;
 					}
 				}
 			});
+
 			if (debugOn) {
 				console.debug((new Date().getTime() - start) + '	composeQuery ');
 			}
@@ -129,6 +129,29 @@ var debugOn = false;
 				});
 			}
 			return url;
+		},
+		guessingEndpoint : function(uri, onSuccess, onFail) {
+			var base = uri.replace(/(^http:\/\/[^\/]+\/).+/, "$1");
+			console.info(0)
+			var guessedEndpoint = base + "sparql?" + $.jStorage.get('endpoints')['all'] + "&query=" + encodeURIComponent("select * where {?a ?b ?c} LIMIT 1");
+			$.jsonp({
+				url : guessedEndpoint,
+				success : function(data) {
+					if (data && data.results && data.results.bindings[0]) {
+						var connections = lodLiveProfile.connection;
+						connections[base] = {
+							endpoint : base + "sparql"
+						};
+						lodLiveProfile.connection = connections;
+						onSuccess();
+					} else {
+						onFail();
+					}
+				},
+				error : function() {
+					onFail();
+				}
+			});
 		},
 		doStats : function(uri) {
 			if ($('#stats').length == 0) {
@@ -2630,11 +2653,12 @@ var debugOn = false;
 			}
 		},
 		openDoc : function(anUri, destBox, fromInverse) {
-
 			if (debugOn) {
 				start = new Date().getTime();
 			}
 
+			var uris = [];
+			var values = [];
 			if ($.jStorage.get('showInfoConsole')) {
 				methods.queryConsole('init', {
 					uriId : anUri
@@ -2648,8 +2672,6 @@ var debugOn = false;
 			if ($.jStorage.get('doStats')) {
 				methods.doStats(anUri);
 			}
-			var uris = [];
-			var values = [];
 			if (SPARQLquery.indexOf("endpoint=") != -1) {
 				var endpoint = SPARQLquery.substring(SPARQLquery.indexOf("endpoint=") + 9);
 				endpoint = endpoint.substring(0, endpoint.indexOf("&"));
@@ -2658,7 +2680,12 @@ var debugOn = false;
 				destBox.attr("data-endpoint", SPARQLquery.substring(0, SPARQLquery.indexOf("?")));
 			}
 			if (SPARQLquery.indexOf("http://system/dummy") == 0) {
-				methods.parseRawResource(destBox, anUri, fromInverse);
+				// guessing endpoint from URI
+				methods.guessingEndpoint(anUri, function() {
+					methods.openDoc(anUri, destBox, fromInverse);
+				}, function() {
+					methods.parseRawResource(destBox, anUri, fromInverse);
+				});
 			} else {
 				$.jsonp({
 					url : SPARQLquery,
@@ -2794,6 +2821,7 @@ var debugOn = false;
 						methods.errorBox(destBox);
 					}
 				});
+
 			}
 			if (debugOn) {
 				console.debug((new Date().getTime() - start) + '	openDoc');
