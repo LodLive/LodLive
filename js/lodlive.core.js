@@ -132,7 +132,6 @@ var debugOn = false;
 		},
 		guessingEndpoint : function(uri, onSuccess, onFail) {
 			var base = uri.replace(/(^http:\/\/[^\/]+\/).+/, "$1");
-			console.info(0)
 			var guessedEndpoint = base + "sparql?" + $.jStorage.get('endpoints')['all'] + "&query=" + encodeURIComponent("select * where {?a ?b ?c} LIMIT 1");
 			$.jsonp({
 				url : guessedEndpoint,
@@ -1346,6 +1345,7 @@ var debugOn = false;
 							console.debug(URI + '	  ');
 							console.debug(values);
 						}
+
 						methods.formatDoc(destBox, values, uris, bnodes, URI);
 					},
 					error : function(e, b, v) {
@@ -1490,7 +1490,7 @@ var debugOn = false;
 
 			var generated = $.jStorage.get('storeIds-generatedBy-' + obj.attr("id"));
 			var generatedRev = $.jStorage.get('storeIds-generatedByRev-' + obj.attr("id"));
-			// elimino la riga se già presente (in caso di
+			// elimino la riga se giÃ  presente (in caso di
 			// spostamento di un
 			// box)
 			$('#line-' + obj.attr("id")).clearCanvas();
@@ -1559,7 +1559,7 @@ var debugOn = false;
 			var images = methods.getProperty("images", "properties", docType);
 			// ed ai path dei link esterni
 			var weblinks = methods.getProperty("weblinks", "properties", docType);
-			// ed eventuali configurazioni delle proprietà da mostrare
+			// ed eventuali configurazioni delle proprietÃ  da mostrare
 			// TODO: fare in modo che sia sempre possibile mettere il dominio come fallback
 			var propertiesMapper = methods.getProperty("document", "propertiesMapper", URI.replace(/(http:\/\/[^\/]+\/).+/, "$1"));
 
@@ -2601,18 +2601,31 @@ var debugOn = false;
 						if (debugOn) {
 							console.debug((new Date().getTime() - start) + '	openDoc eval uris & values');
 						}
-
-						destBox.children('.box').html('');
-						methods.format(destBox.children('.box'), values, uris);
-						methods.addClick(destBox, fromInverse ? function() {
-							try {
-								$(fromInverse).click();
-							} catch (e) {
+						var inverses = [];
+						var callback = function() {
+							destBox.children('.box').html('');
+							methods.format(destBox.children('.box'), values, uris, inverses);
+							methods.addClick(destBox, fromInverse ? function() {
+								try {
+									$(fromInverse).click();
+								} catch (e) {
+								}
+							} : null);
+							if ($.jStorage.get('doAutoExpand')) {
+								methods.autoExpand(destBox);
 							}
-						} : null);
-						if ($.jStorage.get('doAutoExpand')) {
-							methods.autoExpand(destBox);
+						};
+						if ($.jStorage.get('doAutoSameas')) {
+							var counter = 0;
+							var tot = 0;
+							$.each(lodLiveProfile.connection, function(key, value) {
+								tot++;
+							});
+							methods.findInverseSameAs(resource, counter, inverses, callback, tot);
+						} else {
+							callback();
 						}
+
 					},
 					error : function(e, j, k) {
 						// console.debug(e);console.debug(j);
@@ -2687,6 +2700,7 @@ var debugOn = false;
 					methods.parseRawResource(destBox, anUri, fromInverse);
 				});
 			} else {
+
 				$.jsonp({
 					url : SPARQLquery,
 					beforeSend : function() {
@@ -2728,6 +2742,7 @@ var debugOn = false;
 						destBox.children('.box').html('');
 						if ($.jStorage.get('doInverse')) {
 							SPARQLquery = methods.composeQuery(anUri, 'inverse');
+
 							var inverses = [];
 							$.jsonp({
 								url : SPARQLquery,
@@ -2876,7 +2891,7 @@ var debugOn = false;
 					}
 				},
 				error : function(e, b, v) {
-					destSelect.append(template.replace(/\{CONTENT\}/g, 'si è verificato un errore'));
+					destSelect.append(template.replace(/\{CONTENT\}/g, 'si Ã¨ verificato un errore'));
 				}
 			});
 			if (debugOn) {
@@ -3055,7 +3070,7 @@ var debugOn = false;
 				strokeStyle : "#606060",
 				x : (x2bis + x1 + ((x1 + 60) > x2 ? -60 : +60)) / 2,
 				y : (y1 + y1 - ((x1 + 60) > x2 ? 18 : -18)) / 2,
-				text : ((x1 + 60) > x2 ? " « " : "") + label + ((x1 + 60) > x2 ? "" : " » "),
+				text : ((x1 + 60) > x2 ? " Â« " : "") + label + ((x1 + 60) > x2 ? "" : " Â» "),
 				align : "center",
 				strokeWidth : 0.01,
 				fontSize : 11,
