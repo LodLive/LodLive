@@ -6,7 +6,7 @@
 			// eseguo i calcoli e scrivo la riga di connessione tra i cerchi
 			var lineangle = (Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI) + 180;
 			var x2bis = x1 - Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)) + 60;
-			canvas.detectPixelRatio();
+			//canvas.detectPixelRatio();
 			canvas.rotateCanvas({
 				rotate : lineangle,
 				x : x1,
