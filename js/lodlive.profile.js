@@ -435,17 +435,7 @@ $.jStorage.set('profile', {
 			description : {
 				it : 'Reference data for linked UK government data: it covers the central working of government, including organisational structures where these have been made available as RDF.',
 				en : 'Reference data for linked UK government data: it covers the central working of government, including organisational structures where these have been made available as RDF.'
-			},
-			sparql : {
-				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object} ORDER BY ?property',
-				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
-			},
-
+			}, 
 			endpoint : 'http://services.data.gov.uk/reference/sparql',
 			examples : [{
 				uri : 'http://reference.data.gov.uk/id/minister/dfe/secretary-of-state-for-education',
@@ -459,16 +449,7 @@ $.jStorage.set('profile', {
 			description : {
 				it : 'SPCdata.digitpa.gov.it &egrave; il portale dei dati aperti del Sistema Pubblico di Connettivit&agrave; e Cooperazione progettato e gestito direttamente da DigitPA per condividere l\'insieme dei dati pubblici disponibili presso le Pubbliche Amministrazioni. I Linked Open Data SPC attualmente disponibili sono i dati dell\'Indice della Pubblica Amministrazione.',
 				en : 'SPCdata.digitpa.gov.it is the open data portal of the Public Connectivity and Cooperation System, designed and managed by DigitPA to share the set of public data available from the Public Administrations. The Linked Open Data SPC data currently available are the Index of Public Administration.'
-			},
-			sparql : {
-				allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
-				findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/terms/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>; <http://purl.org/dc/terms/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))}  UNION {?subject a <{CLASS}>; <http://spcdata.digitpa.gov.it/nome_cognome> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-				documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object.FILTER (isIRI(?object) || ?property = <http://spcdata.digitpa.gov.it/nome_cognome> || ?property = <http://www.w3.org/2000/01/rdf-schema#label> || ?property = <http://purl.org/dc/terms/title> || ?property = <http://www.w3.org/2003/01/geo/wgs84_pos#long> || ?property = <http://www.w3.org/2003/01/geo/wgs84_pos#lat> || ?property =<http://www.w3.org/ns/locn#fullAddress>)} ORDER BY ?property',
-				document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
-				bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
-				inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>} LIMIT 100',
-				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
-			},
+			}, 
 			useForInverseSameAs : false,
 			endpoint : 'http://spcdata.digitpa.gov.it:8899/sparql',
 			examples : [{
@@ -602,7 +583,7 @@ $.jStorage.set('profile', {
 		sparql : {
 			allClasses : 'SELECT DISTINCT ?object WHERE {[] a ?object}',
 			findSubject : 'SELECT DISTINCT ?subject WHERE { {?subject a <{CLASS}>;<http://purl.org/dc/elements/1.1/title> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2000/01/rdf-schema#label> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} UNION {?subject a <{CLASS}>;<http://www.w3.org/2004/02/skos/core#prefLabel> ?object. FILTER(regex(str(?object),\'{VALUE}\',\'i\'))} }  LIMIT 1  ',
-			documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object} ORDER BY ?property',
+			documentUri : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object. FILTER(?property != <http://dbpedia.org/ontology/wikiPageWikiLink>)} ORDER BY ?property',
 			document : 'SELECT DISTINCT * WHERE {<{URI}> ?property ?object}',
 			bnode : 'SELECT DISTINCT *  WHERE {<{URI}> ?property ?object}',
 			inverse : 'SELECT DISTINCT * WHERE {?object ?property <{URI}>.} LIMIT 100',
