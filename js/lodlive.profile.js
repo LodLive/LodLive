@@ -657,7 +657,7 @@ if (!document.lodliveVars) {
 $.jStorage.set('boxTemplate', '<div class="boxWrapper" id="first"><div class="box sprite"></div></div>');
 $.jStorage.set('relationsLimit', 25);
 $.jStorage.set('doStats', $.jStorage.get('doStats', true));
-$.jStorage.set('doInverse', $.jStorage.get('doAutoExpand', true));
+$.jStorage.set('doInverse', $.jStorage.get('doInverse', true));
 $.jStorage.set('doAutoExpand', $.jStorage.get('doAutoExpand', true));
 $.jStorage.set('doAutoSameas', $.jStorage.get('doAutoSameas', true));
 $.jStorage.set('doCollectImages', $.jStorage.get('doCollectImages', true));
