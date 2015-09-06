@@ -5,6 +5,8 @@ $(function() {
 		spriteHome = 'spriteHomeEn';
 	} else if ($.jStorage.get('selectedLanguage') == 'fr') {
 		spriteHome = 'spriteHomeFr';
+	} else if ($.jStorage.get('selectedLanguage') == 'gl') {
+		spriteHome = 'spriteHomeEn';
 	}
 
 	function myAlert(msg) {
