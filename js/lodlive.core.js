@@ -3070,7 +3070,7 @@ var debugOn = false;
 				strokeStyle : "#606060",
 				x : (x2bis + x1 + ((x1 + 60) > x2 ? -60 : +60)) / 2,
 				y : (y1 + y1 - ((x1 + 60) > x2 ? 18 : -18)) / 2,
-				text : ((x1 + 60) > x2 ? " Â« " : "") + label + ((x1 + 60) > x2 ? "" : " Â» "),
+				text : ((x1 + 60) > x2 ? " « " : "") + label + ((x1 + 60) > x2 ? "" : " » "),
 				align : "center",
 				strokeWidth : 0.01,
 				fontSize : 11,

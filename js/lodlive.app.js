@@ -24,6 +24,7 @@ $(function() {
 	var nextSpeed = 500;
 	var fadeSpeed = 100;
 	var loca = $(location).attr('search');
+    var hash = $(location).attr('hash');
 	if (loca) {
 		$("#startPanel").remove();
 		$(".paginator").remove();
@@ -31,6 +32,7 @@ $(function() {
 		$("#lang").remove();
 		$('body').append('<div id="aSpace"></div>');
 		var res = $.trim(loca.substring(loca.indexOf("?") + 1));
+		if (hash) res += hash;
 		res = res.replace(/%2F/g, '/');
 		res = res.replace(/%3A/g, ':');
 		res = res.replace(/%23/g, '#');
