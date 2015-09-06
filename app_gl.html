@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" version="XHTML+RDFa 1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/MarkUp/SCHEMA/xhtml-rdfa-2.xsd" lang="gl" xmlns="http://www.w3.org/1999/xhtml" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/">
+	<head profile="http://www.w3.org/1999/xhtml/vocab">
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title property="dc:title">LodLive - browsing the Web of Data</title>
+		<link rel="shortcut icon" href="favicon.png" />
+		<link rel="icon" type="image/png" href="favicon.png" />
+		<link rel="image_src" href="./img/logoLodLive.jpg" />
+		<meta property="og:image" content="./img/logoLodLive.jpg" />
+
+
+		<link property="dc:creator" href="http://purl.org/net/foaf:Person/diego-valerio-camarda" />
+		<link property="dc:creator" href="http://purl.org/net/foaf:Person/silvia-mazzini" />
+		<link property="dc:creator" href="http://purl.org/net/foaf:Person/alessandro-antonuccio" />
+		<link property="dc:subject" href="http://dbpedia.org/resource/Semantic_Web" />
+		<link property="dc:subject" href="http://dbpedia.org/page/Linked_Data" />
+		<link property="dc:subject" href="http://dbpedia.org/resource/SPARQL" />
+
+		<link property="cc:licence" href="http://www.opensource.org/licenses/mit-license.php" />
+
+		<meta property="og:title" content="LodLive - browsing the Web of Data" />
+		<meta property="og:description" content="LodLive &eacute; un proxecto experimental concibido para divulgar a filosofía dos Linked Open Data e para crear un instrumento que asocie a potencialidade dun navegador RDF á eficacia da representación cun grafo, propoñéndose como o primeiro navegador de recursos RDF baseado unicamente en puntos de acceso SPARQL." />
+
+		<meta property="dcterms:created" content="2012-04-25T13:00:00" />
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+		<script>
+			window.jQuery || document.write('<script src="js/jquery-2.0.3.min.js"><\/script>')
+		</script>
+
+
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-1940652-20']);
+			_gaq.push(['_setDomainName', 'lodlive.it']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script');
+				ga.type = 'text/javascript';
+				ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+
+		<script type="text/javascript">
+			WebFontConfig = {
+				google : {
+					families : ['Open+Sans:400italic,700italic,800italic,300italic,600italic,400,300,600,800,700:latin']
+				}
+			};
+			(function() {
+				var wf = document.createElement('script');
+				wf.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+				wf.type = 'text/javascript';
+				wf.async = 'true';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(wf, s);
+			})();
+		</script>
+		<script type="text/javascript" src="js/jquery-ui-1.9.2.min.js"></script>
+
+		<link rel="stylesheet" href="js/jquery.fancybox/jquery.fancybox.css" type="text/css" media="all" />
+
+		<link rel="stylesheet" href="css/lodlive.core.css?01" type="text/css" media="all" />
+		<link rel="stylesheet" href="css/lodlive.profile.css?01" type="text/css" media="all" />
+		<link rel="stylesheet" href="css/lodlive.app.css?01" type="text/css" media="all" />
+
+		<script type="text/javascript" src="js/jquery.fancybox/jquery.fancybox.pack.js"></script>
+		<script type="text/javascript" src="js/jquery.slimScroll.min.js"></script>
+		<script type="text/javascript" src="js/jquery.json-2.3.min.js"></script>
+		<script type="text/javascript" src="js/jquery.jsonp-2.4.0.min.js"></script>
+		<script type="text/javascript" src="js/jquery.jstorage.js"></script>
+		<script type="text/javascript" src="js/jquery.jcanvas.js"></script>
+		<script type="text/javascript" src="js/jquery.doTimeout.js"></script>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script type="text/javascript" src="js/jquery.gmap3.js"></script>
+		<script type="text/javascript" src="js/jquery.ThreeDots.min.js"></script>
+
+		<script type="text/javascript" src="js/lodlive.profile.js?01"></script>
+		<script type="text/javascript" src="js/lodlive.core.js?01"></script>
+		<script type="text/javascript" src="js/lodlive.lang.js?01"></script>
+		<script type="text/javascript" src="js/lodlive.utils.js?01"></script>
+		<script type="text/javascript" src="js/lodlive.custom-lines.js?01"></script>
+		<script type="text/javascript" src="js/lodlive.app.js?01"></script>
+		<script type="text/javascript">
+			$.jStorage.set('selectedLanguage', 'gl')
+		</script>
+	</head>
+	<body>
+		<!-- <h1 style="display: none" property="dc:title">LodLive - browsing the Web of Data</h1> -->
+		<div id="lang-gl">
+			<div id="lang">
+				<a href="http://lodlive.it" title="versione italiana">IT</a> / <a href="http://en.lodlive.it" title="english version">EN</a> / <a href="http://fr.lodlive.it" title="version française">FR</a>
+			</div>
+			<div id="nextPage" class="spriteHome paginator"></div>
+			<div id="prevPage" class="spriteHome paginator"></div>
+			<div id="startPanel">
+				<div id="logo" class="sprite"></div>
+				<div id="boxes">
+					<div id="firstLineBoxes"></div>
+					<div id="boxesCont"></div>
+				</div>
+				<div class="startBoxMainText">
+					<div>
+						<p>
+							O proxecto LodLive constitúe un exemplo do uso que se pode facer dos estándares da web semántica (RDF, SPARQL) para percorrer libremente os recursos RDF. LodLive asocia o potencial dun explorador de recursos RDF coa eficacia da representación con grafos.
+						</p>
+					</div>
+					<a href="https://github.com/dvcama/LodLive" target="_blank">DESCARGAR LodLive</a>
+				</div>
+				<div class="startBoxMainTextPlain">
+						<p>O principio que subxace tras LodLive é a intención de demostrar que os recursos publicados en conformidade co estándar W3C SPARQL son fáciles de conseguir e comprender, coa esperanza de animar as administracións públicas e os propietarios de datos a gran escala para compartiren os seus recursos como LOD (Linked Open Data).</p>
+
+						<p>LodLive consiste nun complemento jQuery (lodlive-core.js), un ficheiro de configuración JSON (lodlive-profile.js), unha páxina HTML, algunhas imaxes e outros complementos jQuery plugins públicos. Así de simple. LodLive é de balde, de código aberto baixo a <a href="http://www.opensource.org/licenses/MIT" rel="cc:license">licenza MIT</a> e intégrase de moi doadamente noutras aplicacións. Tamén se pode utilizar en liña en <a href="http://lodlive.it">lodlive.it</a>.
+					</p>
+				</div>
+			</div>
+			<div id="footer">
+				<div id="footerContainer">
+					<div class="footerBox segnala">
+						<h2>comparta LodLive</h2>
+						<a class="tw spriteHome" href="http://twitter.com/home?status=via+%40LodLive+-+%23lodlive+-+browsing+the+web+of+data" target="_blank" title="condividi su Twitter"></a><a class="fb spriteHome" href="http://www.facebook.com/sharer.php?s=100&amp;p[title]=LodLive+-+browsing+the+web+of+data&amp;p[summary]=LodLive+%C3%A8+un+progetto+sperimentale+nato+per+divulgare+la+filosofia+dei+linked+open+data+e+per+creare+uno+strumento+in+grado+di+associare+le+potenzialità+di+un+browser+RDF+all'efficacia+della+rappresentazione+a+grafo.&amp;p[url]=http://lodlive.it&amp;&amp;p[images][0]=http://lodlive.it/img/logoLodLive.jpg" target="_blank" title="condividi su FaceBook"></a>
+						<br />
+						<br />
+						<h2>seguimento de LodLive</h2>
+						<a class="tw spriteHome" href="https://twitter.com/#!/LodLive" target="_blank" title="segui su Twitter"></a><a class="fb spriteHome" href="https://www.facebook.com/lodlive.browser" target="_blank" title="segui su FaceBook"></a>
+					</div>
+					<div class="footerBox" id="menu">
+						<h2>menú</h2>
+						<ul>
+							<li>
+								<a href="#what">Que é LodLive?</a>
+							</li>
+							<li>
+								<a href="http://blog.lodlive.it">Blogue/documentación</a>
+							</li>
+							<li>
+								<a href="#faq">Preguntas frecuentes</a>
+							</li>
+							<li>
+								<a href="#send">Indicar un punto de acceso</a>
+							</li>
+							<li>
+								<a href="#links">Enlaces útiles</a>
+							</li>
+							<li>
+								<a href="#get">Descarga</a>
+							</li>
+							<li>
+								<a href="#credits">Créditos e contactos</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footerBox">
+						<h2>A mellor experiencia con</h2>
+						LodLive non precisa de compoñentes de software de servidor.
+						<br />
+						Aconséllase un navegador de última xeración para utlizalo. <div class="spriteHome browsers" title="FireFox - Chrome - Safari - Opera"></div>
+					</div>
+					<div class="best">
+						2012, lodlive.it <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC BY-SA</a>, lodlive.js <a href="http://www.opensource.org/licenses/mit-license.php" target="_blank">MIT License</a>
+						<div class="license	 spriteHome"></div>
+					</div>
+				</div>
+			</div>
+			<div id="faq" class="hd">
+				<p>
+					<strong>Durante a navegación co grafo, como se sabe cal é o punto de acceso?</strong>
+					<br />
+					Ao pasar o rato sobre o recurso aparece na esquina inferior esquerda un cadro que indica as súas características, incluído o punto de acceso ao que pertence.
+					<br />
+					<br />
+					<strong>Parece ser que o sistema se bloquea ao abrir certos recursos, e con IE parece ser que non funciona.</strong>
+					<br />
+					LodLive utiliza toda a potencia do comuptador desde o que se realiza o acceso e por este motivo conseguiuse desenvolver unha aplicación que non precisa de ningún compoñente de servidor e que unha vez descargada xa está preparada para o seu uso.
+					<br />
+					Aconséllase utilizar un nvagador actualizado, particularmente Opera, Safari ou Google Chrome; FireFox tamén funziona pero a navegación é maís lenta; Internet Explorer non tan soporte polo momento, porque non pode executar algunhas das funcionalidades que usa LodLive.
+				</p>
+			</div>
+			<div id="links" class="hd">
+				<p>
+					<strong>Sobre SPARQL</strong>
+					<br />
+					<a href="http://www.w3.org/TR/rdf-sparql-query/" target="_blank">www.w3.org/TR/rdf-sparql-query</a>
+					<br />
+					<br />
+					<strong>Sobre estándares e web semántica</strong>
+					<br />
+					<a href="http://www.w3.org/RDF/" target="_blank">www.w3.org/RDF</a>
+					<br />
+					<a href="http://www.w3.org/standards/semanticweb/" target="_blank">www.w3.org/standards/semanticweb</a>
+					<br />
+					<a href="http://www.w3.org/DesignIssues/LinkedData.html" target="_blank">www.w3.org/DesignIssues/LinkedData.html</a>
+					<br />
+					<br />
+					<strong>Tutorial de SPARQL do grupo de traballo do W3C</strong>
+					<br />
+					<a href="http://www.cambridgesemantics.com/it/semantic-university/sparql-by-example" target="_blank">www.cambridgesemantics.com/it/semantic-university/sparql-by-example</a>
+					<br />
+					<br />
+				</p>
+			</div>
+			<div id="get" class="hd">
+				<p>
+					LodLive está dsipoñíbel en GitHub <a href="https://github.com/dvcama/LodLive" target="_blank">https://github.com/dvcama/LodLive</a>
+
+				</p>
+			</div>
+			<div id="credits" class="hd">
+				<p>
+					<strong>Persoas que participaron no proxecto</strong>
+					<br />
+					<span itemscope itemtype="http://data-vocabulary.org/Person"><span itemprop="name">Diego Valerio Camarda</span> (diego@lodlive.it), <span itemprop="name">Silvia Mazzini</span> (silvia@lodlive.it) e <span itemprop="name">Alessandro Antonuccio</span> (ale@lodlive.it)</span>
+					<br />
+					<br />
+					Diego levou a cabo o desenvolvemento, Silvia estabeleceu os criterios base e Alessandro ocupouse do deseño da interface. O grupo compartiu o traballo, polo que resulta difícil discernir os límites da competencia de cada membro.
+					<br />
+					<br />
+					Para máis información e contactos info@lodlive.it.
+				</p>
+			</div>
+			<div id="send" class="hd">
+				<p>
+					É posíbel indicar un punto de acceso en info@lodlive.it para inserilo na aplicación dispoñíbel en lodlive.it. En xeral, obtéñense mellores resultados con conxuntos de datos que teñen a relación owl:sameAs ca con outros recursos dispoñíbeis en puntos de acceso SPARQL.
+					<br />
+					<br />
+					É importante fornecer a maior información posíbel sobre os recursos presentes no punto de acceso e sobre as especificidades do conxunto de datos. LodLive pódese configurar especificamente para representar do mellor xeito os contidos que debe navegar.
+				</p>
+			</div>
+			<div id="what" class="hd">
+				<p>
+					LodLive é un proxecto experimental concibido para divulgar a filosofía dos Linked Open Data e para crear unha ferramenta que poida ser utilizada para asociar as funcionalidades dun navegador RDF coa eficacia da representación gráfica dos datos.
+					<br />
+					<br />
+					LodLive é o primeiro nvagador de recursos RDF baseado unicamente en puntos de acceso SPARQL.
+					<br />
+					<br />
+					LodLive quere demostrar que os recursos publicados polos estándares do W3C para a web semántica poden ser ferramentas facilmente comprensíbeis e accesíbeis cos instrumentos adecuados.
+					<br />
+					<br />
+					LodLive é capaz de relacionar os recursos presentes nos puntos de acceso que estean configurados e permite moverse dun punto de acceso para outro facendo uso dascapacidades de interconexión dos Linked Open Data.
+				</p>
+			</div>
+			<div class="help hd">
+				<div>
+					<h2>AXUDA</h2>
+					<p>
+						<a href="http://www.youtube.com/embed/BQ9Ckh2ov-c?rel=0" class="sprite videoHelp"></a>
+					</p>
+					<p>
+						No centro de cada círculo aparece a etiqueta do recurso.
+					</p>
+					<p>
+						Arredor do círculo colócanse outros pequenos círculos que indican as conexións con outros recursos internos e externos. Ao pulsar sobre eles aparece o círculo do novo recurso e conéctase automaticamente cos que xa están abertos.
+					</p>
+					<p>
+						Pódense explorar estas conexións movéndose libremente dun círculo cara a outro.
+					</p>
+					<p>
+						A cor dos círculos respecta a lóxica das clases de asociación de recursos e, daquela, os recursos pertencentes ás mesmas clases terán o círculo da mesma cor.
+					</p>
+					<p>
+						Pode arrastrar os círculos para colocalos ao seu gusto.
+					</p>
+				</div>
+			</div>
+			<div class="legenda hd">
+				<div>
+					<h2>LENDA DOS SÍMBOLOS</h2>
+					<ul class="optionsList legend">
+						<li>
+							<span class="spriteLegenda"></span>ferramentas
+						</li>
+						<li>
+							<span class="spriteLegenda"></span>amosar información adicional
+						</li>
+						<li>
+							<span class="spriteLegenda"></span>pechar o recurso
+						</li>
+						<li>
+							<span class="spriteLegenda"></span>centrar o recurso
+						</li>
+						<li>
+							<span class="spriteLegenda"></span>abrir a URI do recurso
+						</li>
+						<li>
+							<span class="spriteLegenda"></span>expandir todas as relacións visíbeis
+						</li>
+						<li>
+							<span class="spriteLegenda"></span>relación directa
+						</li>
+						<li>
+							<span class="spriteLegenda"></span>grupo de relacións directas
+						</li>
+						<li>
+							<span class="spriteLegenda"></span>relación inversa
+						</li>
+						<li>
+							<span class="spriteLegenda"></span>grupo de relacións inversas
+						</li>
+						<li>
+							<span class="spriteLegenda"></span>relación owl:sameAs
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+
+	</body>
+</html>
