@@ -51,7 +51,7 @@ $.jStorage.set('profile', {
 			},
 			useForInverseSameAs : false,
 			endpoint : 'http://dati.culturaitalia.it/sparql/',
-			proxy : 'http://labs.regesta.com/sparqlProxy/',
+			proxy : 'http://lodview.it/simple-proxy/resourceProxy/',
 			examples : [{
 				label : 'Accademia dei georgofili',
 				uri : 'http://dati.culturaitalia.it/resource/actor/accademia-dei-georgofili'
@@ -192,7 +192,7 @@ $.jStorage.set('profile', {
 			}, 
 			useForInverseSameAs : false,
 			endpoint : 'http://data.nature.com/query',
-			proxy : 'http://labs.regesta.com/sparqlProxy/',
+			proxy : 'http://lodview.it/simple-proxy/resourceProxy/',
 			examples : [{
 				label : 'Stem cells',
 				uri : 'http://ns.nature.com/subjects/stem_cells'
@@ -317,7 +317,7 @@ $.jStorage.set('profile', {
 				inverseSameAs : 'SELECT DISTINCT * WHERE {?object <http://www.w3.org/2002/07/owl#sameAs> <{URI}>}'
 			},
 			endpointType : 'sesame',
-			proxy : 'http://labs.regesta.com/sparqlProxy/',
+			proxy : 'http://lodview.it/simple-proxy/resourceProxy/',
 			endpoint : 'http://data.linkedmdb.org/sparql',
 			examples : [{
 				uri : 'http://data.linkedmdb.org/resource/film/2014',
