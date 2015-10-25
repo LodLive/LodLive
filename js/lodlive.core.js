@@ -1996,16 +1996,18 @@ var debugOn = false;
 			// aggiungo al box il titolo
 			var result = "<div class=\"boxTitle\"><span class=\"ellipsis_text\">";
 			var maxTitles = 3;
-			for (var a = 0; a < titles.length && a <maxTitles; a++) {
+			for (var a = 0; a < titles.length && maxTitles > 0; a++) {
 				var resultArray = methods.getJsonValue(values, titles[a], titles[a].indexOf('http') == 0 ? '' : titles[a]);
 				if (titles[a].indexOf('http') != 0) {
 					if (result.indexOf($.trim(unescape(titles[a])) + " \n") == -1) {
 						result += $.trim(unescape(titles[a])) + " \n";
+						maxTitles--;
 					}
 				} else {
 					for (var af = 0; af < resultArray.length; af++) {
 						if (result.indexOf(unescape(resultArray[af]) + " \n") == -1) {
 							result += unescape(resultArray[af]) + " \n";
+							maxTitles--;
 						}
 					}
 				}
