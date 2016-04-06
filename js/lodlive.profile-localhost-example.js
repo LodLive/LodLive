@@ -13,6 +13,11 @@ $.jStorage.set('profile', {
 			useForInverseSameAs : true,
 			/*change this*/
 			endpoint : 'http://localhost:8890/sparql',
+			/*declare endpointType -> lodlive.profile presets "all", "arcSparql", "sesame"*/
+			/*this is best practice to ensure you generate JSON as output from your queries*/
+			/*Note : handled correctly in lodlive.app and not in lodlive.core*/ 
+			endpointType : 'sesame',
+
 			examples : [{
 				label : 'test 1',
 				uri : 'http://mysite.com/aaa'
