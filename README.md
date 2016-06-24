@@ -11,14 +11,8 @@ LodLive aims to demonstrate how resources published by W3C standards for the sem
 
 LodLive is capable of connecting the resources existing in its configured endpoints, allowing the user to pass from one endpoint to another by making use of LOD interconnection capacities.
 
----------
-
-LodLive è un progetto sperimentale nato per divulgare la filosofia dei linked open data e per creare uno strumento in grado di associare le potenzialità di un browser RDF all'efficacia della rappresentazione a grafo. 
-
-LodLive è il primo navigatore di risorse RDF basato unicamente su endpoint SPARQL.
-
-LodLive vuole dimostrare che le risorse pubblicate secondo gli standard del W3C per il semantic web possono essere facilmente accessibili e comprensibili con strumenti adeguati. 
-
-LodLive è in grado di connettere le risorse presenti negli endpoint configurati al suo interno, consentendo all'utente di passare da un endpoint all'altro sfruttando le capacità di interconnessione insite nei LOD.
-
+## About us
+LodLive is ideated and maintained by Diego Valerio Camarda and Alessandro Antonuccio with the support of Silvia Mazzini.  
+Diego is the RDF guy behind the technology (see https://www.linkedin.com/in/dvcama)   
+Alessandro is the designer responsible for the interface and the UX (see http://hstudio.it)
 
