@@ -212,9 +212,7 @@ var debugOn = false;
 					}
 				}
 				/*
-				 * msgPanel.css({ left : $('body').scrollLeft(), top :
-				 * $('body').scrollTop() + $(window).height() -
-				 * msgPanel.height(), zIndex : 99999999 });
+				 * msgPanel.css({ left : $('body').scrollLeft(), top : $('body').scrollTop() + $(window).height() - msgPanel.height(), zIndex : 99999999 });
 				 */
 				msgPanel.css({
 					left : 0,
@@ -947,10 +945,8 @@ var debugOn = false;
 				var chordsListExpand = methods.circleChords(parts > 10 ? (pos % 2 > 0 ? originalCircus.width() * 3 : originalCircus.width() * 2) : originalCircus.width() * 5 / 2, parts, originalCircus.position().left + obj.width() / 2, originalCircus.position().top + originalCircus.height() / 2, null, pos);
 				context.append(newObj);
 				/*
-				 * newObj.css({ "left" : originalCircus.position().left +
-				 * originalCircus.width() / 2 - newObj.width() / 2, "top" :
-				 * originalCircus.position().top + originalCircus.height() / 2 -
-				 * newObj.height() / 2, "opacity" : 0.1, "zIndex" : 99 });
+				 * newObj.css({ "left" : originalCircus.position().left + originalCircus.width() / 2 - newObj.width() / 2, "top" : originalCircus.position().top +
+				 * originalCircus.height() / 2 - newObj.height() / 2, "opacity" : 0.1, "zIndex" : 99 });
 				 */
 				newObj.css({
 					"left" : (chordsListExpand[0][0] - newObj.height() / 2),
@@ -960,9 +956,8 @@ var debugOn = false;
 				});
 
 				/*
-				 * newObj.animate({ "left" : (chordsListExpand[pos][0] -
-				 * newObj.height() / 2), "top" : (chordsListExpand[pos][1] -
-				 * newObj.width() / 2), "opacity" : 1 }, 400, '', function() {
+				 * newObj.animate({ "left" : (chordsListExpand[pos][0] - newObj.height() / 2), "top" : (chordsListExpand[pos][1] - newObj.width() / 2), "opacity" : 1 }, 400, '',
+				 * function() {
 				 */
 				methods.renewDrag(context.children('.boxWrapper'));
 				if (debugOn) {
@@ -1423,13 +1418,9 @@ var debugOn = false;
 				}
 			} else if (action == 'move') {
 				/*
-				 * if ($('#docInfo').height() > $(window).height() + 10) {
-				 * $('#docInfo').css({ position : 'absolute', left :
-				 * $(window).width() + $('body').scrollLeft() -
-				 * $('#docInfo').width() - 20, top :
-				 * $('#docInfo').attr("data-top") }); } else {
-				 * $('#docInfo').css({ position : 'fixed', left :
-				 * $(window).width() - $('#docInfo').width() - 20, top : 0 }); }
+				 * if ($('#docInfo').height() > $(window).height() + 10) { $('#docInfo').css({ position : 'absolute', left : $(window).width() + $('body').scrollLeft() -
+				 * $('#docInfo').width() - 20, top : $('#docInfo').attr("data-top") }); } else { $('#docInfo').css({ position : 'fixed', left : $(window).width() -
+				 * $('#docInfo').width() - 20, top : 0 }); }
 				 */
 
 			} else {
@@ -1461,13 +1452,18 @@ var debugOn = false;
 							lineStyle = lodLiveProfile.arrows[$.trim(labeArray[o])] + "Line";
 						}
 						var shortKey = $.trim(labeArray[o]);
-						// calcolo una forma breve per la visualizzazione
-						// dell'etichetta della proprieta'
-						while (shortKey.indexOf('/') > -1) {
-							shortKey = shortKey.substring(shortKey.indexOf('/') + 1);
-						}
-						while (shortKey.indexOf('#') > -1) {
-							shortKey = shortKey.substring(shortKey.indexOf('#') + 1);
+						
+						if(lodLiveProfile['labeler'][shortKey]){
+							// replace property with a specific label
+							shortKey = lodLiveProfile['labeler'][shortKey];
+						}else{
+							// otherwise just a portion of the URI
+							while (shortKey.indexOf('/') > -1) {
+								shortKey = shortKey.substring(shortKey.indexOf('/') + 1);
+							}
+							while (shortKey.indexOf('#') > -1) {
+								shortKey = shortKey.substring(shortKey.indexOf('#') + 1);
+							}
 						}
 						if (label.indexOf("\n" + shortKey + "\n") == -1) {
 							label += shortKey + "\n";
@@ -1710,7 +1706,7 @@ var debugOn = false;
 
 			if (propertiesMapper) {
 				$.each(propertiesMapper, function(filter, label) {
-					//show all properties
+					// show all properties
 					$.each(contents, function(key, value) {
 						for (var akey in value) {
 							if (filter == akey) {
@@ -1735,7 +1731,7 @@ var debugOn = false;
 				});
 
 			} else {
-				//show all properties
+				// show all properties
 				$.each(contents, function(key, value) {
 					for (var akey in value) {
 						var shortKey = akey;
@@ -2289,10 +2285,8 @@ var debugOn = false;
 							obj.attr("data-circleId", containerBox.attr('id'));
 						}
 						/*
-						 * } else if (alredyInserted ==
-						 * document.lodliveVars['relationsLimit']) { $('.' +
-						 * MD5(akey), containerBox).append('<span
-						 * class="relatedBox" title="altri elementi">[...]</span>'); }
+						 * } else if (alredyInserted == document.lodliveVars['relationsLimit']) { $('.' + MD5(akey), containerBox).append('<span class="relatedBox" title="altri
+						 * elementi">[...]</span>'); }
 						 */
 						innerCounter++;
 					} else {
@@ -2307,7 +2301,7 @@ var debugOn = false;
 					if (obj) {
 						obj.attr("data-circleId", containerBox.attr('id'));
 						obj.attr("data-property", akey);
-						// se si tratta di un  Bnode applico una classe diversa
+						// se si tratta di un Bnode applico una classe diversa
 						var akeyArray = akey.split(" ");
 						if (obj.attr('rel').indexOf('~~') != -1) {
 							obj.addClass('isBnode');
@@ -2381,10 +2375,8 @@ var debugOn = false;
 							obj.attr("data-circleId", containerBox.attr('id'));
 						}
 						/*
-						 * } else if (alredyInserted ==
-						 * document.lodliveVars['relationsLimit']) { $('.' +
-						 * MD5(akey), containerBox).append('<span
-						 * class="relatedBox" title="altri elementi">[...]</span>'); }
+						 * } else if (alredyInserted == document.lodliveVars['relationsLimit']) { $('.' + MD5(akey), containerBox).append('<span class="relatedBox" title="altri
+						 * elementi">[...]</span>'); }
 						 */
 						innerCounter++;
 					} else {
@@ -3045,7 +3037,7 @@ var debugOn = false;
 			// eseguo i calcoli e scrivo la riga di connessione tra i cerchi
 			var lineangle = (Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI) + 180;
 			var x2bis = x1 - Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)) + 60;
-			//canvas.detectPixelRatio();
+			// canvas.detectPixelRatio();
 			canvas.rotateCanvas({
 				rotate : lineangle,
 				x : x1,
@@ -3112,7 +3104,7 @@ var debugOn = false;
 			});
 		}
 	}
-	/* end lines*/;
+	/* end lines */;
 	$.fn.lodlive = function(method) {
 		if (methods[method]) {
 			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
