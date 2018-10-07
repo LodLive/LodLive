@@ -130,8 +130,8 @@ var debugOn = false;
 			}
 			return url;
 		},
-		guessingEndpoint : function(uri, onSuccess, onFail) {
-			var base = uri.replace(/(^http:\/\/[^\/]+\/).+/, "$1");
+		guessingEndpoint : function(uri, onSuccess, onFail) { 
+			var base = uri.replace(/(^https?:\/\/[^\/]+\/).+/, "$1");
 			var guessedEndpoint = base + "sparql?" + $.jStorage.get('endpoints')['all'] + "&query=" + encodeURIComponent("select * where {?a ?b ?c} LIMIT 1");
 			$.jsonp({
 				url : guessedEndpoint,
